@@ -82,6 +82,16 @@ Checks performed:
 - No page errors or console errors.
 - No broken internal links discovered from rendered pages.
 
+## Manual GitHub Actions visual QA
+
+- Workflow path: `.github/workflows/visual-review.yml`.
+- Trigger: GitHub Actions -> Visual Review -> Run workflow.
+- The workflow is manual only via `workflow_dispatch`; it does not run on push or pull request automatically.
+- Workflow steps: checkout, setup Node LTS, `npm ci`, install Chromium, `npm run build`, start a local Next server, `npm run visual:review`, upload `artifacts/visual-review/`.
+- Download location: GitHub Actions run summary -> Artifacts -> `visual-review`.
+- This change adds only permanent QA automation and report/ignore metadata. No website UI, content, routes, SEO, layout, copy, colors or components were changed.
+- Permanent rule: every meaningful UI or content change must include fresh visual QA artifacts before merge.
+
 ## Artifact paths
 
 Local artifacts are intentionally ignored by git and stored under:
