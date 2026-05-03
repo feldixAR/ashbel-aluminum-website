@@ -7,15 +7,10 @@ on:
 permissions:
   contents: write
   pull-requests: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,108 +54,35 @@ jobs:
           echo "Local server did not become ready"
           exit 1
 
-      - name: Prepare direct visual review assets
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
-        run: |
-          rm -rf review-artifacts
-          mkdir -p review-artifacts/visual-review
-          cp -R artifacts/visual-review/. review-artifacts/visual-review/
-          cd review-artifacts
-          zip -r visual-review.zip visual-review
-
-      - name: Prepare GitHub Pages visual dashboard
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
+      - name: Prepare visual dashboard
+        if: github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
         run: |
           rm -rf pages-visual-review
           mkdir -p pages-visual-review/visual-review
           cp -R artifacts/visual-review/. pages-visual-review/visual-review/
-          cat > pages-visual-review/index.html <<'HTML'
-          <!doctype html>
-          <html lang="he" dir="rtl">
-            <head>
-              <meta charset="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <title>Ashbel Visual Review</title>
-              <style>
-                body{margin:0;background:#eef3f6;color:#111827;font-family:Arial,sans-serif;line-height:1.5}main{width:min(100% - 32px,1440px);margin:auto;padding:32px 0 64px}.hero{background:white;border:1px solid #d6dee6;padding:28px;margin-bottom:24px;box-shadow:0 12px 34px rgba(15,23,42,.08)}h1{margin:0 0 8px;font-size:40px}p{margin:0;color:#64748b}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.card{background:white;border:1px solid #d6dee6;box-shadow:0 12px 34px rgba(15,23,42,.08);overflow:hidden}.card h2{margin:0;padding:14px 18px;background:#17212b;color:white;font-size:18px;direction:ltr;text-align:left}.card img{display:block;width:100%;height:auto;background:#f8fafc}.contact{margin:24px 0}.contact img{width:100%;height:auto;border:1px solid #d6dee6;background:white}@media(max-width:900px){.grid{grid-template-columns:1fr}h1{font-size:30px}}
-              </style>
-            </head>
-            <body>
-              <main>
-                <section class="hero">
-                  <h1>Ashbel Aluminum Visual Review</h1>
-                  <p>Generated automatically from the latest Playwright screenshots. Desktop, mobile and mobile menu states are below.</p>
-                </section>
-                <section class="contact">
-                  <img src="visual-review/contact-sheet.png" alt="contact sheet" />
-                </section>
-                <section class="grid">
-          HTML
-          for file in \
-            desktop-home.png desktop-services.png desktop-styles.png desktop-products.png desktop-projects.png desktop-process.png desktop-professionals.png desktop-upload.png desktop-about.png desktop-contact.png \
-            mobile-home.png mobile-services.png mobile-styles.png mobile-products.png mobile-projects.png mobile-process.png mobile-professionals.png mobile-upload.png mobile-about.png mobile-contact.png mobile-menu-open.png
-          do
-            echo "<article class=\"card\"><h2>${file}</h2><img src=\"visual-review/${file}\" alt=\"${file}\" /></article>" >> pages-visual-review/index.html
+          printf '%s\n' '<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ashbel Visual Review</title><style>body{margin:0;background:#eef3f6;font-family:Arial,sans-serif}main{max-width:1440px;margin:auto;padding:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:white;border:1px solid #d6dee6}.card h2{margin:0;padding:12px;background:#17212b;color:white;direction:ltr;text-align:left;font-size:16px}.card img{width:100%;height:auto;display:block}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><main><h1>Ashbel Visual Review</h1><section class="grid">' > pages-visual-review/index.html
+          for file in desktop-home.png desktop-services.png desktop-styles.png desktop-products.png desktop-projects.png desktop-process.png desktop-professionals.png desktop-upload.png desktop-about.png desktop-contact.png mobile-home.png mobile-services.png mobile-styles.png mobile-products.png mobile-projects.png mobile-process.png mobile-professionals.png mobile-upload.png mobile-about.png mobile-contact.png mobile-menu-open.png; do
+            echo "<article class='card'><h2>$file</h2><img src='visual-review/$file' alt='$file'></article>" >> pages-visual-review/index.html
           done
-          cat >> pages-visual-review/index.html <<'HTML'
-                </section>
-              </main>
-            </body>
-          </html>
-          HTML
-          cp artifacts/visual-review/summary.md pages-visual-review/summary.md
-          cp artifacts/visual-review/visual-review.json pages-visual-review/visual-review.json
+          printf '%s\n' '</section></main></body></html>' >> pages-visual-review/index.html
 
       - name: Upload visual review artifacts
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
+        if: github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
         uses: actions/upload-artifact@v4
         with:
           name: visual-review
           path: artifacts/visual-review/
           if-no-files-found: error
 
-      - name: Upload visual review contact sheet
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-review-contact-sheet
-          path: artifacts/visual-review/contact-sheet.png
-          if-no-files-found: error
-
-      - name: Upload visual review summary
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-review-summary
-          path: artifacts/visual-review/summary.md
-          if-no-files-found: error
-
-      - name: Setup Pages
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: pages-visual-review
-
-      - name: Deploy visual dashboard to GitHub Pages
-        id: deployment
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
-        uses: actions/deploy-pages@v4
-
-      - name: Commit direct visual review assets
-        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
+      - name: Publish to gh-pages
+        if: github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
         run: |
+          cd pages-visual-review
+          git init
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f review-artifacts/visual-review review-artifacts/visual-review.zip
-          if git diff --cached --quiet; then
-            echo "No direct visual review asset changes"
-          else
-            git commit -m "Update direct visual review assets [skip ci]"
-            git stash push --include-untracked -m visual-review-publish-temp || true
-            git pull --rebase origin codex/build-production-ready-rtl-website-for-ashbel-aluminum
-            git push origin HEAD:codex/build-production-ready-rtl-website-for-ashbel-aluminum
-          fi
+          git add .
+          git commit -m "Publish visual review dashboard"
+          git branch -M gh-pages
+          git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+          git push -f origin gh-pages
