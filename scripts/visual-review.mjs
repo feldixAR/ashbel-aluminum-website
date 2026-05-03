@@ -1,10 +1,11 @@
 import { chromium } from 'playwright';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const baseUrl = process.env.VISUAL_BASE_URL || 'http://127.0.0.1:4173';
 const outputDir = path.resolve('artifacts/visual-review');
+const publicOutputDir = path.resolve('public/visual-review');
 const routes = ['/', '/services', '/styles', '/products', '/projects', '/process', '/professionals', '/upload', '/about', '/contact'];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1100 },
@@ -88,6 +89,7 @@ await contactSheetPage.setContent(buildContactSheetHtml(), { waitUntil: 'load' }
 await contactSheetPage.screenshot({ path: path.join(outputDir, 'contact-sheet.png'), fullPage: true });
 await contactSheetPage.close();
 await browser.close();
+await syncPublicReviewOutput();
 
 if (failed.length || brokenLinks.length) {
   console.error(JSON.stringify({ failed, brokenLinks }, null, 2));
@@ -95,6 +97,12 @@ if (failed.length || brokenLinks.length) {
 }
 
 console.log(`Visual review completed for ${routes.length} routes across ${viewports.length} viewports.`);
+
+async function syncPublicReviewOutput() {
+  await rm(publicOutputDir, { recursive: true, force: true });
+  await mkdir(publicOutputDir, { recursive: true });
+  await cp(outputDir, publicOutputDir, { recursive: true });
+}
 
 function buildSummary({ baseUrl: reviewedBaseUrl, findings: reviewFindings, brokenLinks: reviewBrokenLinks, failed: reviewFailed }) {
   const rows = reviewFindings
