@@ -86,11 +86,18 @@ Checks performed:
 
 - Workflow path: `.github/workflows/visual-review.yml`.
 - Trigger: GitHub Actions -> Visual Review -> Run workflow.
-- The workflow is manual only via `workflow_dispatch`; it does not run on push or pull request automatically.
+- The workflow is manual only via `workflow_dispatch`; because GitHub only lists workflows that exist on the default branch, this manual workflow will become visible after merge.
 - Workflow steps: checkout, setup Node LTS, `npm ci`, install Chromium, `npm run build`, start a local Next server, `npm run visual:review`, upload `artifacts/visual-review/`.
 - Download location: GitHub Actions run summary -> Artifacts -> `visual-review`.
 - This change adds only permanent QA automation and report/ignore metadata. No website UI, content, routes, SEO, layout, copy, colors or components were changed.
 - Permanent rule: every meaningful UI or content change must include fresh visual QA artifacts before merge.
+
+## Pull request CI visual QA
+
+- Current PR visual artifacts are produced through the registered CI workflow at `.github/workflows/ci.yml`.
+- On pull requests, CI now installs Chromium after build, starts the local Next server, runs `npm run visual:review`, and uploads `artifacts/visual-review/` with `actions/upload-artifact`.
+- The downloadable artifact name is `visual-review` on the pull request CI run.
+- No website UI, content, routes, SEO, layout, copy, colors or components were changed for this CI artifact update.
 
 ## Artifact paths
 
