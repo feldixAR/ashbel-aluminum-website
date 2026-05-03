@@ -1,0 +1,2 @@
+Trigger visual dashboard deploy after GitHub Pages source was set to GitHub Actions.
+Commit base: 0a1a9b56dfef3aae707992881944a1ad6de114ab
