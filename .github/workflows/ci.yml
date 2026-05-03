@@ -54,6 +54,15 @@ jobs:
           echo "Local server did not become ready"
           exit 1
 
+      - name: Prepare direct visual review assets
+        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
+        run: |
+          rm -rf review-artifacts
+          mkdir -p review-artifacts/visual-review
+          cp -R artifacts/visual-review/. review-artifacts/visual-review/
+          cd review-artifacts
+          zip -r visual-review.zip visual-review
+
       - name: Upload visual review artifacts
         if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
         uses: actions/upload-artifact@v4
@@ -81,15 +90,12 @@ jobs:
       - name: Commit direct visual review assets
         if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
         run: |
-          mkdir -p review-artifacts/visual-review
-          cp artifacts/visual-review/contact-sheet.png review-artifacts/visual-review/contact-sheet.png
-          cp artifacts/visual-review/summary.md review-artifacts/visual-review/summary.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f review-artifacts/visual-review/contact-sheet.png review-artifacts/visual-review/summary.md
+          git add -f review-artifacts/visual-review review-artifacts/visual-review.zip
           if git diff --cached --quiet; then
             echo "No direct visual review asset changes"
           else
-            git commit -m "Update visual QA direct review assets [skip ci]"
+            git commit -m "Update direct visual review assets [skip ci]"
             git push
           fi
