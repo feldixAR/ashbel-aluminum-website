@@ -35,11 +35,11 @@ jobs:
         run: npm run build
 
       - name: Install Chromium
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
         run: npx playwright install --with-deps chromium
 
       - name: Visual review
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
         run: |
           npm run start -- -p 4173 -H 127.0.0.1 &
           SERVER_PID=$!
@@ -55,7 +55,7 @@ jobs:
           exit 1
 
       - name: Upload visual review artifacts
-        if: github.event_name == 'pull_request' && always()
+        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-review
@@ -63,7 +63,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload visual review contact sheet
-        if: github.event_name == 'pull_request' && always()
+        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-review-contact-sheet
@@ -71,7 +71,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload visual review summary
-        if: github.event_name == 'pull_request' && always()
+        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-review-summary
@@ -79,7 +79,7 @@ jobs:
           if-no-files-found: error
 
       - name: Commit direct visual review assets
-        if: github.event_name == 'pull_request' && success()
+        if: (github.event_name == 'pull_request' || github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum') && success()
         run: |
           mkdir -p review-artifacts/visual-review
           cp artifacts/visual-review/contact-sheet.png review-artifacts/visual-review/contact-sheet.png
