@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
 import { projects } from '@/data/projects';
 
 export const metadata: Metadata = {
   title: 'פרויקטים ודוגמאות תרחיש',
-  description: 'דוגמאות תרחיש לעבודות אלומיניום בבית פרטי, וילה ושיפוץ איכותי, עד להוספת תמונות פרויקט מקוריות של אשבל.',
+  description: 'דוגמאות תרחיש לעבודות אלומיניום בבית פרטי, וילה ושיפוץ איכותי, עם המחשה אדריכלית עד להוספת תמונות פרויקט מקוריות של אשבל.',
 };
 
 export default function ProjectsPage() {
@@ -14,18 +13,24 @@ export default function ProjectsPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='פרויקטים'
-          title='מציגים רק מה שאפשר להציג באחריות'
-          text='עד להעלאת תמונות מקוריות של פרויקטי אשבל, העמוד מציג תרחישי עבודה אמיתיים מבחינת צורך מקצועי, בלי להמציא לקוחות, כתובות, תעודות או פרטי ביצוע שלא אומתו.'
+          title='דוגמאות תרחיש שמראות איך ניגשים לפרויקט נכון'
+          text='העמוד מציג סוגי עבודות נפוצים בבית פרטי ובשיפוץ: מעטפת פתחים, שדרוג מערכות ומראה אדריכלי. התמונות הן המחשה תכנונית בלבד, עד להעלאת תיעוד מקורי מפרויקטים שניתן לפרסם באחריות.'
         />
 
         <section className='section-shell'>
-          <SectionHeader title='דוגמאות תרחיש' text='התרחישים עוזרים להבין איך ניגשים לפרויקט אלומיניום ומה כדאי לשלוח לבדיקה ראשונית.' />
+          <SectionHeader title='דוגמאות תרחיש' text='כך נראה תהליך חשיבה מקצועי לפני מדידה, ייצור והתקנה: לא רק סוג חלון, אלא התאמה בין הפתח, הסדרה, התריסים, הרשתות, הגמר והעבודה בשטח.' />
           <div className='grid-3'>
-            {projects.map((project) => (
-              <article className='project-card' key={project.title}>
-                <div className='image-frame'>
-                  <Image src='/project-placeholder.svg' alt={project.alt} width={800} height={450} />
+            {projects.map((project, index) => (
+              <article className='project-card project-card-elevated' key={project.title}>
+                <div className={`project-visual project-visual-${index + 1}`} aria-label={project.alt}>
+                  <span className='project-skyline' />
+                  <span className='project-frame project-frame-main' />
+                  <span className='project-frame project-frame-side' />
+                  <span className='project-glass project-glass-main' />
+                  <span className='project-glass project-glass-side' />
+                  <span className='project-floor' />
                 </div>
+                <p className='project-kicker'>תרחיש עבודה</p>
                 <h2>{project.title}</h2>
                 <p>{project.desc}</p>
               </article>
