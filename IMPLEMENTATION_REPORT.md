@@ -99,6 +99,15 @@ Checks performed:
 - The downloadable artifact name is `visual-review` on the pull request CI run.
 - No website UI, content, routes, SEO, layout, copy, colors or components were changed for this CI artifact update.
 
+## Visual QA review handoff
+
+- Contact sheet path: `artifacts/visual-review/contact-sheet.png`.
+- Summary report path: `artifacts/visual-review/summary.md`.
+- The contact sheet combines the highest-priority screenshots into one image: desktop home, mobile home, mobile menu, upload, professionals and contact views.
+- The summary report gives reviewers a quick route/status table, links to screenshot filenames, and the automated failure summary.
+- This improves external visual review because reviewers can inspect the main screens immediately from one image and one short Markdown file instead of opening many individual screenshots from the artifact ZIP.
+- No website UI, content, routes, SEO, layout, copy, colors or components were changed for this handoff improvement.
+
 ## Artifact paths
 
 Local artifacts are intentionally ignored by git and stored under:
@@ -124,6 +133,8 @@ Local artifacts are intentionally ignored by git and stored under:
 - `artifacts/visual-review/mobile-about.png`
 - `artifacts/visual-review/mobile-contact.png`
 - `artifacts/visual-review/mobile-menu-open.png`
+- `artifacts/visual-review/contact-sheet.png`
+- `artifacts/visual-review/summary.md`
 - `artifacts/visual-review/visual-review.json`
 
 ## Acceptance summary
