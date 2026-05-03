@@ -34,6 +34,24 @@ export default function ProjectsPage() {
                 <p className='project-kicker'>תרחיש עבודה</p>
                 <h2>{project.title}</h2>
                 <p>{project.desc}</p>
+                <dl className='project-proof-list'>
+                  <div>
+                    <dt>הקשר</dt>
+                    <dd>{project.context}</dd>
+                  </div>
+                  <div>
+                    <dt>אתגר</dt>
+                    <dd>{project.challenge}</dd>
+                  </div>
+                  <div>
+                    <dt>כיוון פתרון</dt>
+                    <dd>{project.solution}</dd>
+                  </div>
+                  <div>
+                    <dt>מה לשלוח</dt>
+                    <dd>{project.send}</dd>
+                  </div>
+                </dl>
               </article>
             ))}
           </div>
