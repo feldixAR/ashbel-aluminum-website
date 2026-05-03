@@ -1,5 +1,37 @@
 <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='700' viewBox='0 0 1200 700'>
-  <rect width='1200' height='700' fill='#e2e8f0'/>
-  <rect x='80' y='80' width='1040' height='540' rx='24' fill='#cbd5e1'/>
-  <text x='600' y='340' font-size='44' text-anchor='middle' fill='#334155' font-family='Arial'>תמונת פרויקט להחלפה</text>
+  <defs>
+    <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+      <stop offset='0' stop-color='#f8fbfc'/>
+      <stop offset='0.55' stop-color='#dfe8ee'/>
+      <stop offset='1' stop-color='#b9c8d3'/>
+    </linearGradient>
+    <linearGradient id='glass' x1='0' y1='0' x2='1' y2='1'>
+      <stop offset='0' stop-color='#ffffff' stop-opacity='0.86'/>
+      <stop offset='0.45' stop-color='#b9d1de' stop-opacity='0.54'/>
+      <stop offset='1' stop-color='#2f5f78' stop-opacity='0.28'/>
+    </linearGradient>
+    <filter id='shadow' x='-20%' y='-20%' width='140%' height='140%'>
+      <feDropShadow dx='0' dy='24' stdDeviation='26' flood-color='#0f172a' flood-opacity='0.18'/>
+    </filter>
+  </defs>
+  <rect width='1200' height='700' fill='url(#bg)'/>
+  <path d='M0 560 L1200 400 L1200 700 L0 700 Z' fill='#0d2535' opacity='0.08'/>
+  <g opacity='0.18' stroke='#123449' stroke-width='2'>
+    <path d='M120 0 V700'/><path d='M300 0 V700'/><path d='M480 0 V700'/><path d='M660 0 V700'/><path d='M840 0 V700'/><path d='M1020 0 V700'/>
+    <path d='M0 120 H1200'/><path d='M0 260 H1200'/><path d='M0 400 H1200'/><path d='M0 540 H1200'/>
+  </g>
+  <g filter='url(#shadow)'>
+    <rect x='120' y='92' width='440' height='500' fill='none' stroke='#122536' stroke-width='30'/>
+    <rect x='164' y='136' width='352' height='412' fill='url(#glass)'/>
+    <line x1='340' y1='112' x2='340' y2='572' stroke='#122536' stroke-width='18'/>
+    <line x1='140' y1='342' x2='540' y2='342' stroke='#122536' stroke-width='18'/>
+  </g>
+  <g filter='url(#shadow)'>
+    <rect x='610' y='150' width='430' height='390' fill='none' stroke='#123449' stroke-width='26'/>
+    <rect x='650' y='190' width='350' height='310' fill='url(#glass)'/>
+    <line x1='825' y1='166' x2='825' y2='524' stroke='#123449' stroke-width='16'/>
+  </g>
+  <path d='M190 185 L480 480' stroke='#ffffff' stroke-width='12' opacity='0.36'/>
+  <path d='M690 220 L970 470' stroke='#ffffff' stroke-width='10' opacity='0.34'/>
+  <text x='600' y='642' text-anchor='middle' fill='#123449' font-size='34' font-family='Arial' font-weight='700'>תצוגת פרויקט אלומיניום להחלפה בתמונה אמיתית</text>
 </svg>
