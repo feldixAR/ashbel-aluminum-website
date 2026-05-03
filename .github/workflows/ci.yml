@@ -47,6 +47,7 @@ jobs:
           for i in {1..30}; do
             if curl -fsS http://127.0.0.1:4173 >/dev/null; then
               npm run visual:review
+              npm run visual:ai
               exit 0
             fi
             sleep 2
@@ -60,7 +61,7 @@ jobs:
           rm -rf pages-visual-review
           mkdir -p pages-visual-review/visual-review
           cp -R artifacts/visual-review/. pages-visual-review/visual-review/
-          printf '%s\n' '<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ashbel Visual Review</title><style>body{margin:0;background:#eef3f6;font-family:Arial,sans-serif}main{max-width:1440px;margin:auto;padding:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:white;border:1px solid #d6dee6}.card h2{margin:0;padding:12px;background:#17212b;color:white;direction:ltr;text-align:left;font-size:16px}.card img{width:100%;height:auto;display:block}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><main><h1>Ashbel Visual Review</h1><section class="grid">' > pages-visual-review/index.html
+          printf '%s\n' '<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ashbel Visual Review</title><style>body{margin:0;background:#eef3f6;font-family:Arial,sans-serif}main{max-width:1440px;margin:auto;padding:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:white;border:1px solid #d6dee6}.card h2{margin:0;padding:12px;background:#17212b;color:white;direction:ltr;text-align:left;font-size:16px}.card img{width:100%;height:auto;display:block}.ai-link{display:inline-flex;margin:0 0 18px;padding:12px 18px;background:#17212b;color:white;text-decoration:none;font-weight:700}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><main><h1>Ashbel Visual Review</h1><a class="ai-link" href="visual-review/ai-review-embedded.html">Open AI compact review</a><section class="grid">' > pages-visual-review/index.html
           for file in desktop-home.png desktop-services.png desktop-styles.png desktop-products.png desktop-projects.png desktop-process.png desktop-professionals.png desktop-upload.png desktop-about.png desktop-contact.png mobile-home.png mobile-services.png mobile-styles.png mobile-products.png mobile-projects.png mobile-process.png mobile-professionals.png mobile-upload.png mobile-about.png mobile-contact.png mobile-menu-open.png; do
             echo "<article class='card'><h2>$file</h2><img src='visual-review/$file' alt='$file'></article>" >> pages-visual-review/index.html
           done
