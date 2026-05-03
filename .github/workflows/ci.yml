@@ -97,6 +97,7 @@ jobs:
             echo "No direct visual review asset changes"
           else
             git commit -m "Update direct visual review assets [skip ci]"
+            git stash push --include-untracked -m visual-review-publish-temp || true
             git pull --rebase origin codex/build-production-ready-rtl-website-for-ashbel-aluminum
-            git push
+            git push origin HEAD:codex/build-production-ready-rtl-website-for-ashbel-aluminum
           fi
