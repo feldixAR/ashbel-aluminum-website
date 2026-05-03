@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
 import { projects } from '@/data/projects';
 import './projects.css';
+import './project-proof.css';
 
 export const metadata: Metadata = {
   title: 'פרויקטים ודוגמאות תרחיש',
