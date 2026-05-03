@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+:root { color-scheme: light; }
+body { font-family: Arial, sans-serif; background:#f8fafc; color:#1f2937; }
+.container-main{max-width:1120px;margin-inline:auto;padding-inline:1rem}
+.card{background:white;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem}
+.btn{display:inline-block;border-radius:.75rem;padding:.75rem 1rem;font-weight:700}
+.btn-primary{background:#1e3a5f;color:white}.btn-secondary{background:#e2e8f0;color:#0f172a}
