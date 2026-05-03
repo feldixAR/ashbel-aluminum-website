@@ -1,0 +1,25 @@
+.project-card-elevated > .project-proof-list {
+  padding-inline: 24px;
+  padding-bottom: 24px;
+}
+
+.project-proof-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.project-proof-list div {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.project-proof-list dt {
+  color: var(--steel-dark);
+  font-weight: 950;
+}
+
+.project-proof-list dd {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
