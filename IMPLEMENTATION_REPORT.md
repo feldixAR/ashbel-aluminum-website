@@ -70,3 +70,8 @@
 - [ ] חיבור אנליטיקה.
 - [ ] החלפת נכסים זמניים בנכסי מותג אמיתיים.
 - [ ] תכנון נקודת אינטגרציה עתידית ל-AshbelOS Intake API (ללא הפעלה חיה בשלב זה).
+
+## Vercel deployment incident and fix
+- Vercel failed because it treated the project as Brunch/Other and tried to build `main` with `brunch build --production`.
+- Added root `vercel.json` to force Next.js framework detection and explicit install/build commands.
+- Next step: redeploy after PR #2 branch updates are pushed so Vercel rebuilds with Next.js settings.
