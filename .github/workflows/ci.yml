@@ -55,3 +55,19 @@ jobs:
           name: visual-review
           path: artifacts/visual-review/
           if-no-files-found: error
+
+      - name: Upload visual review contact sheet
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-review-contact-sheet
+          path: artifacts/visual-review/contact-sheet.png
+          if-no-files-found: error
+
+      - name: Upload visual review summary
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-review-summary
+          path: artifacts/visual-review/summary.md
+          if-no-files-found: error
