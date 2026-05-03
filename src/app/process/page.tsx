@@ -1,20 +1,43 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { processSteps } from '@/data/process';
 
-export const metadata: Metadata = { title: 'איך מתקדמים', description: 'תהליך עבודה מובנה משלב התוכניות ועד ההתקנה והגמר.' };
+export const metadata: Metadata = {
+  title: 'איך מתקדמים בפרויקט אלומיניום',
+  description: 'תהליך עבודה מסודר: שיחה, תוכניות ותמונות, בדיקה טכנית, המלצה, מדידה, ייצור, התקנה וגמר.',
+};
 
 export default function ProcessPage() {
   return (
-    <main className='container-main py-8'>
-      <h1 className='text-3xl font-bold'>איך מתקדמים</h1>
-      <ol className='me-5 mt-4 list-decimal space-y-1'>
-        <li>שולחים תוכניות, תמונות או תיאור קצר</li>
-        <li>מבינים את סוג הפרויקט והשלב שבו הוא נמצא</li>
-        <li>מקבלים כיוון מקצועי ראשוני</li>
-        <li>מתאמים מדידה בשטח</li>
-        <li>מגבשים הצעת מחיר מסודרת</li>
-        <li>יוצאים לייצור</li>
-        <li>מתקינים ומבצעים בדיקת גמר</li>
-      </ol>
+    <main>
+      <div className='container-main'>
+        <PageIntro
+          eyebrow='איך מתקדמים'
+          title='תהליך עבודה ברור מפחית טעויות לפני הייצור'
+          text='באלומיניום לבית פרטי, החלטות מוקדמות משפיעות על פתחים, תריסים, זכוכית, מסילות, רשתות וגמרים. לכן מתקדמים בשלבים ולא מדלגים על בדיקה מקצועית.'
+        >
+          <Link className='btn btn-primary' href='/upload'>
+            שליחת תוכניות או תמונות
+          </Link>
+        </PageIntro>
+
+        <section className='section-shell'>
+          <SectionHeader title='שלבי העבודה' text='השלבים עשויים להשתנות לפי סוג הפרויקט, אבל הסדר המקצועי נשאר: להבין, לבדוק, למדוד, לייצר ולהתקין.' />
+          <ol className='process-list'>
+            {processSteps.map((step) => (
+              <li key={step.title}>
+                <div>
+                  <h2>{step.title}</h2>
+                  <p>{step.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <CtaBand title='רוצים להתחיל נכון?' text='שלחו חומר קיים או תארו את הפרויקט, ונכוון אתכם לשלב הבא בלי הבטחה להצעת מחיר מיידית.' />
+      </div>
     </main>
   );
 }

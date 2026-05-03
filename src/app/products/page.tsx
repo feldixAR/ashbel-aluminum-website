@@ -1,8 +1,46 @@
 import type { Metadata } from 'next';
+import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
 import { kalilSeries } from '@/data/kalilSeries';
 
-export const metadata: Metadata = { title: 'מוצרים וסדרות', description: 'מידע פרקטי על משפחות מוצרים וסדרות קליל לפרויקטים פרטיים.' };
+export const metadata: Metadata = {
+  title: 'מוצרי אלומיניום וסדרות קליל',
+  description: 'הסבר שיווקי ומקצועי על חלונות אלומיניום, ויטרינות, פרופיל בלגי, מערכות הזזה וסדרות קליל רלוונטיות לבתים פרטיים.',
+};
 
 export default function ProductsPage() {
-  return <main className='container-main py-8'><h1 className='text-3xl font-bold'>מוצרים וסדרות</h1><div className='mt-4 grid gap-4 md:grid-cols-2'>{kalilSeries.map((k)=><article key={k.name} className='card'><h2 className='font-bold'>{k.name}</h2><p>{k.exp}</p><p className='mt-2 text-sm'><b>שימוש מתאים:</b> {k.use}</p><p className='text-sm'><b>מה לבדוק:</b> {k.check}</p><a className='btn btn-secondary mt-3' href='/upload'>שליחת תוכניות או תמונות</a></article>)}</div></main>;
+  return (
+    <main>
+      <div className='container-main'>
+        <PageIntro
+          eyebrow='מוצרים וסדרות'
+          title='לא בוחרים סדרה לפני שמבינים את הפתח'
+          text='סדרת האלומיניום צריכה להתאים למידות, לשימוש, לאטימה, לסגנון ולתנאי השטח. לכן מתחילים מבדיקת התוכנית או התמונות, ורק אחר כך ממליצים על כיוון מתאים.'
+        >
+          <p>האזכור של סדרות קליל הוא מידע כללי לבחינה מקצועית. אין כאן טענה להרשאה רשמית או מפרט טכני מחייב.</p>
+        </PageIntro>
+
+        <section className='section-shell'>
+          <SectionHeader title='משפחות מוצרים רלוונטיות' text='הפירוט כאן נועד לעזור ללקוח או לאיש המקצוע להבין מה צריך לבדוק לפני הזמנה ומדידה.' />
+          <div className='grid-2'>
+            {kalilSeries.map((series) => (
+              <article className='feature-card' key={series.name}>
+                <h2>{series.name}</h2>
+                <p>{series.exp}</p>
+                <p>
+                  <strong>שימוש מתאים: </strong>
+                  {series.use}
+                </p>
+                <p>
+                  <strong>מה לבדוק: </strong>
+                  {series.check}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <CtaBand title='רוצים לדעת איזו מערכת מתאימה?' text='שלחו תוכניות, מידות, תמונות או כתב כמויות, ונבחן את הכיוון המקצועי להמשך.' />
+      </div>
+    </main>
+  );
 }

@@ -1,27 +1,90 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import { site } from '@/data/site';
 
 const links = [
   { href: '/', label: 'ראשי' },
   { href: '/services', label: 'שירותים' },
-  { href: '/styles', label: 'סגנונות' },
   { href: '/products', label: 'מוצרים וסדרות' },
   { href: '/projects', label: 'פרויקטים' },
   { href: '/process', label: 'איך מתקדמים' },
   { href: '/professionals', label: 'אזור מקצוענים' },
-  { href: '/about', label: 'אודות' },
   { href: '/contact', label: 'צור קשר' },
 ];
 
+const secondaryLinks = [
+  { href: '/styles', label: 'סגנונות' },
+  { href: '/upload', label: 'שליחת חומרים' },
+  { href: '/about', label: 'אודות' },
+];
+
 export default function Nav() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <nav className='border-b bg-white'>
-      <div className='container-main flex flex-wrap gap-4 py-4'>
-        {links.map((link) => (
-          <Link key={link.href} href={link.href} className='font-semibold'>
-            {link.label}
+    <header className='site-header'>
+      <nav className='container-main nav-bar' aria-label='ניווט ראשי'>
+        <Link className='brand' href='/' onClick={() => setOpen(false)}>
+          <span className='brand-mark' aria-hidden='true'>
+            א
+          </span>
+          <span>
+            <strong>{site.name}</strong>
+            <small>אלומיניום לבתים פרטיים ופרויקטים איכותיים</small>
+          </span>
+        </Link>
+
+        <div className='desktop-links'>
+          {links.map((link) => (
+            <Link key={link.href} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className='desktop-actions'>
+          <a className='phone-link' href={site.phoneHref}>
+            {site.phone}
+          </a>
+          <Link className='btn btn-primary compact' href='/upload'>
+            שליחת תוכניות
           </Link>
-        ))}
+        </div>
+
+        <button
+          className='menu-button'
+          type='button'
+          aria-expanded={open}
+          aria-controls='mobile-menu'
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span aria-hidden='true'>{open ? '×' : '☰'}</span>
+          <span>תפריט</span>
+        </button>
+      </nav>
+
+      <div id='mobile-menu' className={`mobile-menu ${open ? 'open' : ''}`}>
+        <div className='container-main mobile-menu-inner'>
+          {[...links, ...secondaryLinks].map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {link.label}
+            </Link>
+          ))}
+          <div className='mobile-actions'>
+            <Link className='btn btn-primary' href='/upload' onClick={() => setOpen(false)}>
+              שליחת תוכניות או תמונות
+            </Link>
+            <a className='btn btn-outline' href={site.whatsapp} onClick={() => setOpen(false)}>
+              שליחה בוואטסאפ
+            </a>
+            <a className='phone-link' href={site.phoneHref}>
+              {site.phone}
+            </a>
+          </div>
+        </div>
       </div>
-    </nav>
+    </header>
   );
 }

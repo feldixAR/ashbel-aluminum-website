@@ -1,77 +1,142 @@
 # IMPLEMENTATION REPORT
 
-## Final changes
-- הורחבה ספציפיקציה מלאה במסמך `ASHBEL_WEBSITE_SPEC.md` כמסמך מקור אמת.
-- שופרה קריאות הקוד בעמודים ובניווט תוך שמירה על RTL/עברית/CTA.
-- נוספה תמונת placeholder מקומית והוחלף שימוש לתמונות בטוחות עם `next/image`.
-- נשמרו אזור מקצוענים, עמוד העלאת חומרים, סדרות קליל, JSON-LD, `robots.ts`, `sitemap.ts`.
-- נוספה תצורת CI ב-GitHub Actions לריצת lint/typecheck/build על כל push ו-PR.
+## Scope completed
+
+- Rebuilt the existing Next.js scaffold into a public Hebrew RTL premium marketing website for Ashbel Aluminum.
+- Kept the site focused on lead generation for aluminum work in private homes, villas, architects, contractors, supervisors, developers and private builders.
+- Added completed public routes: `/`, `/services`, `/styles`, `/products`, `/projects`, `/process`, `/professionals`, `/upload`, `/about`, `/contact`.
+- Reworked navigation, mobile menu, homepage hierarchy, internal page structure, CTAs, SEO metadata, robots, sitemap and LocalBusiness JSON-LD.
+- Kept upload/professional flows honest: WhatsApp, phone and email contact flow only; no fake backend upload, no login, no dashboard, no automatic quote.
 
 ## Files changed
-- .github/workflows/ci.yml
-- ASHBEL_WEBSITE_SPEC.md
-- IMPLEMENTATION_REPORT.md
-- public/project-placeholder.svg
-- src/app/layout.tsx
-- src/app/page.tsx
-- src/app/services/page.tsx
-- src/app/styles/page.tsx
-- src/app/products/page.tsx
-- src/app/projects/page.tsx
-- src/app/process/page.tsx
-- src/app/professionals/page.tsx
-- src/app/upload/page.tsx
-- src/app/about/page.tsx
-- src/app/contact/page.tsx
-- src/components/Nav.tsx
 
-## Commands run locally in Codex
-- `npm config set registry https://registry.npmjs.org/` → PASS
-- `npm install` → FAIL (HTTP 403 to npm registry in Codex environment)
-- `npm run lint` → FAIL (`next` not found because install failed)
-- `npm run typecheck` → FAIL (missing `next`/React types because install failed)
-- `npm run build` → FAIL (`next` not found because install failed)
+- `.gitignore`
+- `IMPLEMENTATION_REPORT.md`
+- `next-env.d.ts`
+- `package.json`
+- `package-lock.json`
+- `scripts/visual-review.mjs`
+- `src/app/about/page.tsx`
+- `src/app/contact/page.tsx`
+- `src/app/globals.css`
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `src/app/process/page.tsx`
+- `src/app/products/page.tsx`
+- `src/app/professionals/page.tsx`
+- `src/app/projects/page.tsx`
+- `src/app/robots.ts`
+- `src/app/services/page.tsx`
+- `src/app/sitemap.ts`
+- `src/app/styles/page.tsx`
+- `src/app/upload/page.tsx`
+- `src/components/Nav.tsx`
+- `src/components/PageSections.tsx`
+- `src/data/faqs.ts`
+- `src/data/kalilSeries.ts`
+- `src/data/process.ts`
+- `src/data/projects.ts`
+- `src/data/seo.ts`
+- `src/data/services.ts`
+- `src/data/site.ts`
+- `src/data/styles.ts`
+- `tsconfig.json`
 
-## CI status
-- Workflow file added: `.github/workflows/ci.yml`.
-- CI is configured to run on `push` and `pull_request` with steps:
-  1. npm install
-  2. npm run lint
-  3. npm run typecheck
-  4. npm run build
-- Actual CI run status must be confirmed in GitHub PR #2 checks after push.
+## Commands and results
 
-## Build status
-- Codex local build not verifiable due to environment registry restriction (403).
-- Verification should occur via GitHub Actions and Vercel after push.
+- `npm install` - PASS. Installed dependencies and generated `package-lock.json`. npm reported 2 vulnerabilities and a deprecation warning for the pinned `next@15.3.6`.
+- `npm run lint` - PASS.
+- `npm run typecheck` - PASS.
+- `npm run build` - PASS. Next.js generated all required static routes plus `robots.txt` and `sitemap.xml`.
+- `npx playwright install chromium` - PASS.
+- `npm run visual:review` - PASS.
+- No lorem/TODO/AshbelOS/CRM/dashboard/login/portal placeholder scan - PASS.
+- `git diff --check` - PASS.
 
-## Remaining owner-only TODOs
-- העלאת לוגו רשמי.
-- החלפת תמונות placeholder בתמונות פרויקטים מקוריות.
-- חיבור סודות/משתנים פרטיים בסביבת Vercel אם יידרשו בעתיד.
-- חיבור דומיין בבעלות העסק.
+## Browser QA
 
-## Vercel deployment instructions
-1. Connect GitHub repository to Vercel.
-2. Select PR/branch deployment previews.
-3. Ensure Node.js 20 runtime.
-4. Deploy with default Next.js settings.
-5. Validate routes, RTL rendering, metadata, and lead CTA links post-deploy.
+Visual QA was run against local production server `http://127.0.0.1:4173`.
 
-## Final deployment checklist
-- [ ] PR #2 green CI checks.
-- [ ] Vercel preview build successful.
-- [ ] בדיקת כל המסלולים הציבוריים במובייל ובדסקטופ.
-- [ ] בדיקת RTL ושפה עברית בכל רכיב גלוי.
-- [ ] בדיקת קישורי WhatsApp/טלפון/מייל.
-- [ ] בדיקת robots/sitemap/JSON-LD בפרודקשן.
-- [ ] חיבור דומיין.
-- [ ] חיבור Google Search Console.
-- [ ] חיבור אנליטיקה.
-- [ ] החלפת נכסים זמניים בנכסי מותג אמיתיים.
-- [ ] תכנון נקודת אינטגרציה עתידית ל-AshbelOS Intake API (ללא הפעלה חיה בשלב זה).
+Checked routes:
 
-## Vercel deployment incident and fix
-- Vercel failed because it treated the project as Brunch/Other and tried to build `main` with `brunch build --production`.
-- Added root `vercel.json` to force Next.js framework detection and explicit install/build commands.
-- Next step: redeploy after PR #2 branch updates are pushed so Vercel rebuilds with Next.js settings.
+- `/`
+- `/services`
+- `/styles`
+- `/products`
+- `/projects`
+- `/process`
+- `/professionals`
+- `/upload`
+- `/about`
+- `/contact`
+
+Checks performed:
+
+- Desktop screenshots for all required routes.
+- Mobile screenshots for all required routes.
+- Mobile menu open-state screenshot.
+- HTTP status 200 on all routes.
+- `html dir="rtl"` on all routes.
+- Exactly one H1 on every route.
+- No horizontal overflow on desktop or mobile.
+- No page errors or console errors.
+- No broken internal links discovered from rendered pages.
+
+## Artifact paths
+
+Local artifacts are intentionally ignored by git and stored under:
+
+- `artifacts/visual-review/desktop-home.png`
+- `artifacts/visual-review/desktop-services.png`
+- `artifacts/visual-review/desktop-styles.png`
+- `artifacts/visual-review/desktop-products.png`
+- `artifacts/visual-review/desktop-projects.png`
+- `artifacts/visual-review/desktop-process.png`
+- `artifacts/visual-review/desktop-professionals.png`
+- `artifacts/visual-review/desktop-upload.png`
+- `artifacts/visual-review/desktop-about.png`
+- `artifacts/visual-review/desktop-contact.png`
+- `artifacts/visual-review/mobile-home.png`
+- `artifacts/visual-review/mobile-services.png`
+- `artifacts/visual-review/mobile-styles.png`
+- `artifacts/visual-review/mobile-products.png`
+- `artifacts/visual-review/mobile-projects.png`
+- `artifacts/visual-review/mobile-process.png`
+- `artifacts/visual-review/mobile-professionals.png`
+- `artifacts/visual-review/mobile-upload.png`
+- `artifacts/visual-review/mobile-about.png`
+- `artifacts/visual-review/mobile-contact.png`
+- `artifacts/visual-review/mobile-menu-open.png`
+- `artifacts/visual-review/visual-review.json`
+
+## Acceptance summary
+
+- Hebrew public content: PASS.
+- Full RTL support: PASS.
+- Mobile-first layout and mobile menu: PASS.
+- Required routes present: PASS.
+- Metadata per page: PASS.
+- One H1 per page: PASS.
+- robots and sitemap: PASS.
+- LocalBusiness JSON-LD: PASS.
+- Meaningful Hebrew alt text where images exist: PASS.
+- Conversion CTAs on relevant pages: PASS.
+- Honest upload/professional inquiry flow: PASS.
+- No fabricated customers, certifications, locations or project claims: PASS.
+- No fake login/dashboard/pricing/automatic quote: PASS.
+- No lorem ipsum or placeholder marketing copy: PASS.
+- Broken internal link check: PASS.
+
+## Preview URL
+
+- Preview URL is not available locally in this run. No production deployment was performed and no preview was promoted.
+
+## Limitations
+
+- Real logo and original project photography are still owner assets.
+- Domain, analytics and Search Console remain owner/deployment tasks.
+- npm reported dependency security warnings for the currently pinned framework version; this was not changed because the task was focused on the existing branch implementation.
+
+## Final status
+
+Ready for Preview review.
