@@ -28,7 +28,8 @@ export default function Nav() {
       <nav className='container-main nav-bar' aria-label='ניווט ראשי'>
         <Link className='brand' href='/' onClick={() => setOpen(false)}>
           <span className='brand-mark' aria-hidden='true'>
-            א
+            <span className='brand-frame brand-frame-a' />
+            <span className='brand-frame brand-frame-b' />
           </span>
           <span>
             <strong>{site.name}</strong>
