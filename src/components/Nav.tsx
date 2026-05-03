@@ -28,8 +28,11 @@ export default function Nav() {
       <nav className='container-main nav-bar' aria-label='ניווט ראשי'>
         <Link className='brand' href='/' onClick={() => setOpen(false)}>
           <span className='brand-mark' aria-hidden='true'>
-            <span className='brand-frame brand-frame-a' />
-            <span className='brand-frame brand-frame-b' />
+            <svg viewBox='0 0 44 44' width='34' height='34' role='presentation' focusable='false'>
+              <rect x='5' y='7' width='20' height='30' fill='none' stroke='white' strokeWidth='4' />
+              <rect x='25' y='12' width='14' height='20' fill='none' stroke='#d6b36e' strokeWidth='4' />
+              <path d='M25 7v30' stroke='rgba(255,255,255,0.62)' strokeWidth='2' />
+            </svg>
           </span>
           <span>
             <strong>{site.name}</strong>
