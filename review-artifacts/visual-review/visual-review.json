@@ -1,0 +1,227 @@
+{
+  "baseUrl": "http://127.0.0.1:4173",
+  "findings": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-home.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/services",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-services.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/styles",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-styles.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/products",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-products.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/projects",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-projects.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/process",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-process.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/professionals",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-professionals.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/upload",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-upload.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/about",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-about.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/contact",
+      "viewport": "desktop",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "desktop-contact.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-home.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/services",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-services.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/styles",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-styles.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/products",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-products.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/projects",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-projects.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/process",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-process.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/professionals",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-professionals.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/upload",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-upload.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/about",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-about.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/contact",
+      "viewport": "mobile",
+      "status": 200,
+      "direction": "rtl",
+      "h1Count": 1,
+      "overflow": false,
+      "screenshot": "mobile-contact.png",
+      "pageErrors": [],
+      "consoleErrors": []
+    }
+  ],
+  "brokenLinks": [],
+  "failed": []
+}
