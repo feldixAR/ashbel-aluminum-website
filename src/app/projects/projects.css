@@ -1,0 +1,141 @@
+.project-card-elevated {
+  gap: 16px;
+  padding: 0;
+}
+
+.project-card-elevated > h2,
+.project-card-elevated > p,
+.project-card-elevated > .project-kicker {
+  padding-inline: 24px;
+}
+
+.project-card-elevated > p:last-child {
+  padding-bottom: 24px;
+}
+
+.project-kicker {
+  color: var(--steel);
+  font-size: 0.82rem;
+  font-weight: 950;
+}
+
+.project-visual {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 18% 18%, rgb(255 255 255 / 92%), transparent 34%),
+    linear-gradient(135deg, #f8fbfc, #dce7ed 56%, #b9c8d2);
+}
+
+.project-visual::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgb(18 52 73 / 16%);
+  background:
+    linear-gradient(90deg, rgb(18 52 73 / 7%) 1px, transparent 1px),
+    linear-gradient(0deg, rgb(18 52 73 / 6%) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.project-visual::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 36%;
+  background: linear-gradient(180deg, transparent, rgb(13 37 53 / 16%));
+}
+
+.project-frame,
+.project-glass,
+.project-floor,
+.project-skyline {
+  position: absolute;
+  display: block;
+}
+
+.project-frame {
+  z-index: 2;
+  border: 8px solid #142536;
+  box-shadow: 0 18px 38px rgb(15 23 42 / 18%), inset 0 0 0 1px rgb(255 255 255 / 42%);
+}
+
+.project-frame-main {
+  inset: 42px auto auto 34px;
+  width: 53%;
+  height: 60%;
+}
+
+.project-frame-side {
+  inset: 70px 34px auto auto;
+  width: 34%;
+  height: 48%;
+  border-color: var(--steel-dark);
+}
+
+.project-glass {
+  z-index: 1;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 82%), rgb(47 95 120 / 20%)),
+    linear-gradient(115deg, transparent 0 45%, rgb(255 255 255 / 48%) 45% 49%, transparent 49% 100%);
+}
+
+.project-glass-main {
+  inset: 58px auto auto 52px;
+  width: 42%;
+  height: 47%;
+}
+
+.project-glass-side {
+  inset: 86px 50px auto auto;
+  width: 25%;
+  height: 36%;
+}
+
+.project-floor {
+  z-index: 3;
+  inset-inline: 18px;
+  bottom: 28px;
+  height: 10px;
+  background: linear-gradient(90deg, var(--steel-deep), rgb(154 122 69 / 72%));
+}
+
+.project-skyline {
+  inset-inline: 0;
+  bottom: 0;
+  height: 58px;
+  background: linear-gradient(180deg, transparent, rgb(15 23 42 / 13%));
+}
+
+.project-visual-2 .project-frame-main {
+  width: 45%;
+  height: 56%;
+  border-color: #23313f;
+}
+
+.project-visual-2 .project-frame-side {
+  width: 42%;
+  height: 54%;
+}
+
+.project-visual-3 .project-frame-main {
+  inset-inline-start: 24px;
+  width: 58%;
+  height: 62%;
+  border-width: 6px;
+}
+
+.project-visual-3 .project-frame-side {
+  width: 27%;
+  height: 57%;
+  border-width: 6px;
+}
+
+@media (max-width: 560px) {
+  .project-visual {
+    min-height: 220px;
+  }
+}
