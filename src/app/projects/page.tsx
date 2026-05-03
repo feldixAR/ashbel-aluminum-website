@@ -12,53 +12,57 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <main>
-      <div className='container-main'>
+      <div className='container-main projects-page'>
         <PageIntro
           eyebrow='פרויקטים'
-          title='דוגמאות תרחיש שמראות איך ניגשים לפרויקט נכון'
-          text='העמוד מציג סוגי עבודות נפוצים בבית פרטי ובשיפוץ: מעטפת פתחים, שדרוג מערכות ומראה אדריכלי. התמונות הן המחשה תכנונית בלבד, עד להעלאת תיעוד מקורי מפרויקטים שניתן לפרסם באחריות.'
+          title='הוכחת מקצועיות בלי להמציא פרויקטים'
+          text='עד להעלאת תמונות מקוריות של פרויקטי אשבל, העמוד מציג תרחישי עבודה שמדמים החלטות אמיתיות בפרויקט אלומיניום: מה בודקים, איפה הסיכון ומה צריך לשלוח לפני המשך עבודה.'
         />
 
         <section className='section-shell'>
-          <SectionHeader title='דוגמאות תרחיש' text='כך נראה תהליך חשיבה מקצועי לפני מדידה, ייצור והתקנה: לא רק סוג חלון, אלא התאמה בין הפתח, הסדרה, התריסים, הרשתות, הגמר והעבודה בשטח.' />
-          <div className='grid-3'>
+          <SectionHeader title='תרחישי פרויקט לבדיקה מקצועית' text='כל תרחיש מוצג לפי הקשר, אתגר, כיוון פתרון ומה כדאי להעביר לבדיקה ראשונית.' />
+          <div className='project-proof-list'>
             {projects.map((project, index) => (
-              <article className='project-card project-card-elevated' key={project.title}>
-                <div className={`project-visual project-visual-${index + 1}`} aria-label={project.alt}>
-                  <span className='project-skyline' />
-                  <span className='project-frame project-frame-main' />
-                  <span className='project-frame project-frame-side' />
-                  <span className='project-glass project-glass-main' />
-                  <span className='project-glass project-glass-side' />
-                  <span className='project-floor' />
+              <article className='proof-case' key={project.title}>
+                <div className={`proof-visual proof-visual-${index + 1}`} aria-label={project.alt} role='img'>
+                  <span />
+                  <span />
+                  <span />
                 </div>
-                <p className='project-kicker'>תרחיש עבודה</p>
-                <h2>{project.title}</h2>
-                <p>{project.desc}</p>
-                <dl className='project-proof-list'>
-                  <div>
-                    <dt>הקשר</dt>
-                    <dd>{project.context}</dd>
-                  </div>
-                  <div>
-                    <dt>אתגר</dt>
-                    <dd>{project.challenge}</dd>
-                  </div>
-                  <div>
-                    <dt>כיוון פתרון</dt>
-                    <dd>{project.solution}</dd>
-                  </div>
-                  <div>
-                    <dt>מה לשלוח</dt>
-                    <dd>{project.send}</dd>
-                  </div>
-                </dl>
+                <div className='proof-content'>
+                  <p className='eyebrow'>תרחיש {index + 1}</p>
+                  <h2>{project.title}</h2>
+                  <p>{project.desc}</p>
+                  <dl>
+                    <div>
+                      <dt>הקשר</dt>
+                      <dd>{project.context}</dd>
+                    </div>
+                    <div>
+                      <dt>האתגר</dt>
+                      <dd>{project.challenge}</dd>
+                    </div>
+                    <div>
+                      <dt>כיוון פתרון</dt>
+                      <dd>{project.solution}</dd>
+                    </div>
+                    <div>
+                      <dt>מה לשלוח לבדיקה</dt>
+                      <dd>{project.send}</dd>
+                    </div>
+                  </dl>
+                </div>
               </article>
             ))}
           </div>
         </section>
 
-        <CtaBand title='יש לכם פרויקט דומה?' text='שלחו תמונות, תוכניות או מפרט, ונבדוק מה נדרש כדי להתקדם בצורה מקצועית.' />
+        <section className='project-honesty-note'>
+          <h2>כשיהיו תמונות מקוריות, הן יחליפו את התרחישים</h2>
+          <p>אין כאן לקוחות, כתובות, מספרים, תעודות או צילומי פרויקט שלא אומתו. עד אז, ההוכחה היא דרך חשיבה מקצועית ותהליך בדיקה ברור.</p>
+        </section>
+
+        <CtaBand title='רוצים שנבחן תרחיש דומה?' text='שלחו תמונות, תוכניות, רשימת פתחים או מפרט, ונבדוק מה נדרש כדי להתקדם בצורה מקצועית.' />
       </div>
     </main>
   );

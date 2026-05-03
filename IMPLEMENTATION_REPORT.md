@@ -171,3 +171,12 @@ Local artifacts are intentionally ignored by git and stored under:
 ## Final status
 
 Ready for Preview review.
+
+## Completion pass update
+
+- Added the missing source-of-truth and approved benchmark alignment docs requested for PR completion.
+- Upgraded the products page into a visual category gallery with CSS-based aluminum/glass panels, product story, practical checks and plan/photo/BOQ CTA.
+- Reworked projects into scenario-based proof with context, challenge, solution direction and what to send, without inventing clients, photos, locations or certifications.
+- Strengthened upload as the primary professional intake path for plans, photos, specifications, dimensions and opening lists.
+- Refined the header brand mark into a frame/profile/opening symbol so the brand feels more specific to aluminum work.
+- No fake proof, no AI-generated images and no production deployment were added.

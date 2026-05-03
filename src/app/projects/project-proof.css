@@ -1,25 +1,111 @@
-.project-card-elevated > .project-proof-list {
-  padding-inline: 24px;
-  padding-bottom: 24px;
+.proof-case {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: white;
+  box-shadow: 0 22px 60px rgb(17 24 39 / 8%);
 }
 
-.project-proof-list {
+.proof-visual {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgb(16 24 32 / 8%), rgb(16 24 32 / 72%)),
+    repeating-linear-gradient(90deg, transparent 0 42px, rgb(255 255 255 / 12%) 42px 44px),
+    linear-gradient(135deg, #dfe7ec, #6f7f8d 42%, #17212b);
+}
+
+.proof-visual span {
+  position: absolute;
+  display: block;
+  border: 9px solid rgb(255 255 255 / 72%);
+}
+
+.proof-visual span:first-child {
+  inset: 36px auto auto 28px;
+  width: 42%;
+  height: 62%;
+}
+
+.proof-visual span:nth-child(2) {
+  inset: 68px 12% auto auto;
+  width: 30%;
+  height: 46%;
+  border-color: rgb(23 56 77 / 72%);
+}
+
+.proof-visual span:nth-child(3) {
+  inset: auto 22% 28px auto;
+  width: 24%;
+  height: 30%;
+  border-width: 6px;
+  border-color: rgb(255 255 255 / 48%);
+}
+
+.proof-visual-2 {
+  background:
+    linear-gradient(180deg, rgb(16 24 32 / 8%), rgb(16 24 32 / 70%)),
+    repeating-linear-gradient(0deg, transparent 0 44px, rgb(255 255 255 / 12%) 44px 46px),
+    linear-gradient(135deg, #eef2f5, #2f5f78 46%, #111827);
+}
+
+.proof-visual-3 {
+  background:
+    linear-gradient(180deg, rgb(16 24 32 / 5%), rgb(16 24 32 / 76%)),
+    repeating-linear-gradient(90deg, transparent 0 32px, rgb(255 255 255 / 11%) 32px 34px),
+    linear-gradient(135deg, #c9d4dc, #17384d 48%, #080c12);
+}
+
+.proof-content {
   display: grid;
-  gap: 12px;
+  gap: 18px;
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.proof-content h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.proof-content p,
+.proof-content dd {
+  color: var(--muted);
+}
+
+.proof-content dl {
+  display: grid;
+  gap: 14px;
   margin: 0;
 }
 
-.project-proof-list div {
+.proof-content dl div {
   border-top: 1px solid var(--line);
-  padding-top: 12px;
+  padding-top: 14px;
 }
 
-.project-proof-list dt {
+.proof-content dt {
   color: var(--steel-dark);
-  font-weight: 950;
+  font-weight: 900;
 }
 
-.project-proof-list dd {
+.proof-content dd {
   margin: 4px 0 0;
-  color: var(--muted);
+}
+
+@media (min-width: 860px) {
+  .proof-case {
+    grid-template-columns: minmax(320px, 0.8fr) 1fr;
+  }
+
+  .proof-case:nth-child(even) {
+    grid-template-columns: 1fr minmax(320px, 0.8fr);
+  }
+
+  .proof-case:nth-child(even) .proof-visual {
+    order: 2;
+  }
+
+  .proof-visual {
+    min-height: 100%;
+  }
 }

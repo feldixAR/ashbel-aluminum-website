@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
-import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { PageIntro, SectionHeader } from '@/components/PageSections';
 import { kalilSeries } from '@/data/kalilSeries';
 import './products.css';
 
@@ -8,86 +9,88 @@ export const metadata: Metadata = {
   description: 'מוצרי אלומיניום לבית פרטי: מראה בלגי, מערכות הזזה, ויטרינות, הצללה ופתחים גדולים, עם הסבר מקצועי לבחירת מערכת לפי הפתח.',
 };
 
-const productStory = [
-  {
-    title: 'מתחילים בצורך',
-    text: 'הלקוח לא באמת מחפש שם של סדרה. הוא רוצה להבין מה מתאים לבית שלו, מה נראה נכון, מה יחזיק לאורך זמן ומה לא ייצור בעיות בשטח.',
-  },
-  {
-    title: 'בודקים את הפתח',
-    text: 'לפני המלצה בודקים מידות, שימוש יומיומי, כיוון פתיחה, תריסים, רשתות, זכוכית, גמר ותנאי שטח.',
-  },
-  {
-    title: 'מחברים למערכת אחת',
-    text: 'חלון, ויטרינה, תריס או מראה בלגי הם לא פריט בודד, אלא חלק ממערכת אחת של בית, תכנון וביצוע.',
-  },
-];
-
 export default function ProductsPage() {
   return (
     <main>
-      <div className='container-main'>
+      <div className='container-main products-page'>
         <PageIntro
           eyebrow='מוצרים וסדרות'
-          title='לא בוחרים סדרה לפני שמבינים את הפתח'
-          text='סדרת האלומיניום צריכה להתאים למידות, לשימוש, לאטימה, לסגנון ולתנאי השטח. לכן מתחילים מבדיקת התוכנית או התמונות, ורק אחר כך ממליצים על כיוון מתאים.'
+          title='בחירת מערכת מתחילה מהפתח, לא מהשם של הסדרה'
+          text='חלון, ויטרינה, פרופיל בלגי או תריס נבחרים לפי המפתח, השימוש, תנאי השטח, הגמרים והאדריכלות. רק אחרי שמבינים את הפתח אפשר להתאים מערכת אלומיניום בצורה אחראית.'
         >
           <p>האזכור של סדרות קליל הוא מידע כללי לבחינה מקצועית. אין כאן טענה להרשאה רשמית או מפרט טכני מחייב.</p>
+          <Link className='text-link' href='/upload'>
+            שליחת תוכניות, מידות או כתב כמויות
+          </Link>
         </PageIntro>
 
-        <section className='products-showcase section-shell'>
-          <SectionHeader title='עולמות מוצר מרכזיים' text='כניסה ויזואלית לעולמות המרכזיים בבית פרטי: מראה בלגי, פתחים רחבים, הצללה, ויטרינות וחיבור פנים וחוץ.' />
-          <div className='products-gallery' aria-label='גלריית מוצרי אלומיניום'>
+        <section className='section-shell'>
+          <SectionHeader
+            eyebrow='גלריית קטגוריות'
+            title='משפחות מוצרים עם תחושה של זכוכית, פרופיל ופתח'
+            text='החלוקה כאן עוזרת להבין את אופי הבחירה: צורך, בדיקת פתח, התאמת מערכת ותיאום לפני מדידה.'
+          />
+          <div className='product-gallery' aria-label='גלריית קטגוריות מוצרי אלומיניום'>
             {kalilSeries.map((series, index) => (
               <article className={`product-panel product-panel-${index + 1}`} key={series.name}>
-                <div className='product-panel-visual' aria-hidden='true'>
-                  <span className='product-photo-base' />
-                  <span className='product-line product-line-a' />
-                  <span className='product-line product-line-b' />
-                  <span className='product-line product-line-c' />
-                  <span className='product-glass product-glass-a' />
-                  <span className='product-glass product-glass-b' />
+                <div className='panel-visual' aria-hidden='true'>
+                  <span className='panel-rail rail-a' />
+                  <span className='panel-rail rail-b' />
+                  <span className='panel-glass glass-a' />
+                  <span className='panel-glass glass-b' />
                 </div>
-                <div className='product-panel-overlay'>
-                  <p className='product-index'>0{index + 1}</p>
+                <div className='panel-content'>
+                  <p>{series.category}</p>
                   <h2>{series.name}</h2>
-                  <p>{series.exp}</p>
-                  <strong>{series.use}</strong>
+                  <span>{series.need}</span>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section className='products-story section-shell'>
-          <SectionHeader title='הסיפור של המוצרים' text='אשבל לא מוכרת רק רשימת פריטים. המוצר הנכון נבחר מתוך הבנה של הבית, הפתח, השימוש והשלבים הבאים בשטח.' />
-          <div className='products-story-grid'>
-            {productStory.map((item, index) => (
-              <article className='intro-panel' key={item.title}>
-                <p className='product-index'>0{index + 1}</p>
-                <h2>{item.title}</h2>
-                <p>{item.text}</p>
+        <section className='section-shell product-story'>
+          <SectionHeader
+            eyebrow='דרך הבחירה'
+            title='מהצורך אל המערכת המתאימה'
+            text='במקום לבחור מוצר מתוך רשימה, בוחנים את התפקיד של הפתח ואת נקודות הסיכון לפני שמתקדמים.'
+          />
+          <div className='story-flow'>
+            {[
+              ['צורך', 'אור, פרטיות, מעבר לגינה, מראה בלגי, בידוד או תיאום עם חזית.'],
+              ['בדיקת פתח', 'מידות, מפלסים, כיוון פתיחה, ניקוז, תריסים, רשתות ומפגש עם גמרים.'],
+              ['התאמת מערכת', 'בחירת סדרה, זכוכית, צבע, חלוקות ופרטי התקנה לפי הפרויקט.'],
+            ].map(([title, text]) => (
+              <article key={title}>
+                <h2>{title}</h2>
+                <p>{text}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className='section-shell products-checklist-section'>
-          <SectionHeader title='מה בודקים לפני בחירת מערכת' text='הבחירה הנכונה לא מתחילה בשם הסדרה, אלא בשאלות המעשיות שימנעו טעויות במדידה, ייצור והתקנה.' />
-          <div className='grid-2'>
+        <section className='section-shell product-checklist'>
+          <SectionHeader title='מה לבדוק לפני שבוחרים מערכת' text='הבדיקות האלה חוסכות החלטות מאוחרות ומקטינות פערים בין תוכנית, ייצור והתקנה.' />
+          <div className='checklist-grid'>
             {kalilSeries.map((series) => (
-              <article className='feature-card' key={`${series.name}-check`}>
+              <article key={series.name}>
                 <h2>{series.name}</h2>
-                <p>
-                  <strong>מה לבדוק: </strong>
-                  {series.check}
-                </p>
+                <p>{series.check}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <CtaBand title='רוצים לדעת איזו מערכת מתאימה?' text='שלחו תוכניות, מידות, תמונות או כתב כמויות, ונבחן את הכיוון המקצועי להמשך.' />
+        <section className='products-cta' aria-label='שליחת חומרים לבדיקת מוצרי אלומיניום'>
+          <div>
+            <p className='eyebrow'>בדיקה מקצועית ראשונית</p>
+            <h2>שלחו תוכניות, מידות, תמונות או כתב כמויות</h2>
+            <p>נבחן את סוגי הפתחים, נזהה נקודות תיאום ונכוון למערכות אלומיניום שמתאימות לבית ולשלב הפרויקט.</p>
+          </div>
+          <Link className='btn btn-primary' href='/upload'>
+            שליחת חומרים לבדיקה
+          </Link>
+        </section>
       </div>
     </main>
   );
