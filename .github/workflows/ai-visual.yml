@@ -1,0 +1,56 @@
+name: AI Visual Review
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ai-visual:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'codex/build-production-ready-rtl-website-for-ashbel-aluminum'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Capture visual review and AI sheet
+        run: |
+          npm run start -- -p 4173 -H 127.0.0.1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173 >/dev/null; then
+              npm run visual:review
+              npm run visual:ai
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-visual-review
+          path: artifacts/visual-review/
+      - name: Publish AI visual review to gh-pages
+        run: |
+          rm -rf pages-ai
+          mkdir -p pages-ai/visual-review
+          cp -R artifacts/visual-review/. pages-ai/visual-review/
+          cp artifacts/visual-review/ai-review-embedded.html pages-ai/index.html
+          cd pages-ai
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Publish AI visual review"
+          git branch -M gh-pages
+          git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+          git push -f origin gh-pages
