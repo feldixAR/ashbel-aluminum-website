@@ -7,31 +7,30 @@ import { site } from '@/data/site';
 export default function HomePage() {
   return (
     <main>
-      <section className='container-main hero'>
-        <div className='hero-copy'>
-          <p className='eyebrow'>אשבל אלומיניום</p>
-          <h1>חלונות, ויטרינות ופתרונות אלומיניום לבית</h1>
-          <p className='lead'>עבודות אלומיניום לבתים פרטיים, שיפוצים ופרויקטים: מהמראה הכפרי והמראה המודרני ועד תריסים, פרגולות, גדרות, שערים ופתרונות משלימים.</p>
-          <div className='hero-actions'>
+      <section className='hero hero-overlay'>
+        <VisualMedia image={visualImages.modernHome} className='hero-media hero-background' loading='eager' />
+        <div className='container-main hero-copy hero-overlay-copy'>
+          <h1>פתרונות אלומיניום לבית</h1>
+          <p className='lead'>חלונות, ויטרינות, תריסים ופרגולות בתכנון מדויק ובביצוע נקי.</p>
+          <div className='hero-actions hero-primary-actions'>
             <Link className='btn btn-primary' href='/upload'>
               שליחת תוכניות
             </Link>
             <Link className='btn btn-outline' href='/products'>
               מוצרים
             </Link>
-            <a className='text-link' href={site.phoneHref}>
-              {site.phone}
-            </a>
+          </div>
+          <div className='hero-icon-actions' aria-label='פעולות מהירות'>
+            <a href={site.phoneHref} aria-label='התקשרו לאשבל אלומיניום'>טלפון</a>
+            <a href={site.whatsapp} aria-label='שליחת וואטסאפ לאשבל אלומיניום'>וואטסאפ</a>
           </div>
         </div>
-        <VisualMedia image={visualImages.modernHome} className='hero-media' loading='eager' />
       </section>
 
-      <section className='container-main trust-strip' aria-label='תחומי עבודה מרכזיים'>
-        <span>חלונות וויטרינות</span>
-        <span>מערכות הצללה</span>
-        <span>פרגולות אלומיניום</span>
-        <span>גדרות, שערים וזכוכית</span>
+      <section className='container-main trust-strip trust-strip-credibility' aria-label='אמינות ותחומי עבודה'>
+        <span>מתקין מורשה קליל</span>
+        <span>עבודה מול תוכניות ומידות</span>
+        <span>בתים פרטיים ושיפוצים</span>
       </section>
 
       <section className='container-main section-shell'>
