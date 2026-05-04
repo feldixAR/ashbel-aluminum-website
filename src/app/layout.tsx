@@ -13,12 +13,12 @@ export const metadata: Metadata = {
     default: 'אשבל אלומיניום | חלונות, ויטרינות ופתרונות אלומיניום לבית',
     template: '%s | אשבל אלומיניום',
   },
-  description: 'חלונות אלומיניום, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים. תיאום מקצועי מתוכנית אלומיניום או תוכנית אדריכלית ועד ביצוע בשטח.',
+  description: 'חלונות אלומיניום, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים. תיאום מקצועי מתוכנית אלומיניום או תוכנית אדריכלית ועד ביצוע בשטח.',
   keywords: seo.keywords,
   alternates: { canonical: '/' },
   openGraph: {
     title: 'אשבל אלומיניום',
-    description: 'חלונות, ויטרינות, תריסים ופתרונות אלומיניום לבתים פרטיים, וילות, שיפוצים ופרויקטים.',
+    description: 'חלונות, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום לבתים פרטיים, וילות, שיפוצים ופרויקטים.',
     url: seo.baseUrl,
     siteName: 'אשבל אלומיניום',
     locale: 'he_IL',
@@ -46,20 +46,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className='container-main footer-grid'>
             <div className='footer-brand'>
               <h2>אשבל אלומיניום</h2>
-              <p>חלונות, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם פגישה מקצועית ותיאום מסודר משלב התוכניות ועד ההתקנה.</p>
+              <p>חלונות, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם תיאום מסודר משלב התוכניות ועד ההתקנה.</p>
             </div>
             <div>
-              <h3>מוצרים ופתרונות</h3>
+              <h3>מוצרים</h3>
               {productFamilies.map((family) => (
                 <p key={family.slug}><Link href={`/products/${family.slug}`}>{family.title}</Link></p>
               ))}
             </div>
             <div>
-              <h3>יצירת קשר</h3>
+              <h3>צרו קשר</h3>
               <p><a href={site.phoneHref}>{site.phone}</a></p>
-              <p><a href={site.whatsapp}>תיאום פגישה בוואטסאפ</a></p>
-              <p><Link href='/upload'>העלאת תוכניות ותיאום פגישה</Link></p>
-              <p><Link href='/projects'>סוגי עבודות</Link></p>
+              <p><a href={site.whatsapp}>וואטסאפ</a></p>
+              <p><Link href='/upload'>שליחת תוכניות</Link></p>
+              <p><Link href='/professionals'>אדריכלים</Link></p>
             </div>
           </div>
         </footer>
