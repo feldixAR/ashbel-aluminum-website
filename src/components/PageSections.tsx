@@ -49,22 +49,22 @@ export function SectionHeader({
 }
 
 export function CtaBand({
-  title = 'העלאת תוכניות ותיאום פגישה',
-  text = 'אפשר להעביר תוכנית אלומיניום, תוכנית אדריכלית, מידות, כתב כמויות או שאלה מקצועית. המטרה היא לתאם פגישה ולהתקדם בצורה מסודרת.',
+  title = 'מתחילים מהפתח, מהתוכנית ומהשימוש בבית',
+  text = 'שלחו תוכנית, מידות או שאלה מקצועית. נבין את הפתחים, את שלב העבודה ואת הפרטים שמשפיעים על התוצאה.',
 }: CtaProps) {
   return (
     <section className='cta-band' aria-label='יצירת קשר'>
       <div>
-        <p className='eyebrow'>המשך עבודה</p>
+        <p className='eyebrow'>הצעד הבא</p>
         <h2>{title}</h2>
         <p>{text}</p>
       </div>
       <div className='cta-actions'>
         <Link className='btn btn-primary' href='/upload'>
-          העלאת תוכניות ותיאום פגישה
+          התחילו מתוכנית או מידות
         </Link>
         <a className='btn btn-outline' href={site.whatsapp}>
-          תיאום פגישה בוואטסאפ
+          דברו איתנו בוואטסאפ
         </a>
         <a className='text-link' href={site.phoneHref}>
           {site.phone}
