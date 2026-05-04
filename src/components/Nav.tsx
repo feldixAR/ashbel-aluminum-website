@@ -6,11 +6,10 @@ import { site } from '@/data/site';
 
 const links = [
   { href: '/', label: 'ראשי' },
-  { href: '/products', label: 'מוצרים ופתרונות' },
-  { href: '/projects', label: 'סוגי עבודות' },
-  { href: '/professionals', label: 'לאדריכלים וקבלנים' },
-  { href: '/upload', label: 'העלאת תוכניות' },
-  { href: '/contact', label: 'צור קשר' },
+  { href: '/products', label: 'מוצרים' },
+  { href: '/about', label: 'אודות' },
+  { href: '/professionals', label: 'אדריכלים' },
+  { href: '/contact', label: 'צרו קשר' },
 ];
 
 export default function Nav() {
@@ -44,7 +43,7 @@ export default function Nav() {
             {site.phone}
           </a>
           <Link className='btn btn-primary compact' href='/upload'>
-            העלאת תוכניות ותיאום פגישה
+            שליחת תוכניות
           </Link>
         </div>
 
@@ -69,10 +68,10 @@ export default function Nav() {
           ))}
           <div className='mobile-actions'>
             <Link className='btn btn-primary' href='/upload' onClick={() => setOpen(false)}>
-              העלאת תוכניות ותיאום פגישה
+              שליחת תוכניות
             </Link>
             <a className='btn btn-outline' href={site.whatsapp} onClick={() => setOpen(false)}>
-              תיאום פגישה בוואטסאפ
+              וואטסאפ
             </a>
             <a className='phone-link' href={site.phoneHref}>
               {site.phone}
