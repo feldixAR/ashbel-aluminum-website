@@ -5,7 +5,7 @@ import { services } from '@/data/services';
 
 export const metadata: Metadata = {
   title: 'שירותי אלומיניום לבית פרטי',
-  description: 'חלונות אלומיניום, ויטרינות, פרופיל בלגי, תריסים, רשתות ומפתחים גדולים לבתים פרטיים, וילות ופרויקטים איכותיים.',
+  description: 'חלונות אלומיניום, ויטרינות, תריסים, רשתות, הצללה ומפתחים גדולים לבתים פרטיים, שיפוצים ופרויקטים.',
 };
 
 export default function ServicesPage() {
@@ -14,24 +14,24 @@ export default function ServicesPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='שירותים'
-          title='עבודות אלומיניום שמתחילות מהתוכנית ומהשטח'
-          text='אשבל אלומיניום מתמקדת בביצוע מערכות אלומיניום לבתים פרטיים, וילות ופרויקטים איכותיים, עם התאמה בין אדריכלות, שימוש יומיומי ותיאום ביצוע.'
+          title='עבודות אלומיניום לפי סוג הפתח והבית'
+          text='חלונות, ויטרינות, תריסים, רשתות, הצללה ופתחים גדולים נבחרים לפי הבית, התוכנית, המידות והשימוש היומיומי.'
         >
-          <p>חלונות אלומיניום, ויטרינות אלומיניום, פרופיל בלגי, תריסים לבית פרטי, רשתות ומפתחים גדולים.</p>
-          <Link className='text-link' href='/upload'>
-            שליחת תוכניות אלומיניום לבדיקה
+          <p>לצפייה מסודרת לפי קטגוריות מומלץ להתחיל בעמוד מוצרים ופתרונות.</p>
+          <Link className='text-link' href='/products'>
+            מעבר למוצרים ופתרונות
           </Link>
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='תחומי עבודה מרכזיים' text='כל שירות נבחן לפי סוג הפרויקט, מידות הפתחים, גמרים, שימושים ותיאום עם בעלי המקצוע.' />
+          <SectionHeader title='תחומי עבודה מרכזיים' text='כל תחום נבדק לפי סוג הפתח, גודל המפתח, גמרים, תריסים, רשתות ותיאום עם בעלי המקצוע בשטח.' />
           <div className='grid-2'>
             {services.map((service) => (
               <article className='feature-card' key={service.title}>
                 <h2>{service.title}</h2>
                 <p>{service.desc}</p>
                 <p>
-                  <strong>מה בודקים: </strong>
+                  <strong>מה חשוב לבדוק: </strong>
                   {service.detail}
                 </p>
               </article>

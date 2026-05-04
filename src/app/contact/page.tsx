@@ -5,7 +5,7 @@ import { site } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'צור קשר',
-  description: 'יצירת קשר עם אשבל אלומיניום לשיחה, וואטסאפ או שליחת תוכניות ותמונות לבדיקת פרויקט אלומיניום.',
+  description: 'יצירת קשר עם אשבל אלומיניום בטלפון, וואטסאפ או מייל לשליחת תוכניות, תמונות, מידות או פרטי פרויקט אלומיניום.',
 };
 
 export default function ContactPage() {
@@ -14,15 +14,15 @@ export default function ContactPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='צור קשר'
-          title='ספרו לנו על הפרויקט ונבין מה נכון לבדוק קודם'
-          text='אפשר להתקשר, לשלוח וואטסאפ או להעביר תוכניות ותמונות. המטרה היא להבין את הפרויקט ולתאם המשך עבודה מקצועי, לא להבטיח הצעת מחיר מיידית.'
+          title='דברו איתנו על חלונות, ויטרינות ופתרונות אלומיניום'
+          text='אפשר להתקשר, לשלוח וואטסאפ או להעביר תוכניות ותמונות. ספרו לנו מה סוג העבודה, באיזה שלב הבית או השיפוץ, ומה כבר יש לכם ביד.'
         >
           <div className='button-row'>
-            <a className='btn btn-primary' href={site.phoneHref}>
-              שיחה עם איש מקצוע
+            <a className='btn btn-primary' href={site.whatsapp}>
+              דברו איתנו בוואטסאפ
             </a>
-            <a className='btn btn-outline' href={site.whatsapp}>
-              שליחה בוואטסאפ
+            <a className='btn btn-outline' href={site.phoneHref}>
+              התקשרו עכשיו
             </a>
           </div>
           <p>
@@ -31,7 +31,7 @@ export default function ContactPage() {
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='פרטים שיעזרו לנו לכוון אתכם' text='הטופס הוא מבנה עזר לפנייה. לשליחת קבצים בפועל השתמשו בוואטסאפ או במייל.' />
+          <SectionHeader title='איך הכי נוח להתחיל' text='אם יש תוכניות, תמונות, מידות או כתב כמויות - שלחו אותם. אם עדיין אין, אפשר להתחיל משיחה קצרה.' />
           <div className='grid-2'>
             <form className='feature-card contact-form'>
               <label className='field'>
@@ -43,23 +43,23 @@ export default function ContactPage() {
                 <input name='phone' type='tel' autoComplete='tel' />
               </label>
               <label className='field'>
-                סוג פרויקט
+                סוג עבודה
                 <select name='projectType' defaultValue=''>
-                  <option value='' disabled>בחרו סוג פרויקט</option>
-                  <option>בית פרטי חדש</option>
-                  <option>וילה</option>
-                  <option>שיפוץ</option>
-                  <option>פנייה מקצועית</option>
-                  <option>פרויקט קבלני או יזמי</option>
+                  <option value='' disabled>בחרו סוג עבודה</option>
+                  <option>חלונות לבית פרטי</option>
+                  <option>ויטרינה או הזזה</option>
+                  <option>תריסים והצללה</option>
+                  <option>שיפוץ בית קיים</option>
+                  <option>פנייה של אדריכל או קבלן</option>
                 </select>
               </label>
               <label className='field'>
                 תיאור קצר
                 <textarea name='message' />
               </label>
-              <p className='notice'>אין שליחה אוטומטית מהטופס בשלב זה. השתמשו בכפתורי הטלפון, הוואטסאפ או המייל כדי להעביר את הפרטים.</p>
+              <p className='notice'>הטופס הוא מבנה עזר לפנייה. לשליחת קבצים בפועל השתמשו בוואטסאפ או במייל.</p>
             </form>
-            <div className='feature-card'>
+            <div className='feature-card contact-direct'>
               <h2>דרכי פנייה ישירות</h2>
               <p>
                 <strong>טלפון: </strong>
@@ -67,7 +67,7 @@ export default function ContactPage() {
               </p>
               <p>
                 <strong>וואטסאפ: </strong>
-                <a className='text-link' href={site.whatsapp}>שליחה בוואטסאפ</a>
+                <a className='text-link' href={site.whatsapp}>שליחת הודעה</a>
               </p>
               <p>
                 <strong>מייל: </strong>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Nav from '@/components/Nav';
 import { seo } from '@/data/seo';
@@ -8,15 +9,15 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(seo.baseUrl),
   title: {
-    default: 'אשבל אלומיניום | אלומיניום מדויק לבתים פרטיים',
+    default: 'אשבל אלומיניום | חלונות, ויטרינות ופתרונות אלומיניום לבית',
     template: '%s | אשבל אלומיניום',
   },
-  description: 'אלומיניום מדויק לבתים פרטיים, וילות ופרויקטים איכותיים. מדידה, ייעוץ, ייצור והתקנה משלב התוכניות ועד הגמר.',
+  description: 'חלונות אלומיניום, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים. מדידה, ייצור והתקנה נקייה משלב התוכניות ועד הגמר.',
   keywords: seo.keywords,
   alternates: { canonical: '/' },
   openGraph: {
     title: 'אשבל אלומיניום',
-    description: 'מדידה, ייעוץ, ייצור והתקנה של מערכות אלומיניום לבתים פרטיים, וילות ופרויקטים איכותיים.',
+    description: 'חלונות, ויטרינות, תריסים ופתרונות אלומיניום לבתים פרטיים, וילות, שיפוצים ופרויקטים.',
     url: seo.baseUrl,
     siteName: 'אשבל אלומיניום',
     locale: 'he_IL',
@@ -31,7 +32,7 @@ const localBusinessSchema = {
   telephone: site.phone,
   url: seo.baseUrl,
   areaServed: 'ישראל',
-  description: 'אלומיניום מדויק לבתים פרטיים, וילות ופרויקטים איכותיים.',
+  description: 'חלונות, ויטרינות ופתרונות אלומיניום לבתים פרטיים, וילות ופרויקטים.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -44,20 +45,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className='container-main footer-grid'>
             <div>
               <h2>אשבל אלומיניום</h2>
-              <p>ביצוע מערכות אלומיניום לבית פרטי, וילה ופרויקט איכותי, עם תיאום מקצועי משלב התוכניות ועד הגמר.</p>
+              <p>חלונות, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם תיאום מקצועי משלב התוכניות ועד ההתקנה.</p>
+            </div>
+            <div>
+              <h3>מוצרים ופתרונות</h3>
+              <p><Link href='/products'>המראה הבלגי והמודרני</Link></p>
+              <p><Link href='/products'>ויטרינות, הזזה והצללה</Link></p>
+              <p><Link href='/projects'>דוגמאות מהשטח</Link></p>
             </div>
             <div>
               <h3>יצירת קשר</h3>
-              <p>
-                <a href={site.phoneHref}>{site.phone}</a>
-              </p>
-              <p>
-                <a href={site.whatsapp}>שליחה בוואטסאפ</a>
-              </p>
-            </div>
-            <div>
-              <h3>התחלת תהליך</h3>
-              <p>שלחו תוכניות, מפרטים או תמונות מהשטח לבדיקה ראשונית ותיאום המשך עבודה.</p>
+              <p><a href={site.phoneHref}>{site.phone}</a></p>
+              <p><a href={site.whatsapp}>דברו איתנו בוואטסאפ</a></p>
+              <p><Link href='/upload'>שליחת תוכניות או תמונות</Link></p>
             </div>
           </div>
         </footer>

@@ -428,6 +428,71 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
 
 .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
 
+.home-product-strip {
+  display: grid;
+  gap: 14px;
+}
+
+.home-product-tile {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  border: 1px solid #cbd5dc;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 34%), rgb(15 46 59 / 46%)),
+    repeating-linear-gradient(90deg, rgb(24 32 38 / 8%) 0 1px, transparent 1px 52px),
+    linear-gradient(135deg, #ffffff, #b8c0c7 54%, #2f5f73);
+  color: white;
+  padding: 26px;
+  box-shadow: var(--shadow);
+}
+
+.home-product-tile::before,
+.home-product-tile::after {
+  content: "";
+  position: absolute;
+  border: 7px solid rgb(255 255 255 / 68%);
+  pointer-events: none;
+}
+
+.home-product-tile::before {
+  inset: 26px 28px auto auto;
+  width: 48%;
+  height: 56%;
+}
+
+.home-product-tile::after {
+  inset: auto auto 28px 28px;
+  width: 34%;
+  height: 38%;
+  border-color: rgb(255 255 255 / 46%);
+}
+
+.home-product-tile span,
+.home-product-tile h3,
+.home-product-tile p {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 18px rgb(15 46 59 / 38%);
+}
+
+.home-product-tile span {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 54px;
+  background: rgb(15 46 59 / 54%);
+  border: 1px solid rgb(255 255 255 / 24%);
+  padding: 6px 9px;
+  color: white;
+  font-weight: 900;
+}
+
+.home-product-tile p {
+  max-width: 320px;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
 .feature-card, .project-card, .intro-panel {
   position: relative;
   border: 1px solid var(--line);
@@ -570,6 +635,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
 
 .footer-grid { display: grid; gap: 18px; }
 .site-footer p, .site-footer a { color: #dbe3ea; }
+.site-footer a { text-decoration: underline; text-underline-offset: 5px; }
 
 @media (min-width: 760px) {
   .hero, .page-intro, .cta-band { grid-template-columns: 1.04fr 0.96fr; }
@@ -577,6 +643,13 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
   .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .home-product-strip { grid-template-columns: repeat(5, 1fr); }
+  .home-product-tile { min-height: 360px; }
+  .home-product-tile:nth-child(1),
+  .home-product-tile:nth-child(3) { grid-column: span 2; }
+  .home-product-tile:nth-child(2),
+  .home-product-tile:nth-child(4),
+  .home-product-tile:nth-child(5) { grid-column: span 1; }
   .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
 }
 

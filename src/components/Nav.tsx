@@ -6,18 +6,11 @@ import { site } from '@/data/site';
 
 const links = [
   { href: '/', label: 'ראשי' },
-  { href: '/services', label: 'שירותים' },
-  { href: '/products', label: 'מוצרים וסדרות' },
-  { href: '/projects', label: 'פרויקטים' },
-  { href: '/process', label: 'איך מתקדמים' },
-  { href: '/professionals', label: 'אזור מקצוענים' },
+  { href: '/products', label: 'מוצרים ופתרונות' },
+  { href: '/projects', label: 'דוגמאות מהשטח' },
+  { href: '/professionals', label: 'לאדריכלים וקבלנים' },
+  { href: '/upload', label: 'שליחת תוכניות' },
   { href: '/contact', label: 'צור קשר' },
-];
-
-const secondaryLinks = [
-  { href: '/styles', label: 'סגנונות' },
-  { href: '/upload', label: 'שליחת חומרים' },
-  { href: '/about', label: 'אודות' },
 ];
 
 export default function Nav() {
@@ -34,7 +27,7 @@ export default function Nav() {
           </span>
           <span>
             <strong>{site.name}</strong>
-            <small>אלומיניום לבתים פרטיים ופרויקטים איכותיים</small>
+            <small>חלונות, ויטרינות ופתרונות אלומיניום לבית</small>
           </span>
         </Link>
 
@@ -69,7 +62,7 @@ export default function Nav() {
 
       <div id='mobile-menu' className={`mobile-menu ${open ? 'open' : ''}`}>
         <div className='container-main mobile-menu-inner'>
-          {[...links, ...secondaryLinks].map((link) => (
+          {links.map((link) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {link.label}
             </Link>
@@ -79,7 +72,7 @@ export default function Nav() {
               שליחת תוכניות או תמונות
             </Link>
             <a className='btn btn-outline' href={site.whatsapp} onClick={() => setOpen(false)}>
-              שליחה בוואטסאפ
+              דברו איתנו בוואטסאפ
             </a>
             <a className='phone-link' href={site.phoneHref}>
               {site.phone}

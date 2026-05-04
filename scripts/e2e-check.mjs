@@ -99,7 +99,7 @@ async function checkNavigation(page) {
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
 
   const headerLinks = await page.locator('header a[href^="/"]').filter({ visible: true }).evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href')).filter(Boolean));
-  expect(headerLinks.length >= 8, 'Header does not expose the expected navigation links.');
+  expect(headerLinks.length >= 6, 'Header does not expose the expected simplified navigation links.');
 
   for (const href of [...new Set(headerLinks)]) {
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
@@ -168,15 +168,15 @@ async function checkProducts(page, mobilePage) {
 async function checkProjects(page) {
   await page.goto(new URL('/projects', baseUrl).toString(), { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['תרחיש', 'הקשר', 'האתגר', 'כיוון פתרון', 'מה לשלוח'], 'Projects scenario proof is incomplete.');
-  expectIncludes(text, ['אין כאן', 'לקוחות', 'כתובות', 'תעודות'], 'Projects honesty note is missing.');
+  expectIncludes(text, ['דוגמאות מהשטח', 'המצב', 'מה בודקים', 'כיוון עבודה', 'מה לשלוח'], 'Field examples page is incomplete.');
+  expectIncludes(text, ['בית פרטי בבנייה', 'שיפוץ בית קיים', 'ויטרינה לסלון'], 'Field examples do not cover realistic aluminum work scenarios.');
   expect(await page.locator('main a[href="/upload"], main a[href="/contact"]').count() > 0, 'Projects page does not lead to upload/contact.');
 }
 
 async function checkUpload(page, mobilePage) {
   await page.goto(new URL('/upload', baseUrl).toString(), { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['תוכניות', 'מידות', 'תמונות', 'כתב כמויות', 'מה לשלוח', 'מה אשבל בודקת', 'מה קורה אחר כך'], 'Upload intake explanation is incomplete.');
+  expectIncludes(text, ['תוכניות', 'מידות', 'תמונות', 'כתב כמויות', 'מה לשלוח', 'מה בודקים', 'איך ממשיכים'], 'Upload intake explanation is incomplete.');
   expect(await page.locator('main a[href^="tel:"], main a[href^="https://wa.me/"], main a[href^="mailto:"]').count() > 0, 'Upload action fallback is missing.');
 
   await mobilePage.goto(new URL('/upload', baseUrl).toString(), { waitUntil: 'networkidle' });

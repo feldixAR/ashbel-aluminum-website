@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
-import { processSteps } from '@/data/process';
 
 export const metadata: Metadata = {
-  title: 'איך מתקדמים בפרויקט אלומיניום',
-  description: 'תהליך עבודה מסודר: שיחה, תוכניות ותמונות, בדיקה טכנית, המלצה, מדידה, ייצור, התקנה וגמר.',
+  title: 'איך מתקדמים עם עבודת אלומיניום',
+  description: 'תהליך קצר וברור לשליחת תוכניות, תמונות, מידות או כתב כמויות לעבודות חלונות, ויטרינות ופתרונות אלומיניום.',
 };
 
 export default function ProcessPage() {
@@ -14,29 +13,34 @@ export default function ProcessPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='איך מתקדמים'
-          title='תהליך עבודה ברור מפחית טעויות לפני הייצור'
-          text='באלומיניום לבית פרטי, החלטות מוקדמות משפיעות על פתחים, תריסים, זכוכית, מסילות, רשתות וגמרים. לכן מתקדמים בשלבים ולא מדלגים על בדיקה מקצועית.'
+          title='מתחילים משליחת תוכניות, תמונות או מידות'
+          text='העמוד הזה מחבר את תהליך העבודה עם שליחת חומרים: שולחים מה שיש, בודקים את הפתחים, משלימים שאלות ומתקדמים למדידה או להצעה.'
         >
           <Link className='btn btn-primary' href='/upload'>
-            שליחת תוכניות או תמונות
+            שליחת חומרים עכשיו
           </Link>
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='שלבי העבודה' text='השלבים עשויים להשתנות לפי סוג הפרויקט, אבל הסדר המקצועי נשאר: להבין, לבדוק, למדוד, לייצר ולהתקין.' />
+          <SectionHeader title='תהליך קצר וברור' text='מתאים לבית פרטי, שיפוץ, וילה, עבודה מול אדריכל או פרויקט קבלני.' />
           <ol className='process-list'>
-            {processSteps.map((step) => (
-              <li key={step.title}>
+            {[
+              ['שולחים חומר', 'תוכניות, תמונות, מידות, כתב כמויות או רשימת פתחים.'],
+              ['בודקים את הפתחים', 'סוגי חלונות, ויטרינות, תריסים, מסילות, זכוכית והצללה.'],
+              ['משלימים שאלות', 'אם חסרים פרטים, מבקשים תמונות נוספות או מידות ממוקדות.'],
+              ['מתאמים המשך', 'מדידה, ביקור שטח או הצעה מסודרת לפי מצב הפרויקט.'],
+            ].map(([title, text]) => (
+              <li key={title}>
                 <div>
-                  <h2>{step.title}</h2>
-                  <p>{step.text}</p>
+                  <h2>{title}</h2>
+                  <p>{text}</p>
                 </div>
               </li>
             ))}
           </ol>
         </section>
 
-        <CtaBand title='רוצים להתחיל נכון?' text='שלחו חומר קיים או תארו את הפרויקט, ונכוון אתכם לשלב הבא בלי הבטחה להצעת מחיר מיידית.' />
+        <CtaBand />
       </div>
     </main>
   );

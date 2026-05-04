@@ -49,8 +49,8 @@ export function SectionHeader({
 }
 
 export function CtaBand({
-  title = 'אפשר להתחיל מבדיקה מקצועית ראשונית',
-  text = 'שלחו תוכניות, מפרטים, כתב כמויות או תמונות מהשטח, ונכוון אתכם לשלב הבא בצורה מסודרת.',
+  title = 'שלחו תוכניות, תמונות או מידות לבדיקה',
+  text = 'אפשר להעביר תוכניות, תמונות מהשטח, מידות, מפרט או כתב כמויות. נבין את סוגי הפתחים ונחזור עם שאלות או המשך תיאום.',
 }: CtaProps) {
   return (
     <section className='cta-band' aria-label='יצירת קשר'>
@@ -64,7 +64,7 @@ export function CtaBand({
           שליחת תוכניות או תמונות
         </Link>
         <a className='btn btn-outline' href={site.whatsapp}>
-          שליחה בוואטסאפ
+          דברו איתנו בוואטסאפ
         </a>
         <a className='text-link' href={site.phoneHref}>
           {site.phone}
@@ -74,7 +74,7 @@ export function CtaBand({
   );
 }
 
-export function ArchitecturalVisual({ label = 'מבט אדריכלי על מערכות אלומיניום לבית פרטי' }: { label?: string }) {
+export function ArchitecturalVisual({ label = 'איור אדריכלי דקורטיבי של פתחים, חלונות וויטרינות אלומיניום לבית' }: { label?: string }) {
   return (
     <div className='architectural-visual' role='img' aria-label={label}>
       <span className='frame frame-a' />
@@ -82,7 +82,7 @@ export function ArchitecturalVisual({ label = 'מבט אדריכלי על מער
       <span className='frame frame-c' />
       <span className='glass-panel glass-a' />
       <span className='glass-panel glass-b' />
-      <span className='visual-caption'>תכנון פתחים · מדידה · ייצור · התקנה</span>
+      <span className='visual-caption'>חלונות · ויטרינות · תריסים · התקנה נקייה</span>
     </div>
   );
 }
