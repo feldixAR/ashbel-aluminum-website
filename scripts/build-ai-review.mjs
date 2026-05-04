@@ -2,9 +2,22 @@ import { chromium } from 'playwright';
 import { readFile, writeFile, copyFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const dir = path.resolve('artifacts/visual-review');
-const commit = (process.env.GITHUB_SHA || 'local').slice(0, 8);
+
+function resolveCommit() {
+  const explicit = process.env.VISUAL_REVIEW_COMMIT || process.env.GITHUB_HEAD_SHA;
+  if (explicit) return explicit.slice(0, 8);
+
+  try {
+    return execFileSync('git', ['rev-parse', '--short=8', 'HEAD'], { encoding: 'utf8' }).trim();
+  } catch {
+    return (process.env.GITHUB_SHA || 'local').slice(0, 8);
+  }
+}
+
+const commit = resolveCommit();
 const run = process.env.GITHUB_RUN_NUMBER || 'local';
 const stamp = `${commit}-run-${run}`;
 const jpgName = `ai-review-contact-sheet-${stamp}.jpg`;
