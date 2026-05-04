@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: ProductFamilyPageProps): Prom
   }
 
   return {
-    title: `${family.title} | מוצרים ופתרונות`,
-    description: `${family.title} - ${family.kicker}. הסבר קצר על פתרונות, נקודות תכנון ורכיבי אלומיניום לקראת פגישה מקצועית.`,
+    title: `${family.title} | מוצרים ושירותים`,
+    description: `${family.title}: ${family.kicker}. מידע על מוצרים, הכנה לפגישת ייעוץ ופרטים שכדאי לבדוק לפני הצעת מחיר.`,
   };
 }
 
@@ -37,20 +37,20 @@ export default async function ProductFamilyPage({ params }: ProductFamilyPagePro
 
   const contentSections = [
     {
-      title: 'מה כלול במשפחה הזו',
+      title: 'מה כולל התחום',
       text: family.intro,
       items: family.subOptions,
       image: family.gallery[0],
     },
     {
-      title: 'נקודות תכנון מקצועיות',
-      text: 'לפני שמתקדמים למדידה או להצעה, חשוב לסגור את השאלות שמשפיעות על הביצוע והנראות בבית.',
+      title: 'מה חשוב לבדוק',
+      text: 'לפני שמתקדמים להצעה, חשוב להבין את סוג הפתח, המידות, שלב העבודה והפרטים שמשפיעים על הביצוע.',
       items: family.planning,
       image: family.gallery[1],
     },
     {
-      title: 'רכיבים וחומרה שכדאי להכיר',
-      text: 'הבחירה הנכונה היא שילוב של פרופיל, זכוכית, מסילות, פרזול, גמרים ותיאום התקנה.',
+      title: 'פרטים שמשפיעים על העבודה',
+      text: 'הפרופיל, הזכוכית, המסילות, הפרזול, התריסים והגמרים משפיעים על המחיר, המראה והשימוש היומיומי.',
       items: family.components,
       image: family.gallery[2],
     },
@@ -60,18 +60,18 @@ export default async function ProductFamilyPage({ params }: ProductFamilyPagePro
     <main className='products-page family-page'>
       <section className='container-main product-family-hero'>
         <div className='family-hero-copy'>
-          <p className='eyebrow'>מוצרים ופתרונות</p>
+          <p className='eyebrow'>מוצרים ושירותים</p>
           <h1>{family.title}</h1>
           <p className='lead'>{family.intro}</p>
           <a className='btn btn-primary' href='/upload'>
-            העלאת תוכניות ותיאום פגישה
+            שליחת תוכניות
           </a>
         </div>
-        <VisualMedia image={family.image} className='family-hero-image' loading='eager' label='תמונת אווירה והמחשה, לא פרויקט של אשבל' />
+        <VisualMedia image={family.image} className='family-hero-image' loading='eager' />
       </section>
 
       <section className='container-main section-shell'>
-        <SectionHeader title='פתרונות בתוך המשפחה' text='עמוד זה מסביר את המשפחה ברמה מקצועית קצרה, בלי להפוך אותה לרשימת דגמים טכנית.' />
+        <SectionHeader title='מוצרים בתחום הזה' text='ריכזנו את המוצרים והשירותים המרכזיים בתחום, בלי להעמיס מפרט טכני לפני פגישת ייעוץ.' />
         <div className='family-chip-grid'>
           {family.subOptions.map((option) => (
             <span key={option}>{option}</span>
@@ -81,9 +81,9 @@ export default async function ProductFamilyPage({ params }: ProductFamilyPagePro
 
       {contentSections.map((section, index) => (
         <section className={`container-main family-section ${index % 2 ? 'is-reversed' : ''}`} key={section.title}>
-          <VisualMedia image={section.image} label='תמונת מוצר/חומר להמחשה בלבד' />
+          <VisualMedia image={section.image} />
           <div className='family-section-copy'>
-            <p className='eyebrow'>תכנון וביצוע</p>
+            <p className='eyebrow'>פגישת ייעוץ</p>
             <h2>{section.title}</h2>
             <p>{section.text}</p>
             <ul>
@@ -96,7 +96,7 @@ export default async function ProductFamilyPage({ params }: ProductFamilyPagePro
       ))}
 
       <section className='container-main family-gallery section-shell'>
-        <SectionHeader title='עוד פרטים ותחושת חומר' text='התמונות בעמוד משמשות כהמחשה למוצר, חומר ואווירה אדריכלית בלבד.' />
+        <SectionHeader title='תמונות להמחשה' text='התמונות בעמוד נועדו להמחשת סגנון, חומר ותחום עבודה.' />
         <div className='image-mosaic'>
           {family.gallery.map((image) => (
             <VisualMedia image={image} key={image.src} />
@@ -105,7 +105,7 @@ export default async function ProductFamilyPage({ params }: ProductFamilyPagePro
       </section>
 
       <div className='container-main'>
-        <CtaBand title={`מתאמים פגישה סביב ${family.title}`} text='העלו תוכנית אלומיניום, תוכנית אדריכלית, מידות או שאלה מקצועית, ונחזור לתיאום פגישה והמשך טיפול מסודר.' />
+        <CtaBand title={`שליחת תוכניות עבור ${family.title}`} text='שלחו תוכנית, מידות או תמונות מהשטח. נבדוק את החומר ונחזור לתיאום המשך עבודה.' />
       </div>
     </main>
   );
