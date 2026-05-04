@@ -18,9 +18,9 @@ export default function ProductsPage() {
           title='חלונות, ויטרינות ופתרונות אלומיניום לפי סוג הפתח'
           text='בחירת אלומיניום לבית מתחילה מהפתחים עצמם: גודל, כיוון פתיחה, יציאה לגינה, תריס, הצללה, פרטיות, סגנון הבית ותיאום עם הגמרים.'
         >
-          <p>אפשר לשלוח תוכניות, תמונות או מידות ונבדוק איזה כיוון מתאים לפני מדידה והצעה מסודרת.</p>
+          <p>אפשר להעלות תוכנית אלומיניום, תוכנית אדריכלית או מידות ולתאם פגישה לפני מדידה והצעה מסודרת.</p>
           <Link className='text-link' href='/upload'>
-            שליחת מידות או תמונות לבדיקה
+            העלאת תוכניות ותיאום פגישה
           </Link>
         </PageIntro>
 
@@ -44,7 +44,7 @@ export default function ProductsPage() {
                   <h2>{series.name}</h2>
                   <span>{series.need}</span>
                   <Link className='panel-link' href='/upload'>
-                    שליחת תוכניות לבדיקה
+                    העלאת תוכניות ותיאום פגישה
                   </Link>
                 </div>
               </article>
@@ -55,8 +55,8 @@ export default function ProductsPage() {
         <section className='section-shell product-story'>
           <SectionHeader
             eyebrow='איך בוחרים נכון'
-            title='בודקים את השימוש, הפתח והפרטים הקטנים'
-            text='מערכת טובה היא שילוב של מראה, תפעול, זכוכית, מסילות, תריסים, רשתות ותיאום התקנה. לכן בודקים את הפתח לפני שמתקבעים על פתרון.'
+            title='מתחילים מהשימוש, הפתח והפרטים הקטנים'
+            text='מערכת טובה היא שילוב של מראה, תפעול, זכוכית, מסילות, תריסים, רשתות ותיאום התקנה. לכן מגיעים לפגישה עם חומר מקצועי ומבינים את הפתח לפני שמתקבעים על פתרון.'
           />
           <div className='story-flow'>
             {[
@@ -73,7 +73,7 @@ export default function ProductsPage() {
         </section>
 
         <section className='section-shell product-checklist'>
-          <SectionHeader title='מה כדאי להכין לפני פנייה' text='לא חייבים לשלוח הכול. גם תמונות ומידות בסיסיות יכולות לעזור להבין כיוון ולהחליט מה צריך להשלים.' />
+          <SectionHeader title='מה כדאי להכין לקראת פגישה' text='לא חייבים להכין הכול מראש. תוכנית, מידות או רשימת פתחים עוזרות להבין את העבודה; תמונות יכולות להשלים נקודות קטנות מהשטח.' />
           <div className='checklist-grid'>
             {kalilSeries.map((series) => (
               <article key={series.name}>
@@ -84,14 +84,14 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        <section className='products-cta' aria-label='שליחת חומרים לבדיקת מוצרי אלומיניום'>
+        <section className='products-cta' aria-label='העלאת תוכניות לתיאום מוצרי אלומיניום'>
           <div>
-            <p className='eyebrow'>מתחילים מהחומר שיש לכם</p>
-            <h2>שלחו תוכניות, מידות, תמונות או כתב כמויות</h2>
-            <p>נבדוק את סוגי הפתחים והפתרונות המתאימים: חלונות, ויטרינות, תריסים, הצללה, רשתות ופרטים משלימים.</p>
+            <p className='eyebrow'>מתחילים מהחומר המקצועי שיש לכם</p>
+            <h2>העלאת תוכנית אלומיניום או תוכנית אדריכלית</h2>
+            <p>נתאם פגישה סביב סוגי הפתחים והפתרונות הרלוונטיים: חלונות, ויטרינות, תריסים, הצללה, פרגולות, שערים ופרטים משלימים.</p>
           </div>
           <Link className='btn btn-primary' href='/upload'>
-            שליחת תוכניות או תמונות
+            העלאת תוכניות ותיאום פגישה
           </Link>
         </section>
       </div>

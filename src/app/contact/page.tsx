@@ -5,7 +5,7 @@ import { site } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'צור קשר',
-  description: 'יצירת קשר עם אשבל אלומיניום בטלפון, וואטסאפ או מייל לשליחת תוכניות, תמונות, מידות או פרטי פרויקט אלומיניום.',
+  description: 'יצירת קשר עם אשבל אלומיניום לתיאום פגישה לעבודת אלומיניום, תוכנית אדריכלית, מידות או שאלה מקצועית.',
 };
 
 export default function ContactPage() {
@@ -14,15 +14,15 @@ export default function ContactPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='צור קשר'
-          title='דברו איתנו על חלונות, ויטרינות ופתרונות אלומיניום'
-          text='אפשר להתקשר, לשלוח וואטסאפ או להעביר תוכניות ותמונות. ספרו לנו מה סוג העבודה, באיזה שלב הבית או השיפוץ, ומה כבר יש לכם ביד.'
+          title='מתאמים פגישה לעבודת אלומיניום'
+          text='יש לכם תוכנית אלומיניום, תוכנית אדריכלית, מידות או צורך בעבודת אלומיניום? השאירו פרטים או פנו בוואטסאפ, ונחזור לתיאום פגישה מקצועית.'
         >
           <div className='button-row'>
             <a className='btn btn-primary' href={site.whatsapp}>
-              דברו איתנו בוואטסאפ
+              תיאום פגישה בוואטסאפ
             </a>
             <a className='btn btn-outline' href={site.phoneHref}>
-              התקשרו עכשיו
+              התקשרו לתיאום
             </a>
           </div>
           <p>
@@ -31,7 +31,7 @@ export default function ContactPage() {
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='איך הכי נוח להתחיל' text='אם יש תוכניות, תמונות, מידות או כתב כמויות - שלחו אותם. אם עדיין אין, אפשר להתחיל משיחה קצרה.' />
+          <SectionHeader title='איך הכי נוח להתחיל' text='אם יש תוכנית אלומיניום, תוכנית אדריכלית, מידות או כתב כמויות - העלו אותם דרך וואטסאפ או מייל. אם עדיין אין חומר מסודר, אפשר להתחיל משיחה קצרה לתיאום פגישה.' />
           <div className='grid-2'>
             <form className='feature-card contact-form'>
               <label className='field'>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 תיאור קצר
                 <textarea name='message' />
               </label>
-              <p className='notice'>הטופס הוא מבנה עזר לפנייה. לשליחת קבצים בפועל השתמשו בוואטסאפ או במייל.</p>
+              <p className='notice'>הטופס הוא מבנה עזר לפנייה. להעלאת תוכנית או קובץ בפועל השתמשו בוואטסאפ או במייל.</p>
             </form>
             <div className='feature-card contact-direct'>
               <h2>דרכי פנייה ישירות</h2>
@@ -67,14 +67,14 @@ export default function ContactPage() {
               </p>
               <p>
                 <strong>וואטסאפ: </strong>
-                <a className='text-link' href={site.whatsapp}>שליחת הודעה</a>
+                <a className='text-link' href={site.whatsapp}>תיאום פגישה</a>
               </p>
               <p>
                 <strong>מייל: </strong>
                 <a className='text-link' href={site.email}>{site.emailLabel}</a>
               </p>
               <Link className='btn btn-primary' href='/upload'>
-                שליחת תוכניות או תמונות
+                העלאת תוכנית
               </Link>
             </div>
           </div>

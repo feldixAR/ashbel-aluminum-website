@@ -20,7 +20,7 @@ export default function ProjectsPage() {
         />
 
         <section className='section-shell'>
-          <SectionHeader title='תרחישי עבודה שממחישים מה בודקים' text='אלו דוגמאות מעשיות לסוגי פניות נפוצים. האיורים בעמוד הם המחשה דקורטיבית בלבד, לא תמונות פרויקט.' />
+          <SectionHeader title='סוגי עבודות שמומלץ לתאם סביבן פגישה' text='אלו מצבים מעשיים שבהם איש אלומיניום יכול לעזור מוקדם. האיורים בעמוד הם המחשה דקורטיבית בלבד, לא תמונות פרויקט.' />
           <div className='project-proof-list'>
             {projects.map((project, index) => (
               <article className='proof-case' key={project.title}>
@@ -39,7 +39,7 @@ export default function ProjectsPage() {
                       <dd>{project.context}</dd>
                     </div>
                     <div>
-                      <dt>מה בודקים</dt>
+                      <dt>נקודות לתיאום</dt>
                       <dd>{project.challenge}</dd>
                     </div>
                     <div>
@@ -47,7 +47,7 @@ export default function ProjectsPage() {
                       <dd>{project.solution}</dd>
                     </div>
                     <div>
-                      <dt>מה לשלוח</dt>
+                      <dt>מה להכין לפגישה</dt>
                       <dd>{project.send}</dd>
                     </div>
                   </dl>
@@ -57,7 +57,7 @@ export default function ProjectsPage() {
           </div>
         </section>
 
-        <CtaBand title='יש לכם מצב דומה בבית או באתר?' text='שלחו תמונות, תוכניות, מידות או רשימת פתחים, ונכוון אתכם לשלב הבא: השלמת מידע, מדידה או הצעה מסודרת.' />
+        <CtaBand title='יש לכם מצב דומה בבית או באתר?' text='העלו תוכנית אלומיניום, תוכנית אדריכלית, מידות או רשימת פתחים, ונחזור לתיאום פגישה והמשך טיפול מסודר.' />
       </div>
     </main>
   );

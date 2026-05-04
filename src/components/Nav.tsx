@@ -9,7 +9,7 @@ const links = [
   { href: '/products', label: 'מוצרים ופתרונות' },
   { href: '/projects', label: 'דוגמאות מהשטח' },
   { href: '/professionals', label: 'לאדריכלים וקבלנים' },
-  { href: '/upload', label: 'שליחת תוכניות' },
+  { href: '/upload', label: 'העלאת תוכניות' },
   { href: '/contact', label: 'צור קשר' },
 ];
 
@@ -44,7 +44,7 @@ export default function Nav() {
             {site.phone}
           </a>
           <Link className='btn btn-primary compact' href='/upload'>
-            שליחת תוכניות
+            העלאת תוכניות ותיאום פגישה
           </Link>
         </div>
 
@@ -69,10 +69,10 @@ export default function Nav() {
           ))}
           <div className='mobile-actions'>
             <Link className='btn btn-primary' href='/upload' onClick={() => setOpen(false)}>
-              שליחת תוכניות או תמונות
+              העלאת תוכניות ותיאום פגישה
             </Link>
             <a className='btn btn-outline' href={site.whatsapp} onClick={() => setOpen(false)}>
-              דברו איתנו בוואטסאפ
+              תיאום פגישה בוואטסאפ
             </a>
             <a className='phone-link' href={site.phoneHref}>
               {site.phone}

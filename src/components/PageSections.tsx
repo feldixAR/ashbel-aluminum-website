@@ -49,8 +49,8 @@ export function SectionHeader({
 }
 
 export function CtaBand({
-  title = 'שלחו תוכניות, תמונות או מידות לבדיקה',
-  text = 'אפשר להעביר תוכניות, תמונות מהשטח, מידות, מפרט או כתב כמויות. נבין את סוגי הפתחים ונחזור עם שאלות או המשך תיאום.',
+  title = 'העלאת תוכניות ותיאום פגישה',
+  text = 'אפשר להעביר תוכנית אלומיניום, תוכנית אדריכלית, מידות, כתב כמויות או שאלה מקצועית. המטרה היא לתאם פגישה ולהתקדם בצורה מסודרת.',
 }: CtaProps) {
   return (
     <section className='cta-band' aria-label='יצירת קשר'>
@@ -61,10 +61,10 @@ export function CtaBand({
       </div>
       <div className='cta-actions'>
         <Link className='btn btn-primary' href='/upload'>
-          שליחת תוכניות או תמונות
+          העלאת תוכניות ותיאום פגישה
         </Link>
         <a className='btn btn-outline' href={site.whatsapp}>
-          דברו איתנו בוואטסאפ
+          תיאום פגישה בוואטסאפ
         </a>
         <a className='text-link' href={site.phoneHref}>
           {site.phone}
@@ -74,7 +74,7 @@ export function CtaBand({
   );
 }
 
-export function ArchitecturalVisual({ label = 'איור אדריכלי דקורטיבי של פתחים, חלונות וויטרינות אלומיניום לבית' }: { label?: string }) {
+export function ArchitecturalVisual({ label = 'איור אדריכלי דקורטיבי של חלונות, ויטרינות, הצללות ופתרונות אלומיניום לבית' }: { label?: string }) {
   return (
     <div className='architectural-visual' role='img' aria-label={label}>
       <span className='frame frame-a' />
@@ -82,7 +82,7 @@ export function ArchitecturalVisual({ label = 'איור אדריכלי דקור�
       <span className='frame frame-c' />
       <span className='glass-panel glass-a' />
       <span className='glass-panel glass-b' />
-      <span className='visual-caption'>חלונות · ויטרינות · תריסים · התקנה נקייה</span>
+      <span className='visual-caption'>חלונות · ויטרינות · פרגולות · מעטפת חוץ</span>
     </div>
   );
 }

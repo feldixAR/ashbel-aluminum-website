@@ -24,14 +24,14 @@ export default function ServicesPage() {
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='תחומי עבודה מרכזיים' text='כל תחום נבדק לפי סוג הפתח, גודל המפתח, גמרים, תריסים, רשתות ותיאום עם בעלי המקצוע בשטח.' />
+          <SectionHeader title='תחומי עבודה מרכזיים' text='כל תחום מתואם לפי סוג הפתח, גודל המפתח, גמרים, תריסים, רשתות ובעלי המקצוע בשטח.' />
           <div className='grid-2'>
             {services.map((service) => (
               <article className='feature-card' key={service.title}>
                 <h2>{service.title}</h2>
                 <p>{service.desc}</p>
                 <p>
-                  <strong>מה חשוב לבדוק: </strong>
+                  <strong>מה חשוב לתאם: </strong>
                   {service.detail}
                 </p>
               </article>

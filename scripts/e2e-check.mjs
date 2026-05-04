@@ -138,7 +138,7 @@ async function checkMobileMenu(page) {
 async function checkHome(page, mobilePage) {
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['אשבל', 'אלומיניום', 'פתחים', 'תוכניות', 'תמונות'], 'Home business positioning is incomplete.');
+  expectIncludes(text, ['אשבל', 'אלומיניום', 'חלונות', 'ויטרינות', 'תוכנית', 'פגישה'], 'Home business positioning is incomplete.');
   expect(text.includes('חלון') || text.includes('חלונות') || text.includes('ויטרינות'), 'Home does not communicate windows/opening work.');
   expect(await page.locator('main a[href="/upload"], main a[href="/contact"]').count() > 0, 'Home main CTA does not lead to upload/contact.');
   expect(await page.locator('main a[href^="tel:"], main a[href^="https://wa.me/"]').count() > 0, 'Home phone or WhatsApp action is missing.');
@@ -168,7 +168,7 @@ async function checkProducts(page, mobilePage) {
 async function checkProjects(page) {
   await page.goto(new URL('/projects', baseUrl).toString(), { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['דוגמאות מהשטח', 'המצב', 'מה בודקים', 'כיוון עבודה', 'מה לשלוח'], 'Field examples page is incomplete.');
+  expectIncludes(text, ['דוגמאות מהשטח', 'המצב', 'נקודות לתיאום', 'כיוון עבודה', 'מה להכין לפגישה'], 'Field examples page is incomplete.');
   expectIncludes(text, ['בית פרטי בבנייה', 'שיפוץ בית קיים', 'ויטרינה לסלון'], 'Field examples do not cover realistic aluminum work scenarios.');
   expect(await page.locator('main a[href="/upload"], main a[href="/contact"]').count() > 0, 'Projects page does not lead to upload/contact.');
 }
@@ -176,7 +176,7 @@ async function checkProjects(page) {
 async function checkUpload(page, mobilePage) {
   await page.goto(new URL('/upload', baseUrl).toString(), { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['תוכניות', 'מידות', 'תמונות', 'כתב כמויות', 'מה לשלוח', 'מה בודקים', 'איך ממשיכים'], 'Upload intake explanation is incomplete.');
+  expectIncludes(text, ['תוכנית אלומיניום', 'תוכנית אדריכלית', 'מידות', 'כתב כמויות', 'פגישה מקצועית', 'אין כאן הצעת מחיר אוטומטית'], 'Upload intake explanation is incomplete.');
   expect(await page.locator('main a[href^="tel:"], main a[href^="https://wa.me/"], main a[href^="mailto:"]').count() > 0, 'Upload action fallback is missing.');
 
   await mobilePage.goto(new URL('/upload', baseUrl).toString(), { waitUntil: 'networkidle' });
@@ -187,7 +187,7 @@ async function checkUpload(page, mobilePage) {
 async function checkProfessionals(page) {
   await page.goto(new URL('/professionals', baseUrl).toString(), { waitUntil: 'networkidle' });
   const text = await page.locator('body').innerText();
-  expectIncludes(text, ['אדריכלים', 'קבלנים', 'מפקחים', 'יזמים', 'תוכניות'], 'Professionals page does not address the required audiences.');
+  expectIncludes(text, ['אדריכלים', 'מעצבים', 'קבלנים', 'תוכניות', 'לא מערכת חשבון'], 'Professionals page does not address the required audiences.');
   expect(await page.locator('main a[href="/upload"]').count() > 0, 'Professionals action path is missing.');
 }
 

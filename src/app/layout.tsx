@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: 'אשבל אלומיניום | חלונות, ויטרינות ופתרונות אלומיניום לבית',
     template: '%s | אשבל אלומיניום',
   },
-  description: 'חלונות אלומיניום, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים. מדידה, ייצור והתקנה נקייה משלב התוכניות ועד הגמר.',
+  description: 'חלונות אלומיניום, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים. תיאום מקצועי מתוכנית אלומיניום או תוכנית אדריכלית ועד ביצוע בשטח.',
   keywords: seo.keywords,
   alternates: { canonical: '/' },
   openGraph: {
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className='container-main footer-grid'>
             <div>
               <h2>אשבל אלומיניום</h2>
-              <p>חלונות, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם תיאום מקצועי משלב התוכניות ועד ההתקנה.</p>
+              <p>חלונות, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם פגישה מקצועית ותיאום מסודר משלב התוכניות ועד ההתקנה.</p>
             </div>
             <div>
               <h3>מוצרים ופתרונות</h3>
@@ -57,7 +57,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <h3>יצירת קשר</h3>
               <p><a href={site.phoneHref}>{site.phone}</a></p>
               <p><a href={site.whatsapp}>דברו איתנו בוואטסאפ</a></p>
-              <p><Link href='/upload'>שליחת תוכניות או תמונות</Link></p>
+              <p><Link href='/upload'>העלאת תוכניות ותיאום פגישה</Link></p>
             </div>
           </div>
         </footer>
