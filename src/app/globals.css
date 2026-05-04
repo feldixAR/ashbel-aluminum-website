@@ -1,21 +1,23 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap");
 
 :root {
   color-scheme: light;
-  --bg: #f4f7f8;
+  --bg: #f7f8f8;
   --paper: #ffffff;
-  --ink: #101827;
-  --muted: #546170;
-  --line: #d8e1e8;
-  --steel: #2f5f78;
-  --steel-dark: #123449;
-  --steel-deep: #0d2535;
-  --silver: #e8eef2;
-  --silver-2: #f7fafb;
-  --charcoal: #111827;
-  --bronze: #9a7a45;
-  --shadow: 0 26px 80px rgb(15 23 42 / 11%);
-  --soft-shadow: 0 18px 52px rgb(15 23 42 / 7%);
+  --ink: #182026;
+  --muted: #5e6872;
+  --line: #dce1e5;
+  --steel: #2f5f73;
+  --steel-dark: #173e4f;
+  --steel-deep: #0f2e3b;
+  --silver: #b8c0c7;
+  --silver-2: #f7f8f8;
+  --charcoal: #263238;
+  --accent: #6f7f52;
+  --soft-cta: #eaf1f3;
+  --shadow: 0 18px 50px rgb(24 32 38 / 10%);
+  --soft-shadow: 0 18px 50px rgb(24 32 38 / 7%);
 }
 
 * { box-sizing: border-box; }
@@ -25,11 +27,10 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 78% 12%, rgb(47 95 120 / 10%), transparent 30vw),
-    radial-gradient(circle at 10% 18%, rgb(154 122 69 / 8%), transparent 34vw),
-    linear-gradient(180deg, #ffffff 0%, #f7fafb 48%, #eef3f6 100%);
+    radial-gradient(circle at 78% 12%, rgb(47 95 115 / 9%), transparent 30vw),
+    linear-gradient(180deg, #ffffff 0%, var(--bg) 48%, #eef3f4 100%);
   color: var(--ink);
-  font-family: Arial, "Noto Sans Hebrew", sans-serif;
+  font-family: Heebo, Arial, "Noto Sans Hebrew", sans-serif;
   line-height: 1.65;
   text-align: right;
 }
@@ -162,7 +163,7 @@ button, input, textarea, select { font: inherit; }
   height: 2px;
   transform: scaleX(0);
   transform-origin: right;
-  background: linear-gradient(90deg, var(--steel), var(--bronze));
+  background: linear-gradient(90deg, var(--steel), var(--accent));
   transition: transform 180ms ease;
 }
 
@@ -217,16 +218,16 @@ h1 {
   max-width: 860px;
   font-size: clamp(2.35rem, 5.8vw, 4.65rem);
   line-height: 1.06;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 h2 {
   font-size: clamp(1.8rem, 3.35vw, 2.85rem);
   line-height: 1.14;
-  letter-spacing: -0.018em;
+  letter-spacing: 0;
 }
 
-h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing: -0.014em; }
+h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing: 0; }
 
 .lead {
   max-width: 735px;
@@ -249,7 +250,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
   content: "";
   width: 22px;
   height: 1px;
-  background: linear-gradient(90deg, var(--steel), var(--bronze));
+  background: linear-gradient(90deg, var(--steel), var(--accent));
 }
 
 .section-shell { padding-block: clamp(58px, 8vw, 104px); }
@@ -309,7 +310,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
   inset-block: 18px;
   inset-inline-start: 0;
   width: 3px;
-  background: linear-gradient(180deg, var(--steel), var(--bronze));
+  background: linear-gradient(180deg, var(--steel), var(--accent));
 }
 
 .btn {
@@ -330,7 +331,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
 .btn-primary {
   background:
     linear-gradient(135deg, rgb(255 255 255 / 13%), transparent 45%),
-    linear-gradient(135deg, var(--steel-deep), var(--steel-dark));
+    linear-gradient(135deg, var(--steel-dark), var(--steel-deep));
   color: white;
   box-shadow: 0 16px 34px rgb(18 52 73 / 20%);
 }
@@ -442,7 +443,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
   inset-block: 18px;
   inset-inline-start: 0;
   width: 3px;
-  background: linear-gradient(180deg, var(--steel), rgb(154 122 69 / 70%));
+  background: linear-gradient(180deg, var(--steel), var(--accent));
   opacity: 0;
   transition: opacity 160ms ease;
 }
@@ -535,7 +536,7 @@ h3 { font-size: clamp(1.28rem, 2vw, 1.72rem); line-height: 1.22; letter-spacing:
 
 .notice {
   border-inline-start: 4px solid var(--steel);
-  background: #edf4f7;
+  background: var(--soft-cta);
   padding: 16px;
   color: #2e3845;
 }
