@@ -13,14 +13,14 @@ export default function HomePage() {
       <section className='container-main hero'>
         <div className='hero-copy'>
           <p className='eyebrow'>אשבל אלומיניום</p>
-          <h1>עבודות אלומיניום לבית פרטי ולשיפוץ</h1>
-          <p className='lead'>חלונות, ויטרינות, תריסים, פרגולות, גדרות, שערים, מסתורי כביסה, מעקות זכוכית ומקלחונים. ניתן לשלוח תוכניות, מידות או תמונות מהשטח ולקבוע פגישת ייעוץ.</p>
+          <h1>חלונות וויטרינות לבית</h1>
+          <p className='lead'>עבודות אלומיניום לבתים פרטיים, שיפוצים ופרויקטים: חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות, מסתורי כביסה, חיפויים, מעקות זכוכית ומקלחונים.</p>
           <div className='hero-actions'>
             <Link className='btn btn-primary' href='/upload'>
               שליחת תוכניות
             </Link>
             <Link className='btn btn-outline' href='/products'>
-              מוצרים ופתרונות
+              מוצרים ושירותים
             </Link>
             <a className='text-link' href={site.phoneHref}>
               {site.phone}
@@ -30,18 +30,18 @@ export default function HomePage() {
         <VisualMedia image={visualImages.modernHome} className='hero-media' loading='eager' />
       </section>
 
-      <section className='container-main trust-strip' aria-label='עיקרי עבודה'>
-        <span>חלונות, ויטרינות, תריסים והצללה</span>
-        <span>תוכנית אלומיניום, תוכנית אדריכלית או מידות</span>
-        <span>עבודה מול בעלי בתים, אדריכלים וקבלנים</span>
-        <span>פגישת ייעוץ לפני הצעת מחיר</span>
+      <section className='container-main trust-strip' aria-label='תחומי עבודה מרכזיים'>
+        <span>חלונות וויטרינות</span>
+        <span>תריסים ופרגולות</span>
+        <span>גדרות ושערים</span>
+        <span>מסתורים, חיפויים וזכוכית</span>
       </section>
 
       <section className='container-main section-shell'>
         <SectionHeader
           eyebrow='המוצרים והשירותים שלנו'
-          title='חלונות, ויטרינות ופתרונות אלומיניום לבית'
-          text='בחרו את סוג העבודה הרלוונטי עבורכם: חלון, ויטרינה, תריס, פרגולה, שער, גדר או פתרון משלים לבית ולחזית.'
+          title='בחרו את סוג העבודה הרלוונטי עבורכם'
+          text='חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות, מסתורי כביסה, חיפויים, מעקות זכוכית ומקלחונים. בכל תחום אפשר לשלוח תוכנית, מידות או תמונות מהשטח.'
         />
         <div className='grid-3'>
           {services.slice(0, 6).map((service) => (
@@ -55,9 +55,9 @@ export default function HomePage() {
 
       <section className='container-main section-shell'>
         <SectionHeader
-          eyebrow='מוצרים ופתרונות'
-          title='בחרו את הקטגוריה המתאימה'
-          text='הקטגוריות מסודרות לפי התחומים המרכזיים באלומיניום לבית: מראה כפרי, מראה מודרני, ויטרינות והזזה, הצללה ופתרונות נוספים.'
+          eyebrow='קטגוריות מוצרים'
+          title='מראה כפרי, מראה מודרני ופתרונות חוץ'
+          text='הקטגוריות מסודרות לפי הדרך שבה לקוחות מחפשים עבודות אלומיניום: סגנון, סוג פתיחה, הצללה ופתרונות משלימים לבית ולחזית.'
         />
         <div className='home-product-strip visual-strip'>
           {productFamilies.map((family) => (
@@ -74,16 +74,16 @@ export default function HomePage() {
       <section className='container-main section-shell'>
         <SectionHeader
           eyebrow='פגישת ייעוץ'
-          title='מה חשוב להביא לפגישה'
-          text='תוכנית אלומיניום, תוכנית אדריכלית, מידות פתחים, תמונות מהשטח או תיאור קצר של העבודה. ככל שיש יותר חומר, קל יותר להבין את סוג העבודה ולתת מענה נכון.'
+          title='מה חשוב להביא לפגישת ייעוץ'
+          text='אפשר להתחיל מתוכנית אלומיניום, תוכנית אדריכלית, מידות פתחים, כתב כמויות או תמונות מהשטח. גם תיאור קצר של העבודה מספיק לשיחה ראשונה.'
         />
         <div className='split-visual-section'>
           <VisualMedia image={visualImages.plan} />
           <ol className='process-list'>
           {[
-            ['שולחים תוכנית או מידות', 'תוכנית אלומיניום, תוכנית אדריכלית, מידות, כתב כמויות או תמונות מהשטח.'],
-            ['בודקים את סוג העבודה', 'חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות או פתרונות משלימים.'],
-            ['מתקדמים לפגישה והצעה', 'לאחר הבנת העבודה מתאמים פגישת ייעוץ, מדידה או הצעת מחיר מסודרת.'],
+            ['שולחים חומר קיים', 'תוכנית, מידות, כתב כמויות, תמונות מהשטח או תיאור קצר של העבודה.'],
+            ['מגדירים את סוג העבודה', 'חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות או פתרונות משלימים.'],
+            ['מתקדמים לפגישה או הצעה', 'לאחר הבנת העבודה מתאמים פגישת ייעוץ, מדידה או הצעת מחיר מסודרת.'],
           ].map(([title, text]) => (
             <li key={title}>
               <div>
@@ -99,8 +99,8 @@ export default function HomePage() {
       <section className='container-main section-shell'>
         <SectionHeader
           eyebrow='לאדריכלים וקבלנים'
-          title='עבודה מול תוכניות, פתחים ופרטי גמר'
-          text='ניתן להעביר תוכניות, מפרטים, רשימת פתחים, חזיתות, חתכים או שאלה מקצועית לתיאום עבודה סביב חלונות, ויטרינות, תריסים, מערכות הזזה ופתרונות חוץ.'
+          title='עבודה מול תוכניות ופתחים'
+          text='ניתן להעביר תוכניות, חזיתות, חתכים, רשימות פתחים, מפרטים או שאלות מקצועיות לתיאום חלונות, ויטרינות, תריסים, מערכות הזזה ופתרונות חוץ.'
         />
         <div className='button-row'>
           <Link className='btn btn-primary' href='/professionals'>
@@ -115,8 +115,8 @@ export default function HomePage() {
       <section className='container-main section-shell'>
         <SectionHeader
           eyebrow='סוגי עבודות'
-          title='עבודות נפוצות באלומיניום'
-          text='בתים פרטיים, שיפוצים, ויטרינות גדולות, עבודה מול אדריכל, פרגולות, שערים, גדרות ופתרונות חוץ.'
+          title='עבודות אלומיניום נפוצות'
+          text='עבודות לבית פרטי, שיפוץ, ויטרינה גדולה, עבודה מול אדריכל, פרגולה, שער, גדר או פתרון חוץ משלים.'
         />
         <div className='grid-3 visual-use-cases'>
           {projects.slice(0, 3).map((project) => (
