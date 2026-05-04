@@ -7,7 +7,7 @@ import { site } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'צור קשר',
-  description: 'יצירת קשר עם אשבל אלומיניום לתיאום פגישה לעבודת אלומיניום, תוכנית אדריכלית, מידות או שאלה מקצועית.',
+  description: 'יצירת קשר עם אשבל אלומיניום לתיאום פגישת ייעוץ לעבודות אלומיניום, שליחת תוכניות, מידות או תמונות מהשטח.',
 };
 
 export default function ContactPage() {
@@ -16,25 +16,25 @@ export default function ContactPage() {
       <div className='container-main'>
         <PageIntro
           eyebrow='צור קשר'
-          title='מתאמים פגישה לעבודת אלומיניום'
-          text='יש לכם תוכנית אלומיניום, תוכנית אדריכלית, מידות או צורך בעבודת אלומיניום? השאירו פרטים או פנו בוואטסאפ, ונחזור לתיאום פגישה מקצועית.'
+          title='דברו איתנו על עבודת האלומיניום שלכם'
+          text='חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות או פתרון אלומיניום אחר. אפשר לפנות בטלפון, בוואטסאפ או להשאיר פרטים.'
         >
           <div className='button-row'>
             <a className='btn btn-primary' href={site.whatsapp}>
-              תיאום פגישה בוואטסאפ
+              וואטסאפ
             </a>
             <a className='btn btn-outline' href={site.phoneHref}>
-              התקשרו לתיאום
+              התקשרו עכשיו
             </a>
           </div>
           <p>
             טלפון: <a className='text-link' href={site.phoneHref}>{site.phone}</a>
           </p>
-          <VisualMedia image={visualImages.modernHomeTall} label='תמונת אווירה אדריכלית, לא פרויקט של אשבל' />
+          <VisualMedia image={visualImages.modernHomeTall} />
         </PageIntro>
 
         <section className='section-shell'>
-          <SectionHeader title='איך הכי נוח להתחיל' text='אם יש תוכנית אלומיניום, תוכנית אדריכלית, מידות או כתב כמויות - העלו אותם דרך וואטסאפ או מייל. אם עדיין אין חומר מסודר, אפשר להתחיל משיחה קצרה לתיאום פגישה.' />
+          <SectionHeader title='איך נוח להתחיל' text='אפשר לשלוח תוכנית, מידות או תמונות מהשטח. אם עדיין אין חומר מסודר, אפשר להתחיל משיחה קצרה.' />
           <div className='grid-2'>
             <form className='feature-card contact-form'>
               <label className='field'>
@@ -49,10 +49,11 @@ export default function ContactPage() {
                 סוג עבודה
                 <select name='projectType' defaultValue=''>
                   <option value='' disabled>בחרו סוג עבודה</option>
-                  <option>חלונות לבית פרטי</option>
-                  <option>ויטרינה או הזזה</option>
+                  <option>חלונות וויטרינות</option>
                   <option>תריסים והצללה</option>
-                  <option>שיפוץ בית קיים</option>
+                  <option>פרגולה</option>
+                  <option>גדר או שער</option>
+                  <option>מסתור, חיפוי או זכוכית</option>
                   <option>פנייה של אדריכל או קבלן</option>
                 </select>
               </label>
@@ -60,7 +61,7 @@ export default function ContactPage() {
                 תיאור קצר
                 <textarea name='message' />
               </label>
-              <p className='notice'>הטופס הוא מבנה עזר לפנייה. להעלאת תוכנית או קובץ בפועל השתמשו בוואטסאפ או במייל.</p>
+              <p className='notice'>להעלאת תוכנית או קובץ מומלץ להשתמש בוואטסאפ או בעמוד שליחת תוכניות.</p>
             </form>
             <div className='feature-card contact-direct'>
               <h2>דרכי פנייה ישירות</h2>
@@ -70,14 +71,14 @@ export default function ContactPage() {
               </p>
               <p>
                 <strong>וואטסאפ: </strong>
-                <a className='text-link' href={site.whatsapp}>תיאום פגישה</a>
+                <a className='text-link' href={site.whatsapp}>שליחת הודעה</a>
               </p>
               <p>
                 <strong>מייל: </strong>
                 <a className='text-link' href={site.email}>{site.emailLabel}</a>
               </p>
               <Link className='btn btn-primary' href='/upload'>
-                העלאת תוכנית
+                שליחת תוכניות
               </Link>
             </div>
           </div>
