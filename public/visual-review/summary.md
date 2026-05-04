@@ -1,6 +1,9 @@
 # Visual Review Summary
 
 - Status: PASS
+- Commit: 8edc700b3080559c8746595951472455761321ac
+- Run: local
+- Timestamp: 2026-05-04T06:52:42.448Z
 - Base URL: http://127.0.0.1:4173
 - Routes checked: 10
 - Viewports checked: desktop, mobile

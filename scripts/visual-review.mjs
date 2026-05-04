@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { execFileSync } from 'node:child_process';
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -6,6 +7,9 @@ import { pathToFileURL } from 'node:url';
 const baseUrl = process.env.VISUAL_BASE_URL || 'http://127.0.0.1:4173';
 const outputDir = path.resolve('artifacts/visual-review');
 const publicOutputDir = path.resolve('public/visual-review');
+const commit = resolveCommit();
+const run = process.env.GITHUB_RUN_NUMBER || 'local';
+const timestamp = new Date().toISOString();
 const routes = ['/', '/services', '/styles', '/products', '/projects', '/process', '/professionals', '/upload', '/about', '/contact'];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1100 },
@@ -22,7 +26,20 @@ const contactSheetItems = [
   { file: 'desktop-contact.png', label: 'Desktop contact' },
   { file: 'mobile-contact.png', label: 'Mobile contact' },
 ];
+const reviewedScreens = [
+  'desktop-home.png',
+  'desktop-products.png',
+  'desktop-projects.png',
+  'desktop-upload.png',
+  'desktop-professionals.png',
+  'desktop-contact.png',
+  'mobile-home.png',
+  'mobile-products.png',
+  'mobile-upload.png',
+  'mobile-menu-open.png',
+];
 
+await rm(outputDir, { recursive: true, force: true });
 await mkdir(outputDir, { recursive: true });
 
 const browser = await chromium.launch();
@@ -48,13 +65,18 @@ for (const viewport of viewports) {
     const h1Count = await page.locator('h1').count();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     const links = await page.locator('a[href^="/"]').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href')).filter(Boolean));
+
     for (const link of links) {
       internalLinks.add(link.split('#')[0]);
     }
+
     const screenshotName = `${viewport.name}-${route === '/' ? 'home' : route.slice(1)}.png`;
     await page.screenshot({ path: path.join(outputDir, screenshotName), fullPage: true });
 
     findings.push({
+      commit,
+      run,
+      timestamp,
       route,
       viewport: viewport.name,
       status,
@@ -62,6 +84,7 @@ for (const viewport of viewports) {
       h1Count,
       overflow,
       screenshot: screenshotName,
+      screenshotPath: `visual-review/${screenshotName}`,
       pageErrors: [...pageErrors],
       consoleErrors: [...consoleErrors],
     });
@@ -75,13 +98,13 @@ for (const viewport of viewports) {
 
 const mobilePage = await browser.newPage({ viewport: { width: 390, height: 900 }, locale: 'he-IL' });
 await mobilePage.goto(new URL('/', baseUrl).toString(), { waitUntil: 'networkidle' });
-await mobilePage.getByRole('button', { name: /תפריט/ }).click();
+await mobilePage.locator('button[aria-controls="mobile-menu"]').click();
 await mobilePage.screenshot({ path: path.join(outputDir, 'mobile-menu-open.png'), fullPage: true });
 await mobilePage.close();
 
 const brokenLinks = [...internalLinks].filter((link) => !routes.includes(link));
 const failed = findings.filter((finding) => finding.status >= 400 || finding.direction !== 'rtl' || finding.h1Count !== 1 || finding.overflow || finding.pageErrors.length || finding.consoleErrors.length);
-await writeFile(path.join(outputDir, 'visual-review.json'), `${JSON.stringify({ baseUrl, findings, brokenLinks, failed }, null, 2)}\n`, 'utf8');
+await writeFile(path.join(outputDir, 'visual-review.json'), `${JSON.stringify({ commit, run, timestamp, baseUrl, reviewedScreens, findings, brokenLinks, failed }, null, 2)}\n`, 'utf8');
 await writeFile(path.join(outputDir, 'summary.md'), buildSummary({ baseUrl, findings, brokenLinks, failed }), 'utf8');
 
 const contactSheetPage = await browser.newPage({ viewport: { width: 1800, height: 2400 }, deviceScaleFactor: 1 });
@@ -98,6 +121,17 @@ if (failed.length || brokenLinks.length) {
 
 console.log(`Visual review completed for ${routes.length} routes across ${viewports.length} viewports.`);
 
+function resolveCommit() {
+  const explicit = process.env.VISUAL_REVIEW_COMMIT || process.env.GITHUB_HEAD_SHA || process.env.GITHUB_SHA;
+  if (explicit) return explicit;
+
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  } catch {
+    return 'local';
+  }
+}
+
 async function syncPublicReviewOutput() {
   await rm(publicOutputDir, { recursive: true, force: true });
   await mkdir(publicOutputDir, { recursive: true });
@@ -113,6 +147,9 @@ function buildSummary({ baseUrl: reviewedBaseUrl, findings: reviewFindings, brok
   return `# Visual Review Summary
 
 - Status: ${status}
+- Commit: ${commit}
+- Run: ${run}
+- Timestamp: ${timestamp}
 - Base URL: ${reviewedBaseUrl}
 - Routes checked: ${routes.length}
 - Viewports checked: ${viewports.map((viewport) => viewport.name).join(', ')}
@@ -163,51 +200,14 @@ function buildContactSheetHtml() {
   <head>
     <meta charset="utf-8">
     <style>
-      body {
-        margin: 0;
-        background: #f4f6f8;
-        color: #18202a;
-        font-family: Arial, sans-serif;
-      }
-      main {
-        padding: 36px;
-      }
-      h1 {
-        margin: 0 0 8px;
-        font-size: 34px;
-      }
-      p {
-        margin: 0 0 28px;
-        color: #5c6673;
-        font-size: 18px;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 22px;
-      }
-      .card {
-        overflow: hidden;
-        border: 1px solid #d5dde5;
-        background: white;
-        box-shadow: 0 12px 35px rgb(24 32 42 / 10%);
-      }
-      h2 {
-        margin: 0;
-        border-bottom: 1px solid #d5dde5;
-        padding: 12px 14px;
-        background: #17212b;
-        color: white;
-        font-size: 18px;
-      }
-      img {
-        display: block;
-        width: 100%;
-        height: 460px;
-        object-fit: contain;
-        object-position: top center;
-        background: #eef2f5;
-      }
+      body { margin: 0; background: #f4f6f8; color: #18202a; font-family: Arial, sans-serif; }
+      main { padding: 36px; }
+      h1 { margin: 0 0 8px; font-size: 34px; }
+      p { margin: 0 0 28px; color: #5c6673; font-size: 18px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .card { overflow: hidden; border: 1px solid #d5dde5; background: white; box-shadow: 0 12px 35px rgb(24 32 42 / 10%); }
+      h2 { margin: 0; border-bottom: 1px solid #d5dde5; padding: 12px 14px; background: #17212b; color: white; font-size: 18px; }
+      img { display: block; width: 100%; height: 460px; object-fit: contain; object-position: top center; background: #eef2f5; }
     </style>
   </head>
   <body>

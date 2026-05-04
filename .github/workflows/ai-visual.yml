@@ -7,6 +7,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ashbel-gh-pages-visual-review
+  cancel-in-progress: false
+
 jobs:
   ai-visual:
     runs-on: ubuntu-latest
@@ -22,6 +26,8 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - name: Capture visual review and AI sheet
+        env:
+          VISUAL_REVIEW_COMMIT: ${{ github.sha }}
         run: |
           npm run start -- -p 4173 -H 127.0.0.1 &
           SERVER_PID=$!
@@ -30,21 +36,31 @@ jobs:
             if curl -fsS http://127.0.0.1:4173 >/dev/null; then
               npm run visual:review
               npm run visual:ai
+              npm run e2e
               exit 0
             fi
             sleep 2
           done
           exit 1
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ai-visual-review
-          path: artifacts/visual-review/
       - name: Publish AI visual review to gh-pages
         run: |
           rm -rf pages-ai
           mkdir -p pages-ai/visual-review
           cp -R artifacts/visual-review/. pages-ai/visual-review/
-          cp artifacts/visual-review/ai-review-embedded.html pages-ai/index.html
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const review = JSON.parse(fs.readFileSync('artifacts/visual-review/visual-review.json', 'utf8'));
+          const meta = JSON.parse(fs.readFileSync('artifacts/visual-review/ai-review-meta.json', 'utf8'));
+          const screenshots = review.findings.map((finding) => finding.screenshot);
+          screenshots.push('mobile-menu-open.png');
+          const uniqueScreenshots = [...new Set(screenshots)];
+          const cards = uniqueScreenshots.map((file) => `<article><h2>${file}</h2><a href="visual-review/${file}"><img src="visual-review/${file}" alt="${file}"></a></article>`).join('\n');
+          const rows = review.findings.map((finding) => `<tr><td>${finding.viewport}</td><td>${finding.route}</td><td>${finding.status}</td><td>${finding.direction}</td><td>${finding.h1Count}</td><td>${finding.overflow ? 'Yes' : 'No'}</td><td><a href="${finding.screenshotPath}">${finding.screenshot}</a></td></tr>`).join('\n');
+          const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ashbel Visual Review</title><style>body{margin:0;background:#eef3f6;color:#111827;font-family:Arial,sans-serif}main{max-width:1440px;margin:auto;padding:28px}.meta,.links{background:#fff;border:1px solid #d6dee6;padding:16px;margin:0 0 18px;direction:ltr;text-align:left}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}article{background:white;border:1px solid #d6dee6}article h2{margin:0;padding:10px 12px;background:#17212b;color:white;font-size:14px}img{width:100%;height:auto;display:block}table{width:100%;border-collapse:collapse;background:#fff;margin:22px 0}th,td{border:1px solid #d6dee6;padding:8px;text-align:left}a{color:#0f4f77;font-weight:700}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><main><h1>Ashbel Visual Review</h1><section class="meta"><strong>commit:</strong> ${meta.commit}<br><strong>run:</strong> ${meta.run}<br><strong>timestamp:</strong> ${meta.timestamp}</section><section class="links"><p><a href="visual-review/${meta.html}">Open compact AI review</a></p><p><a href="visual-review/${meta.image}">Open AI contact sheet JPG</a></p><p><a href="visual-review/contact-sheet.png">Open full contact sheet PNG</a></p><p><a href="visual-review/summary.md">Open summary.md</a></p><p><a href="visual-review/visual-review.json">Open visual-review.json manifest</a></p></section><section class="grid">${cards}</section><table><thead><tr><th>Viewport</th><th>Route</th><th>Status</th><th>Dir</th><th>H1</th><th>Overflow</th><th>Screenshot</th></tr></thead><tbody>${rows}</tbody></table></main></body></html>`;
+          fs.writeFileSync('pages-ai/index.html', html);
+          fs.writeFileSync('pages-ai/visual-review/index.html', html);
+          NODE
           cd pages-ai
           git init
           git config user.name "github-actions[bot]"
@@ -53,4 +69,16 @@ jobs:
           git commit -m "Publish AI visual review"
           git branch -M gh-pages
           git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-          git push -f origin gh-pages
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages || true
+          git push --force-with-lease origin gh-pages
+          cp visual-review/ai-review-current.txt visual-review/ai-review-latest.txt
+          git add visual-review/ai-review-latest.txt
+          git commit -m "Update visual review latest pointer"
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages || true
+          git push --force-with-lease origin gh-pages
+          cp visual-review/ai-review-latest.txt ../artifacts/visual-review/ai-review-latest.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-visual-review
+          path: artifacts/visual-review/
+          if-no-files-found: error
