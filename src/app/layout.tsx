@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Nav from '@/components/Nav';
+import { productFamilies } from '@/data/productFamilies';
 import { seo } from '@/data/seo';
 import { site } from '@/data/site';
 import './globals.css';
@@ -43,21 +44,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {children}
         <footer className='site-footer'>
           <div className='container-main footer-grid'>
-            <div>
+            <div className='footer-brand'>
               <h2>אשבל אלומיניום</h2>
               <p>חלונות, ויטרינות, תריסים, הצללה ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם פגישה מקצועית ותיאום מסודר משלב התוכניות ועד ההתקנה.</p>
             </div>
             <div>
               <h3>מוצרים ופתרונות</h3>
-              <p><Link href='/products'>המראה הבלגי והמודרני</Link></p>
-              <p><Link href='/products'>ויטרינות, הזזה והצללה</Link></p>
-              <p><Link href='/projects'>דוגמאות מהשטח</Link></p>
+              {productFamilies.map((family) => (
+                <p key={family.slug}><Link href={`/products/${family.slug}`}>{family.title}</Link></p>
+              ))}
             </div>
             <div>
               <h3>יצירת קשר</h3>
               <p><a href={site.phoneHref}>{site.phone}</a></p>
-              <p><a href={site.whatsapp}>דברו איתנו בוואטסאפ</a></p>
+              <p><a href={site.whatsapp}>תיאום פגישה בוואטסאפ</a></p>
               <p><Link href='/upload'>העלאת תוכניות ותיאום פגישה</Link></p>
+              <p><Link href='/projects'>סוגי עבודות</Link></p>
             </div>
           </div>
         </footer>

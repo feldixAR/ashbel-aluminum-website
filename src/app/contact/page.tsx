@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PageIntro, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
+import { visualImages } from '@/data/productFamilies';
 import { site } from '@/data/site';
 
 export const metadata: Metadata = {
@@ -28,6 +30,7 @@ export default function ContactPage() {
           <p>
             טלפון: <a className='text-link' href={site.phoneHref}>{site.phone}</a>
           </p>
+          <VisualMedia image={visualImages.modernHomeTall} label='תמונת אווירה אדריכלית, לא פרויקט של אשבל' />
         </PageIntro>
 
         <section className='section-shell'>

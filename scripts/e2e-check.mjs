@@ -2,8 +2,9 @@ import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 
 const baseUrl = process.env.E2E_BASE_URL || 'http://127.0.0.1:4173';
-const routes = ['/', '/services', '/styles', '/products', '/projects', '/process', '/professionals', '/upload', '/about', '/contact'];
-const externalSchemes = ['tel:', 'mailto:', 'https://wa.me/'];
+const productRoutes = ['/products/belgian-style', '/products/modern-style', '/products/sliding-systems', '/products/shading-systems', '/products/additional-solutions'];
+const routes = ['/', '/services', '/styles', '/products', ...productRoutes, '/projects', '/process', '/professionals', '/upload', '/about', '/contact'];
+const externalSchemes = ['tel:', 'mailto:', 'https://wa.me/', 'https://commons.wikimedia.org/'];
 let serverProcess;
 
 await ensureServer();
@@ -35,8 +36,12 @@ try {
 async function ensureServer() {
   if (await isUp()) return;
 
-  const command = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  serverProcess = spawn(command, ['run', 'start', '--', '-p', '4173', '-H', '127.0.0.1'], {
+  const command = process.platform === 'win32' ? 'cmd.exe' : 'npm';
+  const args = process.platform === 'win32'
+    ? ['/d', '/s', '/c', 'npm.cmd run start -- -p 4173 -H 127.0.0.1']
+    : ['run', 'start', '--', '-p', '4173', '-H', '127.0.0.1'];
+
+  serverProcess = spawn(command, args, {
     stdio: 'ignore',
     shell: false,
   });
@@ -78,6 +83,9 @@ async function checkAllRoutes(page) {
     expect(await page.locator('html').getAttribute('dir') === 'rtl', `${route} is not RTL`);
     expect(await page.locator('h1').count() === 1, `${route} does not have exactly one H1`);
     expect(!(await hasHorizontalOverflow(page)), `${route} has horizontal overflow`);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    expect(await waitForImages(page), `${route} has one or more broken images`);
+    await page.evaluate(() => window.scrollTo(0, 0));
 
     const links = await page.locator('a[href]').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href')).filter(Boolean));
     for (const href of links) {
@@ -153,6 +161,7 @@ async function checkProducts(page, mobilePage) {
   const text = await page.locator('body').innerText();
   expectIncludes(text, ['המראה הבלגי', 'המראה המודרני', 'מערכות הצללה', 'ויטרינות והזזה', 'פתרונות נוספים'], 'Product gallery categories are incomplete.');
   expect(await page.locator('main a[href="/upload"]').count() > 0, 'Products upload CTA is missing.');
+  expect(await page.locator('.product-gateway-block').count() === 5, 'Products page does not expose five large product blocks.');
 
   const oldTitles = ['קליל בלגי 1700', 'קליל בלגי 4300', 'קליל בלגי 7300'];
   const headings = await page.locator('main h2').evaluateAll((nodes) => nodes.map((node) => node.textContent?.trim() ?? ''));
@@ -162,7 +171,14 @@ async function checkProducts(page, mobilePage) {
 
   await mobilePage.goto(new URL('/products', baseUrl).toString(), { waitUntil: 'networkidle' });
   expect(await hasHorizontalOverflow(mobilePage) === false, 'Mobile products page has horizontal overflow.');
-  expect(await mobilePage.locator('.product-panel').first().isVisible(), 'Mobile products gallery is not visible.');
+  expect(await mobilePage.locator('.product-gateway-block').first().isVisible(), 'Mobile products gallery is not visible.');
+
+  for (const route of productRoutes) {
+    const response = await page.goto(new URL(route, baseUrl).toString(), { waitUntil: 'networkidle' });
+    expect(response?.status() < 400, `${route} returned ${response?.status()}`);
+    expect(await page.locator('main img').count() >= 3, `${route} does not include at least three meaningful images.`);
+    expect(await page.locator('main a[href="/upload"]').count() > 0, `${route} upload CTA is missing.`);
+  }
 }
 
 async function checkProjects(page) {
@@ -200,6 +216,25 @@ async function checkContact(page) {
 
 async function hasHorizontalOverflow(page) {
   return page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
+}
+
+async function waitForImages(page) {
+  return page.evaluate(() =>
+    Promise.all(
+      [...document.images].map((image) => {
+        if (image.complete) {
+          return image.naturalWidth > 0 && image.naturalHeight > 0;
+        }
+
+        return new Promise((resolve) => {
+          const finish = () => resolve(image.naturalWidth > 0 && image.naturalHeight > 0);
+          image.addEventListener('load', finish, { once: true });
+          image.addEventListener('error', finish, { once: true });
+          setTimeout(finish, 4000);
+        });
+      }),
+    ).then((results) => results.every(Boolean)),
+  );
 }
 
 function expect(value, message) {

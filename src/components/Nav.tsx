@@ -7,7 +7,7 @@ import { site } from '@/data/site';
 const links = [
   { href: '/', label: 'ראשי' },
   { href: '/products', label: 'מוצרים ופתרונות' },
-  { href: '/projects', label: 'דוגמאות מהשטח' },
+  { href: '/projects', label: 'סוגי עבודות' },
   { href: '/professionals', label: 'לאדריכלים וקבלנים' },
   { href: '/upload', label: 'העלאת תוכניות' },
   { href: '/contact', label: 'צור קשר' },

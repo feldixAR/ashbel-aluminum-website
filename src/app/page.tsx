@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { ArchitecturalVisual, CtaBand, SectionHeader } from '@/components/PageSections';
+import { CtaBand, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
 import { faqs } from '@/data/faqs';
-import { kalilSeries } from '@/data/kalilSeries';
+import { productFamilies, visualImages } from '@/data/productFamilies';
 import { projects } from '@/data/projects';
 import { services } from '@/data/services';
 import { site } from '@/data/site';
@@ -27,7 +27,7 @@ export default function HomePage() {
             </a>
           </div>
         </div>
-        <ArchitecturalVisual />
+        <VisualMedia image={visualImages.modernHome} className='hero-media' loading='eager' label='תמונת אווירה אדריכלית, לא פרויקט של אשבל' />
       </section>
 
       <section className='container-main trust-strip' aria-label='עיקרי עבודה'>
@@ -59,12 +59,13 @@ export default function HomePage() {
           title='בחירה לפי מראה, פתיחה ושימוש יומיומי'
           text='במקום להתחיל משם של סדרה, מתחילים מהשאלה מה הפתח צריך לעשות: להכניס אור, לפתוח יציאה לגינה, לתת פרטיות, לשמור על קו מודרני או ליצור מראה בלגי.'
         />
-        <div className='home-product-strip'>
-          {kalilSeries.map((series) => (
-            <Link className='home-product-tile' href='/products' key={series.name}>
-              <span>{series.category}</span>
-              <h3>{series.name}</h3>
-              <p>{series.need}</p>
+        <div className='home-product-strip visual-strip'>
+          {productFamilies.map((family) => (
+            <Link className='home-product-tile visual-card' href={`/products/${family.slug}`} key={family.slug}>
+              <VisualMedia image={family.image} />
+              <span>{family.kicker}</span>
+              <h3>{family.title}</h3>
+              <p>{family.intro}</p>
             </Link>
           ))}
         </div>
@@ -76,7 +77,9 @@ export default function HomePage() {
           title='מעלים תוכנית, מתאמים פגישה וממשיכים בצורה מסודרת'
           text='מתחילים מתוכנית אלומיניום, תוכנית אדריכלית, מידות או שאלה מקצועית. בפגישה עוברים על סוג העבודה, הפתחים, השלב שבו נמצא הפרויקט והמשך הטיפול הנכון.'
         />
-        <ol className='process-list'>
+        <div className='split-visual-section'>
+          <VisualMedia image={visualImages.plan} label='תוכנית אדריכלית להמחשה בלבד' />
+          <ol className='process-list'>
           {[
             ['מעלים תוכנית או שאלה מקצועית', 'תוכנית אלומיניום, תוכנית אדריכלית, מידות, כתב כמויות או צורך נקודתי בעבודת אלומיניום.'],
             ['מתאמים פגישה מקצועית', 'עוברים על החלונות, הוויטרינות, התריסים, ההצללות, פרטי החוץ ושלב העבודה בשטח.'],
@@ -89,7 +92,8 @@ export default function HomePage() {
               </div>
             </li>
           ))}
-        </ol>
+          </ol>
+        </div>
       </section>
 
       <section className='container-main section-shell'>
@@ -114,11 +118,11 @@ export default function HomePage() {
           title='מצבים נפוצים בעבודות אלומיניום לבית'
           text='דוגמאות עבודה שממחישות איך חושבים על פתחים בבית פרטי, שיפוץ, ויטרינה גדולה, עבודה מול אדריכל או התאמת תריסים והצללה.'
         />
-        <div className='grid-3'>
+        <div className='grid-3 visual-use-cases'>
           {projects.slice(0, 3).map((project) => (
             <article className='project-card' key={project.title}>
               <div className='image-frame'>
-                <Image src='/project-placeholder.svg' alt={project.alt} width={800} height={450} />
+                <img src={project.image.src} alt={project.image.alt} loading='lazy' />
               </div>
               <h3>{project.title}</h3>
               <p>{project.desc}</p>

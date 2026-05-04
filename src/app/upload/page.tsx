@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
+import { visualImages } from '@/data/productFamilies';
 import { site } from '@/data/site';
 
 export const metadata: Metadata = {
@@ -40,9 +42,11 @@ export default function UploadPage() {
             </a>
           </div>
           <p>המטרה היא לתאם פגישה ולהתקדם בצורה מסודרת. אין כאן הצעת מחיר אוטומטית.</p>
+          <VisualMedia image={visualImages.plan} label='תוכנית אדריכלית להמחשת חומר לפגישה' />
         </PageIntro>
 
-        <section className='section-shell'>
+        <section className='section-shell split-intake'>
+          <div>
           <SectionHeader title='מה כדאי להעביר לקראת פגישה' text='אפשר להתחיל גם מחומר חלקי. תמונות מתאימות בעיקר לצורך נקודתי או לשאלה ראשונית, אבל תוכנית ומידות הן הבסיס לתיאום מקצועי יותר.' />
           <div className='grid-3'>
             {intakeColumns.map((column) => (
@@ -55,6 +59,10 @@ export default function UploadPage() {
                 </ul>
               </article>
             ))}
+          </div>
+          </div>
+          <div className='stacked-visuals'>
+            <VisualMedia image={visualImages.slidingDetail} label='פרט אלומיניום ומסילה להמחשה' />
           </div>
         </section>
 

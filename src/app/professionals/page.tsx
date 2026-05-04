@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
+import { visualImages } from '@/data/productFamilies';
 
 export const metadata: Metadata = {
   title: 'כניסה מקצועית לאדריכלים, מעצבים וקבלנים',
@@ -29,9 +31,11 @@ export default function ProfessionalsPage() {
             העלאת תוכניות ותיאום פגישה
           </Link>
           <p>זהו עמוד פנייה מקצועי, לא מערכת חשבון או אזור משתמש.</p>
+          <VisualMedia image={visualImages.planDetail} label='שרטוט וחומר מקצועי להמחשת פנייה של אדריכל או קבלן' />
         </PageIntro>
 
-        <section className='section-shell'>
+        <section className='section-shell split-intake'>
+          <div>
           <SectionHeader title='מה עוזר להתכונן לפגישה' text='ככל שהחומר ברור יותר, קל יותר להגיע לשיחה מקצועית על פתחים, מערכות, גמרים ושלבי ביצוע.' />
           <div className='grid-3'>
             {professionalNeeds.map(([title, text]) => (
@@ -40,6 +44,10 @@ export default function ProfessionalsPage() {
                 <p>{text}</p>
               </article>
             ))}
+          </div>
+          </div>
+          <div className='stacked-visuals'>
+            <VisualMedia image={visualImages.handle} label='פרט פרזול ואלומיניום להמחשה' />
           </div>
         </section>
 

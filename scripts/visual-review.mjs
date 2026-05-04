@@ -10,13 +10,30 @@ const publicOutputDir = path.resolve('public/visual-review');
 const commit = resolveCommit();
 const run = process.env.GITHUB_RUN_NUMBER || 'local';
 const timestamp = new Date().toISOString();
-const routes = ['/', '/services', '/styles', '/products', '/projects', '/process', '/professionals', '/upload', '/about', '/contact'];
+const routes = [
+  '/',
+  '/services',
+  '/styles',
+  '/products',
+  '/products/belgian-style',
+  '/products/modern-style',
+  '/products/sliding-systems',
+  '/products/shading-systems',
+  '/products/additional-solutions',
+  '/projects',
+  '/process',
+  '/professionals',
+  '/upload',
+  '/about',
+  '/contact',
+];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1100 },
   { name: 'mobile', width: 390, height: 900 },
 ];
 const contactSheetItems = [
   { file: 'desktop-home.png', label: 'Desktop home' },
+  { file: 'desktop-products-hover.png', label: 'Desktop products hover' },
   { file: 'mobile-home.png', label: 'Mobile home' },
   { file: 'mobile-menu-open.png', label: 'Mobile menu open' },
   { file: 'desktop-upload.png', label: 'Desktop upload' },
@@ -29,6 +46,7 @@ const contactSheetItems = [
 const reviewedScreens = [
   'desktop-home.png',
   'desktop-products.png',
+  'desktop-products-belgian-style.png',
   'desktop-projects.png',
   'desktop-upload.png',
   'desktop-professionals.png',
@@ -70,7 +88,7 @@ for (const viewport of viewports) {
       internalLinks.add(link.split('#')[0]);
     }
 
-    const screenshotName = `${viewport.name}-${route === '/' ? 'home' : route.slice(1)}.png`;
+    const screenshotName = `${viewport.name}-${route === '/' ? 'home' : route.slice(1).replaceAll('/', '-')}.png`;
     await page.screenshot({ path: path.join(outputDir, screenshotName), fullPage: true });
 
     findings.push({
@@ -101,6 +119,12 @@ await mobilePage.goto(new URL('/', baseUrl).toString(), { waitUntil: 'networkidl
 await mobilePage.locator('button[aria-controls="mobile-menu"]').click();
 await mobilePage.screenshot({ path: path.join(outputDir, 'mobile-menu-open.png'), fullPage: true });
 await mobilePage.close();
+
+const hoverPage = await browser.newPage({ viewport: { width: 1440, height: 1100 }, locale: 'he-IL' });
+await hoverPage.goto(new URL('/products', baseUrl).toString(), { waitUntil: 'networkidle' });
+await hoverPage.locator('.product-gateway-block').first().hover();
+await hoverPage.screenshot({ path: path.join(outputDir, 'desktop-products-hover.png'), fullPage: true });
+await hoverPage.close();
 
 const brokenLinks = [...internalLinks].filter((link) => !routes.includes(link));
 const failed = findings.filter((finding) => finding.status >= 400 || finding.direction !== 'rtl' || finding.h1Count !== 1 || finding.overflow || finding.pageErrors.length || finding.consoleErrors.length);

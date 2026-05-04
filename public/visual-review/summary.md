@@ -1,11 +1,11 @@
 # Visual Review Summary
 
 - Status: PASS
-- Commit: e0312ca5df9768bf0b812f766156179b9efc13b2
+- Commit: 04f718a0b8cb9710926921396dc15d48880ca2ca
 - Run: local
-- Timestamp: 2026-05-04T09:41:21.369Z
+- Timestamp: 2026-05-04T12:16:38.847Z
 - Base URL: http://127.0.0.1:4173
-- Routes checked: 10
+- Routes checked: 15
 - Viewports checked: desktop, mobile
 - Contact sheet: contact-sheet.png
 - Full JSON report: visual-review.json
@@ -15,6 +15,7 @@
 The contact sheet combines the highest-priority review screens:
 
 - Desktop home: desktop-home.png
+- Desktop products hover: desktop-products-hover.png
 - Mobile home: mobile-home.png
 - Mobile menu open: mobile-menu-open.png
 - Desktop upload: desktop-upload.png
@@ -41,6 +42,11 @@ The contact sheet combines the highest-priority review screens:
 | desktop | /services | 200 | rtl | 1 | No | desktop-services.png |
 | desktop | /styles | 200 | rtl | 1 | No | desktop-styles.png |
 | desktop | /products | 200 | rtl | 1 | No | desktop-products.png |
+| desktop | /products/belgian-style | 200 | rtl | 1 | No | desktop-products-belgian-style.png |
+| desktop | /products/modern-style | 200 | rtl | 1 | No | desktop-products-modern-style.png |
+| desktop | /products/sliding-systems | 200 | rtl | 1 | No | desktop-products-sliding-systems.png |
+| desktop | /products/shading-systems | 200 | rtl | 1 | No | desktop-products-shading-systems.png |
+| desktop | /products/additional-solutions | 200 | rtl | 1 | No | desktop-products-additional-solutions.png |
 | desktop | /projects | 200 | rtl | 1 | No | desktop-projects.png |
 | desktop | /process | 200 | rtl | 1 | No | desktop-process.png |
 | desktop | /professionals | 200 | rtl | 1 | No | desktop-professionals.png |
@@ -51,6 +57,11 @@ The contact sheet combines the highest-priority review screens:
 | mobile | /services | 200 | rtl | 1 | No | mobile-services.png |
 | mobile | /styles | 200 | rtl | 1 | No | mobile-styles.png |
 | mobile | /products | 200 | rtl | 1 | No | mobile-products.png |
+| mobile | /products/belgian-style | 200 | rtl | 1 | No | mobile-products-belgian-style.png |
+| mobile | /products/modern-style | 200 | rtl | 1 | No | mobile-products-modern-style.png |
+| mobile | /products/sliding-systems | 200 | rtl | 1 | No | mobile-products-sliding-systems.png |
+| mobile | /products/shading-systems | 200 | rtl | 1 | No | mobile-products-shading-systems.png |
+| mobile | /products/additional-solutions | 200 | rtl | 1 | No | mobile-products-additional-solutions.png |
 | mobile | /projects | 200 | rtl | 1 | No | mobile-projects.png |
 | mobile | /process | 200 | rtl | 1 | No | mobile-process.png |
 | mobile | /professionals | 200 | rtl | 1 | No | mobile-professionals.png |

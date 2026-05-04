@@ -3,58 +3,11 @@
   overflow: hidden;
   border: 1px solid var(--line);
   background: white;
-  box-shadow: 0 22px 60px rgb(17 24 39 / 8%);
+  box-shadow: 0 8px 24px rgb(15 23 42 / 6%);
 }
 
-.proof-visual {
-  position: relative;
-  min-height: 280px;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgb(16 24 32 / 8%), rgb(16 24 32 / 72%)),
-    repeating-linear-gradient(90deg, transparent 0 42px, rgb(255 255 255 / 12%) 42px 44px),
-    linear-gradient(135deg, #dfe7ec, #6f7f8d 42%, #17212b);
-}
-
-.proof-visual span {
-  position: absolute;
-  display: block;
-  border: 9px solid rgb(255 255 255 / 72%);
-}
-
-.proof-visual span:first-child {
-  inset: 36px auto auto 28px;
-  width: 42%;
-  height: 62%;
-}
-
-.proof-visual span:nth-child(2) {
-  inset: 68px 12% auto auto;
-  width: 30%;
-  height: 46%;
-  border-color: rgb(23 56 77 / 72%);
-}
-
-.proof-visual span:nth-child(3) {
-  inset: auto 22% 28px auto;
-  width: 24%;
-  height: 30%;
-  border-width: 6px;
-  border-color: rgb(255 255 255 / 48%);
-}
-
-.proof-visual-2 {
-  background:
-    linear-gradient(180deg, rgb(16 24 32 / 8%), rgb(16 24 32 / 70%)),
-    repeating-linear-gradient(0deg, transparent 0 44px, rgb(255 255 255 / 12%) 44px 46px),
-    linear-gradient(135deg, #eef2f5, #2f5f78 46%, #111827);
-}
-
-.proof-visual-3 {
-  background:
-    linear-gradient(180deg, rgb(16 24 32 / 5%), rgb(16 24 32 / 76%)),
-    repeating-linear-gradient(90deg, transparent 0 32px, rgb(255 255 255 / 11%) 32px 34px),
-    linear-gradient(135deg, #c9d4dc, #17384d 48%, #080c12);
+.proof-case .visual-media {
+  min-height: 340px;
 }
 
 .proof-content {
@@ -101,11 +54,11 @@
     grid-template-columns: 1fr minmax(320px, 0.8fr);
   }
 
-  .proof-case:nth-child(even) .proof-visual {
+  .proof-case:nth-child(even) .visual-media {
     order: 2;
   }
 
-  .proof-visual {
+  .proof-case .visual-media {
     min-height: 100%;
   }
 }

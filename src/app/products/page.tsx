@@ -1,99 +1,69 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { PageIntro, SectionHeader } from '@/components/PageSections';
-import { kalilSeries } from '@/data/kalilSeries';
+import { CtaBand, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
+import { productFamilies } from '@/data/productFamilies';
 import './products.css';
 
 export const metadata: Metadata = {
   title: 'מוצרים ופתרונות אלומיניום',
-  description: 'קטלוג פתרונות אלומיניום לבית פרטי: המראה הבלגי, המראה המודרני, ויטרינות והזזה, מערכות הצללה ופתרונות משלימים.',
+  description: 'קטלוג חזותי של פתרונות אלומיניום לבית: המראה הבלגי, המראה המודרני, ויטרינות והזזה, מערכות הצללה ופתרונות חוץ משלימים.',
 };
 
 export default function ProductsPage() {
   return (
-    <main>
-      <div className='container-main products-page'>
-        <PageIntro
-          eyebrow='מוצרים ופתרונות'
-          title='חלונות, ויטרינות ופתרונות אלומיניום לפי סוג הפתח'
-          text='בחירת אלומיניום לבית מתחילה מהפתחים עצמם: גודל, כיוון פתיחה, יציאה לגינה, תריס, הצללה, פרטיות, סגנון הבית ותיאום עם הגמרים.'
-        >
-          <p>אפשר להעלות תוכנית אלומיניום, תוכנית אדריכלית או מידות ולתאם פגישה לפני מדידה והצעה מסודרת.</p>
-          <Link className='text-link' href='/upload'>
-            העלאת תוכניות ותיאום פגישה
-          </Link>
-        </PageIntro>
+    <main className='products-page'>
+      <section className='products-gateway' aria-labelledby='products-title'>
+        <div className='products-gateway-copy'>
+          <p className='eyebrow'>מוצרים ופתרונות</p>
+          <h1 id='products-title'>קטלוג אלומיניום לפי מראה, פתיחה ושימוש בבית</h1>
+          <p>
+            בחירת אלומיניום מתחילה מסוג הפתח ומהתכנון של הבית: חלון בלגי, מפתח מודרני, ויטרינה לגינה,
+            תריס או פתרון חוץ. בחרו משפחת פתרונות והמשיכו לעמוד שמסביר מה חשוב לתאם בפגישה.
+          </p>
+        </div>
 
-        <section className='section-shell product-catalog-section'>
-          <SectionHeader
-            eyebrow='קטלוג לפי קטגוריות'
-            title='מבט מהיר על משפחות המוצרים'
-            text='הקטגוריות מסודרות לפי שפה עיצובית ושימוש: מראה בלגי, מראה מודרני, ויטרינות גדולות, הצללה ופתרונות משלימים.'
-          />
-          <div className='product-gallery' aria-label='קטגוריות מוצרי אלומיניום'>
-            {kalilSeries.map((series, index) => (
-              <article className={`product-panel product-panel-${index + 1}`} key={series.name}>
-                <div className='panel-visual' aria-hidden='true'>
-                  <span className='panel-rail rail-a' />
-                  <span className='panel-rail rail-b' />
-                  <span className='panel-glass glass-a' />
-                  <span className='panel-glass glass-b' />
-                </div>
-                <div className='panel-content'>
-                  <p>{series.category}</p>
-                  <h2>{series.name}</h2>
-                  <span>{series.need}</span>
-                  <Link className='panel-link' href='/upload'>
-                    העלאת תוכניות ותיאום פגישה
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <div className='product-gateway-row' aria-label='משפחות מוצרי אלומיניום'>
+          {productFamilies.map((family) => (
+            <Link className='product-gateway-block' href={`/products/${family.slug}`} key={family.slug}>
+              <VisualMedia image={family.image} loading='eager' />
+              <div className='product-gateway-overlay'>
+                <p>{family.kicker}</p>
+                <h2>{family.title}</h2>
+                <ul>
+                  {family.subOptions.slice(0, 5).map((option) => (
+                    <li key={option}>{option}</li>
+                  ))}
+                </ul>
+                <span>לצפייה בפתרונות</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-        <section className='section-shell product-story'>
-          <SectionHeader
-            eyebrow='איך בוחרים נכון'
-            title='מתחילים מהשימוש, הפתח והפרטים הקטנים'
-            text='מערכת טובה היא שילוב של מראה, תפעול, זכוכית, מסילות, תריסים, רשתות ותיאום התקנה. לכן מגיעים לפגישה עם חומר מקצועי ומבינים את הפתח לפני שמתקבעים על פתרון.'
-          />
-          <div className='story-flow'>
-            {[
-              ['שימוש', 'חלון לחדר, ויטרינה לסלון, יציאה לגינה, פרטיות בחדר שינה או פתיחה רחבה לאזור אירוח.'],
-              ['שטח ומידות', 'רוחב וגובה הפתח, מפלסים, כיוון פתיחה, מסילות, ניקוז, תריסים ורשתות.'],
-              ['גמר והתקנה', 'צבע, זכוכית, חלוקות, מפגש עם ריצוף וחיפויים, ותיאום עבודה נקייה בבית.'],
-            ].map(([title, text]) => (
-              <article key={title}>
-                <h2>{title}</h2>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+      <section className='container-main section-shell product-planning'>
+        <SectionHeader
+          eyebrow='לפני שבוחרים מערכת'
+          title='מה מביאים לפגישה כדי לבחור נכון'
+          text='הפגישה המקצועית מחברת בין התוכנית, הפתחים והחיים בבית. המטרה אינה לבחור שם של סדרה על הנייר, אלא להבין את המפתח, השימוש, הגמר והביצוע.'
+        />
+        <div className='planning-band'>
+          {[
+            ['תוכנית ומידות', 'תוכנית אלומיניום, תוכנית אדריכלית, חזיתות, חתכים או מידות פתחים ראשוניות.'],
+            ['שימוש יומיומי', 'אור, פרטיות, יציאה לגינה, פתיחה רחבה, תחזוקה, ילדים בבית או אזור אירוח.'],
+            ['תיאום ביצוע', 'מסילות, תריסים, ניקוז, ריצוף, חיפויים, הכנות חשמל ופרטי גמר.'],
+          ].map(([title, text]) => (
+            <article key={title}>
+              <h2>{title}</h2>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        <section className='section-shell product-checklist'>
-          <SectionHeader title='מה כדאי להכין לקראת פגישה' text='לא חייבים להכין הכול מראש. תוכנית, מידות או רשימת פתחים עוזרות להבין את העבודה; תמונות יכולות להשלים נקודות קטנות מהשטח.' />
-          <div className='checklist-grid'>
-            {kalilSeries.map((series) => (
-              <article key={series.name}>
-                <h2>{series.name}</h2>
-                <p>{series.check}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className='products-cta' aria-label='העלאת תוכניות לתיאום מוצרי אלומיניום'>
-          <div>
-            <p className='eyebrow'>מתחילים מהחומר המקצועי שיש לכם</p>
-            <h2>העלאת תוכנית אלומיניום או תוכנית אדריכלית</h2>
-            <p>נתאם פגישה סביב סוגי הפתחים והפתרונות הרלוונטיים: חלונות, ויטרינות, תריסים, הצללה, פרגולות, שערים ופרטים משלימים.</p>
-          </div>
-          <Link className='btn btn-primary' href='/upload'>
-            העלאת תוכניות ותיאום פגישה
-          </Link>
-        </section>
+      <div className='container-main'>
+        <CtaBand title='העלאת תוכניות ותיאום פגישה' text='העלו תוכנית אלומיניום, תוכנית אדריכלית, מידות או שאלה מקצועית, ונחזור לתיאום פגישה והמשך טיפול מסודר.' />
       </div>
     </main>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { VisualMedia } from '@/components/VisualMedia';
 import { projects } from '@/data/projects';
 import './projects.css';
 import './project-proof.css';
@@ -15,22 +16,18 @@ export default function ProjectsPage() {
       <div className='container-main projects-page'>
         <PageIntro
           eyebrow='דוגמאות מהשטח'
-          title='מצבים נפוצים שבהם כדאי לערב איש אלומיניום מוקדם'
+          title='סוגי עבודות שבהם כדאי לערב איש אלומיניום מוקדם'
           text='בית בבנייה, שיפוץ, ויטרינה לסלון, עבודה מול אדריכל או קבלן, תריסים והצללה - לכל מצב יש שאלות אחרות של פתחים, מידות, מסילות, זכוכית וגמרים.'
         />
 
         <section className='section-shell'>
           <SectionHeader title='סוגי עבודות שמומלץ לתאם סביבן פגישה' text='אלו מצבים מעשיים שבהם איש אלומיניום יכול לעזור מוקדם. האיורים בעמוד הם המחשה דקורטיבית בלבד, לא תמונות פרויקט.' />
           <div className='project-proof-list'>
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <article className='proof-case' key={project.title}>
-                <div className={`proof-visual proof-visual-${(index % 3) + 1}`} aria-label={project.alt} role='img'>
-                  <span />
-                  <span />
-                  <span />
-                </div>
+                <VisualMedia image={project.image} label='תמונת המחשה בלבד, לא פרויקט של אשבל' />
                 <div className='proof-content'>
-                  <p className='eyebrow'>דוגמה {index + 1}</p>
+                  <p className='eyebrow'>{project.category.title}</p>
                   <h2>{project.title}</h2>
                   <p>{project.desc}</p>
                   <dl>
@@ -51,6 +48,9 @@ export default function ProjectsPage() {
                       <dd>{project.send}</dd>
                     </div>
                   </dl>
+                  <a className='btn btn-outline' href={`/products/${project.category.slug}`}>
+                    פתרונות רלוונטיים
+                  </a>
                 </div>
               </article>
             ))}
