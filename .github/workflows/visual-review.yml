@@ -1,0 +1,49 @@
+name: Visual Review
+
+on:
+  workflow_dispatch:
+
+jobs:
+  visual-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Visual review
+        run: |
+          npm run start -- -p 4173 -H 127.0.0.1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173 >/dev/null; then
+              npm run visual:review
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Local server did not become ready"
+          exit 1
+
+      - name: Upload visual review artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-review
+          path: artifacts/visual-review/
+          if-no-files-found: error

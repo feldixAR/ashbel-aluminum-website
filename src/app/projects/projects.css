@@ -1,0 +1,24 @@
+.projects-page .page-intro {
+  padding-bottom: 20px;
+}
+
+.project-proof-list {
+  display: grid;
+  gap: clamp(22px, 4vw, 42px);
+}
+
+.project-honesty-note {
+  display: grid;
+  gap: 12px;
+  border: 1px solid #b9c6d1;
+  background: #edf4f7;
+  padding: clamp(22px, 4vw, 38px);
+}
+
+.project-honesty-note h2 {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.project-honesty-note p {
+  color: #3c4653;
+}
