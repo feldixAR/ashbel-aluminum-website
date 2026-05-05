@@ -1,89 +1,9 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { PageIntro, SectionHeader } from '@/components/PageSections';
-import { VisualMedia } from '@/components/VisualMedia';
-import { visualImages } from '@/data/productFamilies';
+import { PageIntro } from '@/components/PageSections';
 import { site } from '@/data/site';
 
-export const metadata: Metadata = {
-  title: 'צרו קשר',
-  description: 'יצירת קשר עם אשבל אלומיניום לתיאום פגישה לעבודות אלומיניום, שליחת תוכניות, מידות או תמונות מהשטח.',
-};
+export const metadata: Metadata = { title: 'צרו קשר', description: 'לשיחה, שליחת תוכניות או תיאום פגישה לעבודות אלומיניום.' };
 
 export default function ContactPage() {
-  return (
-    <main>
-      <div className='container-main'>
-        <PageIntro
-          eyebrow='צרו קשר'
-          title='דברו איתנו על עבודת האלומיניום שלכם'
-          text='חלונות, ויטרינות, תריסים, פרגולות, שערים, גדרות או פתרון אלומיניום אחר. אפשר לפנות בטלפון, בוואטסאפ או להשאיר פרטים.'
-        >
-          <div className='button-row'>
-            <a className='btn btn-primary' href={site.whatsapp}>
-              וואטסאפ
-            </a>
-            <a className='btn btn-outline' href={site.phoneHref}>
-              התקשרו עכשיו
-            </a>
-          </div>
-          <p>
-            טלפון: <a className='text-link' href={site.phoneHref}>{site.phone}</a>
-          </p>
-        </PageIntro>
-
-        <section className='section-shell split-intake'>
-          <div>
-            <SectionHeader title='איך נוח להתחיל' text='אפשר לשלוח תוכנית, מידות או תמונות מהשטח. אם עדיין אין חומר מסודר, אפשר להתחיל משיחה קצרה.' />
-            <form className='feature-card contact-form'>
-              <label className='field'>
-                שם מלא
-                <input name='name' type='text' autoComplete='name' />
-              </label>
-              <label className='field'>
-                טלפון
-                <input name='phone' type='tel' autoComplete='tel' />
-              </label>
-              <label className='field'>
-                סוג עבודה
-                <select name='projectType' defaultValue=''>
-                  <option value='' disabled>בחרו סוג עבודה</option>
-                  <option>המראה הכפרי</option>
-                  <option>המראה המודרני</option>
-                  <option>מערכות הצללה</option>
-                  <option>פרגולות אלומיניום</option>
-                  <option>פתרונות משלימים</option>
-                  <option>פנייה של אדריכל או קבלן</option>
-                </select>
-              </label>
-              <label className='field'>
-                תיאור קצר
-                <textarea name='message' />
-              </label>
-              <p className='notice'>להעלאת תוכנית או קובץ מומלץ להשתמש בוואטסאפ או בעמוד שליחת תוכניות.</p>
-            </form>
-          </div>
-          <div className='feature-card contact-direct'>
-            <VisualMedia image={visualImages.modernHomeTall} />
-            <h2>דרכי פנייה ישירות</h2>
-            <p>
-              <strong>טלפון: </strong>
-              <a className='text-link' href={site.phoneHref}>{site.phone}</a>
-            </p>
-            <p>
-              <strong>וואטסאפ: </strong>
-              <a className='text-link' href={site.whatsapp}>שליחת הודעה</a>
-            </p>
-            <p>
-              <strong>מייל: </strong>
-              <a className='text-link' href={site.email}>{site.emailLabel}</a>
-            </p>
-            <Link className='btn btn-primary' href='/upload'>
-              שליחת תוכניות
-            </Link>
-          </div>
-        </section>
-      </div>
-    </main>
-  );
+  return <main><div className='container-main'><PageIntro eyebrow='צרו קשר' title='צרו קשר' text='לשיחה, שליחת תוכניות או תיאום פגישה לעבודות אלומיניום.' /><section className='section-shell grid-3'>{[['טלפון',site.phone,'התקשרו',site.phoneHref],['וואטסאפ','שליחת הודעה, תמונות או תוכניות','שלחו וואטסאפ',site.whatsapp],['מייל','לפניות, תוכניות ומפרטים','שליחת מייל',site.email]].map(([title,text,cta,href])=><article className='feature-card' key={String(title)}><h2>{title}</h2><p>{text}</p><a className='btn btn-outline' href={String(href)}>{cta}</a></article>)}</section><section className='section-shell'><form className='feature-card contact-form'><label className='field'>שם מלא<input name='name' type='text' /></label><label className='field'>טלפון<input name='phone' type='tel' /></label><label className='field'>סוג עבודה<select name='projectType' defaultValue=''><option value='' disabled>בחרו</option><option>חלונות וויטרינות</option><option>תריסים והצללה</option><option>פרגולות</option><option>גדרות, שערים וחיפויים</option><option>מעקות זכוכית ומקלחונים</option><option>אדריכל / קבלן / מפקח</option></select></label><label className='field'>שלב הפרויקט<select name='projectStage' defaultValue=''><option value='' disabled>בחרו</option><option>תכנון ראשוני</option><option>לפני היתר</option><option>במהלך שלד</option><option>לפני גמרים</option><option>שיפוץ קיים</option><option>לא בטוח</option></select></label><label className='field'>תיאור קצר<textarea name='message' /></label></form></section></div></main>;
 }

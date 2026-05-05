@@ -1,56 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
-import { VisualMedia } from '@/components/VisualMedia';
-import { visualImages } from '@/data/productFamilies';
+import { CtaBand, PageIntro } from '@/components/PageSections';
 
-export const metadata: Metadata = {
-  title: 'אדריכלים',
-  description: 'עבודה מול אדריכלים, מעצבים וקבלנים סביב תוכניות, חזיתות, חתכים, רשימות פתחים ופרטי אלומיניום.',
-};
-
-const professionalNeeds = [
-  ['תוכניות ופתחים', 'תוכנית אדריכלית, תוכנית אלומיניום, חזיתות, חתכים ורשימת פתחים.'],
-  ['מידות ומפרט', 'מידות פתחים, כתב כמויות, סוג זכוכית, צבע, תריסים ורשתות.'],
-  ['פרטי גמר', 'מסילות, בתי תריס, ארגזים, ריצוף, חיפויים, ניקוז והכנות חשמל.'],
-  ['המשך עבודה', 'שיחת בירור, השלמת חומר, פגישת ייעוץ, מדידה או הצעת מחיר מסודרת.'],
-];
+export const metadata: Metadata = { title: 'אדריכלים ותוכניות', description: 'עבודה מול אדריכלים, מעצבים, קבלנים ומפקחים לפי תוכניות, חזיתות, חתכים ורשימות פתחים.' };
 
 export default function ProfessionalsPage() {
-  return (
-    <main>
-      <div className='container-main'>
-        <PageIntro
-          eyebrow='אדריכלים'
-          title='עבודה מול תוכניות, פתחים ופרטי גמר'
-          text='עמוד לאדריכלים, מעצבים, קבלנים ומפקחים שרוצים להעביר תוכניות, חזיתות, חתכים, רשימות פתחים, מפרטים או שאלות מקצועיות לתיאום עבודות אלומיניום.'
-        >
-          <Link className='btn btn-primary' href='/upload'>
-            שליחת תוכניות
-          </Link>
-          <p>אפשר לשלוח חומר מלא או חלקי. נבדוק מה חסר ונחזור לתיאום המשך עבודה.</p>
-          <VisualMedia image={visualImages.planDetail} />
-        </PageIntro>
-
-        <section className='section-shell split-intake'>
-          <div>
-            <SectionHeader title='מה כדאי להעביר' text='ככל שהחומר ברור יותר, קל יותר לבדוק את הפתחים, סוגי המערכות, הגמרים והשלב הבא בעבודה.' />
-            <div className='grid-2'>
-              {professionalNeeds.map(([title, text]) => (
-                <article className='feature-card' key={title}>
-                  <h2>{title}</h2>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-          <div className='stacked-visuals'>
-            <VisualMedia image={visualImages.handle} />
-          </div>
-        </section>
-
-        <CtaBand title='שליחת תוכניות לאשבל אלומיניום' text='שלחו תוכנית, מפרט, רשימת פתחים או מידות. נבדוק את החומר ונחזור לתיאום המשך עבודה.' />
-      </div>
-    </main>
-  );
+  return <main><div className='container-main'><PageIntro eyebrow='לאנשי מקצוע' title='עבודה מול אדריכלים ותוכניות' text='ביצוע עבודות אלומיניום לפי תוכניות, חזיתות, חתכים, רשימות פתחים, מפרטים ופרטי גמר, עם תיאום מסודר מול האדריכל, הקבלן והשטח.' /><section className='section-shell grid-3'>{[['מה אפשר להעביר','תוכנית אדריכלית, תוכנית אלומיניום, חזיתות וחתכים, רשימת פתחים, כתב כמויות, פרטי גמר.'],['מה אנחנו בודקים','סוגי פתיחה, מפתח וגודל זכוכית, פרופילים וסדרות, תריסים ומנועים, מסילות והכנות, גוון וגמר, התאמה לשטח.'],['איך ממשיכים','בדיקת חומר, שאלות השלמה, פגישה או מדידה, הצעה מסודרת, תיאום ביצוע.']].map(([t,p])=><article className='feature-card' key={t}><h2>{t}</h2><p>{p}</p></article>)}</section><CtaBand title='שליחת תוכניות לאשבל אלומיניום' text='שלחו חומר קיים ונחזור לתיאום המשך עבודה.' /></div></main>;
 }
