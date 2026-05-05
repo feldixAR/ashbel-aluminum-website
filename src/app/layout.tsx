@@ -45,8 +45,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <footer className='site-footer'>
           <div className='container-main footer-grid'>
             <div className='footer-brand'>
-              <h2>אשבל אלומיניום</h2>
-              <p>חלונות, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום לבית פרטי, וילה ושיפוץ, עם תיאום מסודר משלב התוכניות ועד ההתקנה.</p>
+              <Link href='/'><h2>אשבל אלומיניום</h2></Link>
+              <p>חברת אלומיניום לבתים פרטיים, שיפוצים ופרויקטים, עם עבודה מול תוכניות, מידות ותנאי שטח.</p>
             </div>
             <div>
               <h3>מוצרים</h3>
@@ -55,11 +55,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               ))}
             </div>
             <div>
-              <h3>צרו קשר</h3>
+              <h3>מידע</h3>
+              <p><Link href='/about'>אודות</Link></p>
+              <p><a href={site.email}>{site.emailLabel}</a></p>
+              <p><Link href='/contact'>צרו קשר</Link></p>
+            </div>
+            <div>
+              <h3>יצירת קשר</h3>
               <p><a href={site.phoneHref}>{site.phone}</a></p>
               <p><a href={site.whatsapp}>וואטסאפ</a></p>
               <p><Link href='/upload'>שליחת תוכניות</Link></p>
-              <p><Link href='/professionals'>אדריכלים</Link></p>
+              <p><a href={site.email}>{site.emailLabel}</a></p>
             </div>
           </div>
         </footer>

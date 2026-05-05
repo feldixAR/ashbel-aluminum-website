@@ -1,50 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { CtaBand, PageIntro, SectionHeader } from '@/components/PageSections';
+import { CtaBand, PageIntro } from '@/components/PageSections';
 
-export const metadata: Metadata = {
-  title: 'אודות אשבל אלומיניום',
-  description: 'אשבל אלומיניום מבצעת חלונות, ויטרינות ופתרונות אלומיניום לבתים פרטיים, וילות, שיפוצים ופרויקטים.',
-};
+export const metadata: Metadata = { title: 'אודות אשבל אלומיניום', description: 'אודות אשבל אלומיניום: חלונות, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום לבתים פרטיים ושיפוצים.' };
 
 export default function AboutPage() {
-  return (
-    <main>
-      <div className='container-main'>
-        <PageIntro
-          eyebrow='אודות'
-          title='חברת אלומיניום שמחברת בין תוכנית, שטח וגמר נקי'
-          text='אשבל אלומיניום עוסקת בחלונות, ויטרינות, תריסים ופתרונות אלומיניום לבתים פרטיים, שיפוצים, וילות ופרויקטים, עם דגש על תיאום מדויק והתקנה נקייה.'
-        >
-          <Link className='btn btn-primary' href='/contact'>
-            שיחה עם איש מקצוע
-          </Link>
-        </PageIntro>
-
-        <section className='section-shell'>
-          <SectionHeader title='מה חשוב לנו בעבודה' text='עבודת אלומיניום טובה מתחילה בהבנת הפתח, ממשיכה במדידה מסודרת ונגמרת בהתקנה שמתאימה לבית ולגמרים.' />
-          <div className='grid-3'>
-            {[
-              ['דיוק במדידה', 'פתחים, מפלסים, מסילות, זכוכית, תריסים ורשתות מתואמים לפני ייצור.'],
-              ['שפה שמתאימה לבית', 'המראה הבלגי, המראה המודרני, ויטרינות גדולות ופתרונות הצללה נבחרים לפי הבית.'],
-              ['תיאום עם השטח', 'עבודה מול בעלי בתים, אדריכלים, קבלנים ומפקחים כדי לסגור פרטים בזמן.'],
-            ].map(([title, text]) => (
-              <article className='feature-card' key={title}>
-                <h2>{title}</h2>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className='section-shell body-copy'>
-          <SectionHeader title='למי האתר מתאים' />
-          <p>לבעלי בתים פרטיים, בוני וילות, משפצים, אדריכלים, קבלנים, מפקחים ויזמים שמחפשים פתרונות אלומיניום לבית או לפרויקט.</p>
-          <p>הדרך הנוחה להתחיל היא להעלות תוכנית אלומיניום, תוכנית אדריכלית, מידות או רשימת פתחים, ולתאם פגישה מקצועית להמשך טיפול מסודר.</p>
-        </section>
-
-        <CtaBand />
-      </div>
-    </main>
-  );
+  return <main><div className='container-main'><PageIntro eyebrow='אודות' title='אודות אשבל אלומיניום' text='חברת אלומיניום לבתים פרטיים, שיפוצים ופרויקטים, עם התמחות בחלונות, ויטרינות, תריסים, פרגולות ופתרונות אלומיניום משלימים.' /><section className='section-shell body-copy'><h2>דיוק בשטח, גמר נקי ותיאום מסודר</h2><p>עבודת אלומיניום טובה מתחילה בהבנת התוכנית והפתח, ממשיכה במדידה מדויקת ומסתיימת בהתקנה נקייה שמתאימה לבית, לגמרים ולתנאי השטח.</p><div className='grid-2'>{['מדידה ודיוק','יכולת ביצוע בשטח','שפה שמתאימה לבית','תיאום מול אנשי מקצוע'].map((t)=><article key={t} className='feature-card'><h3>{t}</h3></article>)}</div><p>אשבל אלומיניום פועלת כמתקין מורשה קליל ועובדת בתיאום עם בעלי בתים, אדריכלים, קבלנים ומפקחים.</p></section><CtaBand /></div></main>;
 }
