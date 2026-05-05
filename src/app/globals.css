@@ -40,15 +40,8 @@ h3 { font-size: clamp(1.18rem, 1.8vw, 1.55rem); line-height: 1.25; letter-spacin
 .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 96%); backdrop-filter: blur(18px); }
 .nav-bar { display: flex; min-height: 82px; align-items: center; gap: 18px; }
 .brand { display: inline-flex; align-items: center; gap: 14px; }
-.ashbel-logo { min-width: 360px; justify-content: flex-start; }
-.brand-mark { position: relative; display: grid; width: 58px; height: 58px; place-items: center; overflow: visible; background: transparent; flex: 0 0 auto; }
-.clean-brand-mark svg { width: 100%; height: 100%; }
-.brand-guide { fill: none; stroke: #c8d1d7; stroke-width: 1; stroke-dasharray: 6 6; }
-.brand-outer-line { fill: none; stroke: #27323b; stroke-width: 3.2; }
-.brand-inner-line { fill: none; stroke: #27323b; stroke-width: 3.2; stroke-linecap: square; }
-.brand-name { display: grid; gap: 2px; text-align: right; white-space: nowrap; }
-.brand-name strong { display: block; color: #26313d; font-size: clamp(1.45rem, 2.25vw, 2.15rem); font-weight: 400; line-height: 1.05; letter-spacing: .035em; }
-.brand-name small { display: block; color: #26313d; font-size: clamp(.66rem, 1vw, .92rem); font-weight: 400; line-height: 1.35; letter-spacing: .48em; padding-inline-start: .2em; }
+.ashbel-logo { width: 360px; min-width: 280px; justify-content: flex-start; }
+.ashbel-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
 .desktop-links, .desktop-actions { display: none; }
 .desktop-links { flex: 1; align-items: center; justify-content: center; gap: 24px; color: #26313d; font-size: .95rem; font-weight: 700; }
 .desktop-links a { position: relative; padding-block: 29px; }
@@ -166,11 +159,8 @@ h3 { font-size: clamp(1.18rem, 1.8vw, 1.55rem); line-height: 1.25; letter-spacin
 @media (max-width: 560px) {
   .container-main { width: min(100% - 24px, 1180px); }
   .nav-bar { min-height: 78px; gap: 8px; }
-  .ashbel-logo { min-width: 0; flex: 1; gap: 8px; justify-content: flex-start; }
-  .brand-mark { width: 42px; height: 42px; order: 2; }
-  .brand-name { order: 1; min-width: 0; }
-  .brand-name strong { font-size: 1.03rem; letter-spacing: .02em; }
-  .brand-name small { font-size: .56rem; letter-spacing: .28em; white-space: normal; }
+  .ashbel-logo { width: 178px; min-width: 0; flex: 1; }
+  .ashbel-logo img { width: 178px; max-width: 100%; height: auto; }
   .mobile-top-actions { gap: 6px; }
   .icon-action { width: 40px; height: 40px; }
   .menu-button { padding: 8px 10px; }
