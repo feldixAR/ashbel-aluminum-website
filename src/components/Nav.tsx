@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { site } from '@/data/site';
@@ -11,16 +12,6 @@ const links = [
   { href: '/professionals', label: 'אדריכלים' },
   { href: '/contact', label: 'צרו קשר' },
 ];
-
-function BrandSymbol() {
-  return (
-    <svg viewBox='0 0 96 96' aria-hidden='true' focusable='false'>
-      <path className='brand-guide' d='M18 8v80M78 8v80M8 18h80M8 78h80' />
-      <rect className='brand-outer-line' x='25' y='25' width='46' height='46' />
-      <path className='brand-inner-line' d='M27 69 68 28M34 70 70 34M27 30l40 40' />
-    </svg>
-  );
-}
 
 function PhoneIcon() {
   return (
@@ -45,13 +36,7 @@ export default function Nav() {
     <header className='site-header'>
       <nav className='container-main nav-bar' aria-label='ניווט ראשי'>
         <Link className='brand ashbel-logo' href='/' onClick={() => setOpen(false)}>
-          <span className='brand-name'>
-            <strong>אשבל אלומיניום</strong>
-            <small>פתרונות אלומיניום מתקדמים</small>
-          </span>
-          <span className='brand-mark clean-brand-mark' aria-hidden='true'>
-            <BrandSymbol />
-          </span>
+          <Image src='/images/ashbel-logo.svg' alt='אשבל אלומיניום, פתרונות אלומיניום מתקדמים' width={720} height={180} priority />
         </Link>
 
         <div className='desktop-links'>
