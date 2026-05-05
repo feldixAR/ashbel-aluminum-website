@@ -16,8 +16,8 @@ function BrandSymbol() {
   return (
     <svg viewBox='0 0 96 96' aria-hidden='true' focusable='false'>
       <path className='brand-guide' d='M18 8v80M78 8v80M8 18h80M8 78h80' />
-      <rect className='brand-outer-line' x='24' y='24' width='48' height='48' />
-      <path className='brand-inner-line' d='M25 70 68 27M31 72 72 31M25 29l42 42' />
+      <rect className='brand-outer-line' x='25' y='25' width='46' height='46' />
+      <path className='brand-inner-line' d='M27 69 68 28M34 70 70 34M27 30l40 40' />
     </svg>
   );
 }
@@ -44,13 +44,13 @@ export default function Nav() {
   return (
     <header className='site-header'>
       <nav className='container-main nav-bar' aria-label='ניווט ראשי'>
-        <Link className='brand' href='/' onClick={() => setOpen(false)}>
+        <Link className='brand ashbel-logo' href='/' onClick={() => setOpen(false)}>
+          <span className='brand-name'>
+            <strong>אשבל אלומיניום</strong>
+            <small>פתרונות אלומיניום מתקדמים</small>
+          </span>
           <span className='brand-mark clean-brand-mark' aria-hidden='true'>
             <BrandSymbol />
-          </span>
-          <span className='brand-name'>
-            <strong>{site.name}</strong>
-            <small>חלונות, ויטרינות ופתרונות אלומיניום לבית</small>
           </span>
         </Link>
 
