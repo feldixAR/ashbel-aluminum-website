@@ -1,13 +1,17 @@
 import { useState } from 'react'
-import { Menu, MessageCircle, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { asset, contact, navItems } from '@/data/siteContent'
 
-export function Header() {
+export function Header({ currentRoute = '/' }) {
   const [open, setOpen] = useState(false)
+  const isActive = (href) => {
+    const route = href.replace('#', '')
+    return route === '/' ? currentRoute === '/' : currentRoute.startsWith(route)
+  }
 
   return (
     <header className="site-header" aria-label="ניווט ראשי">
-      <a className="brand" href="#top" aria-label="אשבל אלומיניום - דף הבית">
+      <a className="brand" href="#/" aria-label="אשבל אלומיניום - דף הבית" onClick={() => setOpen(false)}>
         <img src={asset('portfolio/ashbel-logo.webp')} alt="" />
         <span>
           <strong>{contact.businessName}</strong>
@@ -17,16 +21,13 @@ export function Header() {
 
       <nav className="desktop-nav" aria-label="קישורי האתר">
         {navItems.map((item) => (
-          <a key={item.href} href={item.href}>
+          <a key={item.href} href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
             {item.label}
           </a>
         ))}
       </nav>
 
-      <a className="header-contact" href={contact.whatsappHref}>
-        <MessageCircle data-icon="inline-start" />
-        WhatsApp
-      </a>
+      <a className="header-contact" href="#/contact">לקביעת ייעוץ טכני</a>
 
       <button
         className="mobile-menu-button"
@@ -41,7 +42,12 @@ export function Header() {
       {open ? (
         <nav className="mobile-nav" aria-label="תפריט מובייל">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <a
+              key={item.href}
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
               {item.label}
             </a>
           ))}

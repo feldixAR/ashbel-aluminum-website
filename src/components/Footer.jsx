@@ -1,11 +1,12 @@
-import { contact, navItems } from '@/data/siteContent'
+import { contact, navItems, solutionCategories } from '@/data/siteContent'
 
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div>
+      <div className="footer-brand">
         <strong>{contact.businessName}</strong>
         <span>{contact.positioning}</span>
+        <small>{contact.location} · {contact.hours}</small>
       </div>
       <nav aria-label="קישורי תחתית">
         {navItems.map((item) => (
@@ -14,11 +15,19 @@ export function Footer() {
           </a>
         ))}
       </nav>
-      <div>
+      <nav aria-label="פתרונות אלומיניום">
+        {solutionCategories.slice(0, 5).map((item) => (
+          <a key={item.slug} href={`#/solutions/${item.slug}`}>
+            {item.title}
+          </a>
+        ))}
+      </nav>
+      <div className="footer-contact">
         <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <a href={contact.whatsappHref}>WhatsApp</a>
       </div>
-      <small>© 2026 כל הזכויות שמורות - אשבל אלומיניום</small>
+      <small className="footer-rights">© 2026 כל הזכויות שמורות - אשבל אלומיניום</small>
     </footer>
   )
 }
