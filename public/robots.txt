@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://feldixar.github.io/ashbel-aluminum-website/sitemap.xml
