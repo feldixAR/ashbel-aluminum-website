@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;700;800;900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,19 +7,20 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --ink: #111b27;
-  --copy: #465465;
-  --muted-copy: #647386;
+  --ink: #0f172a;
+  --copy: #445164;
+  --muted-copy: #657386;
   --line: #dbe2ea;
   --line-strong: #b8c3cf;
   --surface: #ffffff;
-  --surface-muted: #f3f6f8;
+  --surface-muted: #f7f9fb;
   --accent-gold: #c88225;
+  --accent-blue: #0369a1;
   --shadow-md: 0 18px 40px rgba(15, 23, 42, 0.11);
   --shadow-lg: 0 24px 58px rgba(15, 23, 42, 0.13);
   --shadow-xl: 0 34px 80px rgba(15, 23, 42, 0.18);
 
-  font: 18px/1.5 'Geist Variable', system-ui, 'Segoe UI', Arial, sans-serif;
+  font: 17px/1.5 'Noto Sans Hebrew', 'Geist Variable', system-ui, 'Segoe UI', Arial, sans-serif;
   letter-spacing: 0;
   color-scheme: light dark;
   color: var(--foreground);

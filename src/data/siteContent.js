@@ -1,0 +1,149 @@
+import {
+  Building2,
+  CheckCircle2,
+  ClipboardCheck,
+  DoorOpen,
+  DraftingCompass,
+  Factory,
+  FileText,
+  Layers3,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Ruler,
+  SunMedium,
+  Wrench,
+} from 'lucide-react'
+
+export const base = import.meta.env.BASE_URL
+
+export const asset = (path) => `${base}${path}`.replace(/\/{2,}/g, '/')
+
+export const contact = {
+  businessName: 'אשבל אלומיניום',
+  positioning: 'ייצור וביצוע פרויקטים באלומיניום',
+  location: 'ניצני עוז',
+  phoneDisplay: '+972-55-960-7033 - עמית',
+  phoneHref: 'tel:+972559607033',
+  email: 'alumashbel@gmail.com',
+  hours: 'ראשון עד חמישי, 08:30-16:30, בתיאום מראש',
+  whatsappHref:
+    'https://wa.me/972559607033?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%A2%D7%9E%D7%99%D7%AA%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9C%D7%95%D7%97%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%95%D7%AA%20%D7%90%D7%95%20%D7%AA%D7%9E%D7%95%D7%A0%D7%95%D7%AA%20%D7%9C%D7%91%D7%93%D7%99%D7%A7%D7%94.',
+}
+
+export const navItems = [
+  { label: 'בית', href: '#top' },
+  { label: 'שירותים', href: '#services' },
+  { label: 'תהליך עבודה', href: '#process' },
+  { label: 'תיק עבודות', href: '#gallery' },
+  { label: 'מרכז ידע', href: '#knowledge' },
+  { label: 'צור קשר', href: '#contact' },
+]
+
+export const hero = {
+  title: 'אשבל אלומיניום',
+  subtitle: 'ייצור וביצוע פרויקטים באלומיניום לבתים פרטיים, קבלנים ואדריכלים',
+  text: 'מערכות אלומיניום מניצני עוז, משלב בקרת התוכנית ועד התקנה ומסירה בשטח.',
+  image: 'hero-wide-openings.webp',
+  alt: 'ויטרינות אלומיניום שחורות במפתח רחב עם נוף פתוח',
+}
+
+export const trustItems = ['בתים פרטיים', 'וילות', 'אדריכלים', 'קבלנים', 'מדידה', 'ייצור', 'התקנה']
+
+export const services = [
+  {
+    title: 'חלונות אלומיניום',
+    icon: DoorOpen,
+    text: 'חלונות ציר, קיפ, פתיחה והזזה לפי תוכנית, עם דגש על התאמה למפתח, איטום ונראות נקייה.',
+  },
+  {
+    title: 'ויטרינות אלומיניום',
+    icon: Building2,
+    text: 'מפתחים רחבים, יציאות למרפסת ופתרונות הזזה לחללים שבהם האור והנוף הם חלק מהתכנון.',
+  },
+  {
+    title: 'פרופיל בלגי ומראה בלגי',
+    icon: DraftingCompass,
+    text: 'חלוקות עדינות וקו אדריכלי נקי לחללים שבהם העיצוב חשוב לא פחות מהביצוע.',
+  },
+  {
+    title: 'תריסים והצללות',
+    icon: SunMedium,
+    text: 'תריסים, פרגולות, מסתורים וחיפויי אלומיניום שמתחברים לשימוש היומיומי ולחזית הבית.',
+  },
+  {
+    title: 'דלתות אלומיניום',
+    icon: Layers3,
+    text: 'דלתות כניסה, דלתות שירות ודלתות זכוכית בהתאמה לתכנון, לפתיחה ולרמת הפרט הנדרשת.',
+  },
+  {
+    title: 'ביצוע לפי תוכניות',
+    icon: Factory,
+    text: 'עבודה מול אדריכלים, קבלנים ובונים פרטיים: בדיקת תוכנית, תיאום מפרט, ייצור והתקנה.',
+  },
+]
+
+export const processSteps = [
+  {
+    title: 'בדיקת תוכניות וצרכים',
+    icon: ClipboardCheck,
+    text: 'בודקים תוכניות, תמונות או תיאור קצר ומבינים את סוג הפרויקט והשלב שבו הוא נמצא.',
+  },
+  {
+    title: 'הצעת מחיר ותיאום מפרט',
+    icon: FileText,
+    text: 'מגדירים מערכות, פתחים, גמרים וצרכים מקצועיים לפני יציאה למדידה או ייצור.',
+  },
+  {
+    title: 'ייצור',
+    icon: Ruler,
+    text: 'מכינים את מערכות האלומיניום לפי מידות ותוכנית מאושרת.',
+  },
+  {
+    title: 'התקנה בשטח',
+    icon: Wrench,
+    text: 'מבצעים התקנה באתר תוך שמירה על סדר, דיוק ותיאום מול בעלי המקצוע.',
+  },
+  {
+    title: 'בדיקה ומסירה',
+    icon: CheckCircle2,
+    text: 'עוברים על העבודה, בודקים גמרים ומוסרים את הפרויקט בצורה מסודרת.',
+  },
+]
+
+export const galleryImages = [
+  ['large-sliding-vitrine.webp', 'ויטרינה לבנה רחבה בחלל מגורים מואר'],
+  ['black-frame-living-room.webp', 'חלל מגורים עם חלונות וויטרינת אלומיניום שחורים'],
+  ['pergola-slats.webp', 'פרגולת אלומיניום עם סרגלי הצללה'],
+  ['belgian-partition.webp', 'מחיצת אלומיניום בסגנון בלגי עם חלוקה שחורה'],
+  ['ribbed-glass-door.webp', 'דלת אלומיניום שחורה עם זכוכית מחוספסת'],
+  ['narrow-window-stone.webp', 'חלון אנתרציט צר בקיר אבן'],
+  ['exterior-shutters.webp', 'תריסים שחורים בחזית אבן בהירה'],
+]
+
+export const knowledgeItems = [
+  {
+    title: 'איך ניגשים להצעת מחיר לעבודות אלומיניום',
+    text: 'כדאי להכין תוכנית, מידות פתחים, תמונות מהשטח ודרישות מיוחדות. כך קל יותר להבין את היקף העבודה.',
+  },
+  {
+    title: 'מה חשוב לבדוק לפני הזמנת ויטרינה',
+    text: 'במפתח רחב בודקים כיוון פתיחה, משקל כנף, מסילה, איטום, הצללה ונוחות שימוש לאורך זמן.',
+  },
+  {
+    title: 'מה ההבדל בין מראה בלגי למערכות אחרות',
+    text: 'המראה הבלגי מדגיש חלוקות דקות ונוכחות אדריכלית. הבחירה תלויה בגודל הפתח, שימוש ועיצוב הבית.',
+  },
+  {
+    title: 'איך להעביר תוכניות בצורה מסודרת',
+    text: 'אדריכלים וקבלנים יכולים לשלוח תוכניות, מפרט ותמונות ב-WhatsApp או במייל כדי לקבל כיוון ראשוני.',
+  },
+]
+
+export const contactIcons = {
+  Phone,
+  MessageCircle,
+  Mail,
+  MapPin,
+}

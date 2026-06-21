@@ -1,52 +1,47 @@
 [
   {
     "file": "/portfolio/hero-wide-openings.webp",
-    "number": "gallery-01",
+    "number": "hero-01",
     "description": "ויטרינות אלומיניום שחורות במפתח רחב עם נוף פתוח"
   },
   {
+    "file": "/portfolio/sliding-vitrine-balcony.webp",
+    "number": "context-01",
+    "description": "ויטרינת הזזה כהה ביציאה למרפסת"
+  },
+  {
     "file": "/portfolio/large-sliding-vitrine.webp",
-    "number": "gallery-02",
+    "number": "gallery-01",
     "description": "ויטרינה לבנה רחבה בחלל מגורים מואר"
   },
   {
     "file": "/portfolio/black-frame-living-room.webp",
-    "number": "gallery-03",
+    "number": "gallery-02",
     "description": "חלל מגורים עם חלונות וויטרינת אלומיניום שחורים"
   },
   {
-    "file": "/portfolio/modern-facade-black-aluminum.webp",
-    "number": "gallery-04",
-    "description": "חזית בית מודרני עם מערכות אלומיניום שחורות"
-  },
-  {
     "file": "/portfolio/pergola-slats.webp",
-    "number": "gallery-05",
+    "number": "gallery-03",
     "description": "פרגולת אלומיניום עם סרגלי הצללה"
   },
   {
     "file": "/portfolio/belgian-partition.webp",
-    "number": "gallery-06",
+    "number": "gallery-04",
     "description": "מחיצת אלומיניום בסגנון בלגי עם חלוקה שחורה"
   },
   {
     "file": "/portfolio/ribbed-glass-door.webp",
-    "number": "gallery-07",
+    "number": "gallery-05",
     "description": "דלת אלומיניום שחורה עם זכוכית מחוספסת"
   },
   {
-    "file": "/portfolio/sliding-vitrine-balcony.webp",
-    "number": "gallery-08",
-    "description": "ויטרינת הזזה כהה ביציאה למרפסת"
-  },
-  {
     "file": "/portfolio/narrow-window-stone.webp",
-    "number": "gallery-09",
+    "number": "gallery-06",
     "description": "חלון אנתרציט צר בקיר אבן"
   },
   {
     "file": "/portfolio/exterior-shutters.webp",
-    "number": "gallery-10",
+    "number": "gallery-07",
     "description": "תריסים שחורים בחזית אבן בהירה"
   }
 ]
