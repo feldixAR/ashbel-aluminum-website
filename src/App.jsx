@@ -63,10 +63,55 @@ function useHashRoute() {
   }, [])
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }, [route])
 
   return route
+}
+
+const articleDisplay = {
+  'aluminum-pergolas': {
+    title: 'פרגולות אלומיניום לבנייה פרטית',
+    category: 'הצללות ופרגולות',
+    image: 'pergola-slats.webp',
+  },
+  'profiles-and-openings': {
+    title: 'סוגי פרופילים ופתחים לבית פרטי',
+    category: 'בחירת מערכת',
+    image: 'hero-wide-openings.webp',
+  },
+  'after-architect': {
+    title: 'מה בודקים אחרי שהתכנון מוכן',
+    category: 'תכנון וביצוע',
+    image: 'modern-facade-black-aluminum.webp',
+  },
+  'one-supplier': {
+    title: 'אלומיניום לבית בחבילה אחת',
+    category: 'בנייה פרטית',
+    image: 'large-sliding-vitrine.webp',
+  },
+  'glass-choice': {
+    title: 'בחירת זכוכית לחלונות ופתחים',
+    category: 'זכוכית ובידוד',
+    image: 'ribbed-glass-door.webp',
+  },
+  'technical-consultation': {
+    title: 'איך לבחור קבלן אלומיניום',
+    category: 'ייעוץ טכני',
+    image: 'black-frame-living-room.webp',
+  },
+}
+
+function articleTitle(article) {
+  return articleDisplay[article.slug]?.title || article.title
+}
+
+function articleCategory(article) {
+  return articleDisplay[article.slug]?.category || 'מרכז ידע'
+}
+
+function articleImage(article) {
+  return articleDisplay[article.slug]?.image || 'hero-wide-openings.webp'
 }
 
 function setMeta(route, title, description) {
@@ -221,13 +266,14 @@ function SolutionsPreview() {
               <a href={`#/solutions/${solution.slug}`}>
                 <img src={asset(`portfolio/${solution.image}`)} alt={solution.alt} loading="lazy" />
                 <span className="solution-overlay" aria-hidden="true" />
-                <span className="solution-content">
-                  <Icon aria-hidden="true" />
-                  <strong>{solution.title}</strong>
-                  <small>{solution.short}</small>
-                </span>
-              </a>
-            </Reveal>
+              <span className="solution-content">
+                <Icon aria-hidden="true" />
+                <strong>{solution.title}</strong>
+                <small>{solution.short}</small>
+                <em>לפרטים</em>
+              </span>
+            </a>
+          </Reveal>
           )
         })}
       </div>
@@ -344,8 +390,8 @@ function KnowledgePreview() {
         {articles.slice(0, 4).map((article, index) => (
           <Reveal className="knowledge-card" key={article.slug} delay={index * 0.025}>
             <a href={`#/knowledge/${article.slug}`}>
-              <span>{article.readTime}</span>
-              <h3>{article.title}</h3>
+              <span>{articleCategory(article)} · {article.readTime}</span>
+              <h3>{articleTitle(article)}</h3>
               <p>{article.intro}</p>
               <small>קראו עוד</small>
             </a>
@@ -375,7 +421,7 @@ function ConsultationBand() {
         </Button>
         <Button asChild size="lg" variant="outline">
           <a href={contact.whatsappHref}>
-            WhatsApp
+            שלחו בוואטסאפ
             <MessageCircle data-icon="inline-end" />
           </a>
         </Button>
@@ -400,17 +446,31 @@ function SolutionPage({ solution }) {
     <>
       <InnerHero title={solution.title} text={solution.short} image={solution.image} />
       <section className="content-section solution-detail-section">
+        <Reveal className="solution-intro-block">
+          <p>{solution.approach}</p>
+        </Reveal>
         <div className="detail-layout">
           <Reveal className="detail-copy">
             <p className="section-kicker">פתרון אלומיניום</p>
             <h2>מה חשוב לדעת לפני ביצוע</h2>
-            <p>{solution.approach}</p>
-            <DetailList title="למי זה מתאים" items={solution.suitable} />
-            <DetailList title="מה בודקים לפני הצעה" items={solution.checks} />
+            <div className="solution-info-grid">
+              <DetailList title="למי זה מתאים" items={solution.suitable} />
+              <DetailList title="מה בודקים לפני הצעה" items={solution.checks} />
+              <DetailList
+                title="איך אשבל עובדת"
+                items={['בדיקת תוכנית או תמונות לפני הצעה', 'התאמת מערכת, גמר ופתיחה לפי הפתח', 'ייצור והתקנה מסודרים עד למסירה']}
+              />
+            </div>
           </Reveal>
           <Reveal className="detail-aside" delay={0.05}>
             <h3>העבירו חומר לבדיקה</h3>
             <p>תוכנית, מידות פתחים, תמונות מהשטח או תיאור קצר יעזרו להבין את הכיוון.</p>
+            <ul className="send-list">
+              <li>תוכנית או סקיצה</li>
+              <li>תמונות של הפתח</li>
+              <li>מידות אם קיימות</li>
+              <li>שלב בפרויקט</li>
+            </ul>
             <Button asChild className="primary-action">
               <a href={contact.whatsappHref}>שלחו תוכניות לבדיקה</a>
             </Button>
@@ -496,9 +556,10 @@ function KnowledgePage() {
           {articles.map((article, index) => (
             <Reveal className="article-card" key={article.slug} delay={index * 0.02}>
               <a href={`#/knowledge/${article.slug}`}>
-                <span>{article.readTime}</span>
-                <h2>{article.title}</h2>
+                <span>{articleCategory(article)} · {article.readTime}</span>
+                <h2>{articleTitle(article)}</h2>
                 <p>{article.intro}</p>
+                <small>קראו עוד</small>
               </a>
             </Reveal>
           ))}
@@ -512,10 +573,10 @@ function ArticlePage({ article }) {
   const relatedSolutions = article.related.map(getSolution).filter(Boolean)
   return (
     <>
-      <InnerHero title={article.title} text={article.intro} image="hero-wide-openings.webp" compact />
+      <InnerHero title={articleTitle(article)} text={article.intro} image={articleImage(article)} compact type="article" />
       <article className="content-section article-page">
         <div className="article-body">
-          <p className="article-time">{article.readTime}</p>
+          <p className="article-time">{articleCategory(article)} · {article.readTime}</p>
           {article.sections.map(([title, text]) => (
             <section key={title}>
               <h2>{title}</h2>
@@ -551,11 +612,17 @@ function ContactPage() {
             <h2>העבירו חומר לבדיקה ראשונית</h2>
             <p>אפשר לפנות ב-WhatsApp או במייל. נחזור עם כיוון מקצועי ונבין יחד מה נדרש לשלב הבא.</p>
           </div>
+          <ul className="contact-checklist" aria-label="מה כדאי לשלוח לבדיקה">
+            <li>תוכנית או סקיצה</li>
+            <li>תמונות של הפתח או החזית</li>
+            <li>מידות אם כבר קיימות</li>
+            <li>מיקום כללי ושלב בפרויקט</li>
+          </ul>
           <div className="contact-actions">
             <Button asChild size="lg" className="primary-action">
               <a href={contact.whatsappHref}>
                 <MessageCircle data-icon="inline-start" />
-                WhatsApp
+                שלחו בוואטסאפ
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -589,9 +656,9 @@ function ContactPage() {
   )
 }
 
-function InnerHero({ title, text, image, compact = false }) {
+function InnerHero({ title, text, image, compact = false, type = 'default' }) {
   return (
-    <section className={`inner-hero ${compact ? 'compact' : ''}`}>
+    <section className={`inner-hero ${compact ? 'compact' : ''} ${type === 'article' ? 'article-hero' : ''}`}>
       <img src={asset(`portfolio/${image}`)} alt="" aria-hidden="true" />
       <div className="inner-hero-shade" aria-hidden="true" />
       <Reveal className="inner-hero-copy">
