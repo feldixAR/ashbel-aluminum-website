@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -20,7 +20,7 @@
   --shadow-lg: 0 24px 58px rgba(15, 23, 42, 0.13);
   --shadow-xl: 0 34px 80px rgba(15, 23, 42, 0.18);
 
-  font: 17px/1.5 'Noto Sans Hebrew', 'Geist Variable', system-ui, 'Segoe UI', Arial, sans-serif;
+  font: 17px/1.5 'Assistant', 'Noto Sans Hebrew', 'Geist Variable', system-ui, 'Segoe UI', Arial, sans-serif;
   letter-spacing: 0;
   color-scheme: light dark;
   color: var(--foreground);
@@ -79,10 +79,12 @@
 body {
   margin: 0;
   direction: rtl;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 @theme inline {

@@ -7,7 +7,9 @@ export function Hero() {
   return (
     <>
       <section className="hero-section">
-        <div className="hero-grid">
+        <img className="hero-background" src={asset(`portfolio/${hero.image}`)} alt="" aria-hidden="true" />
+        <div className="hero-shade" aria-hidden="true" />
+        <div className="hero-inner">
           <Reveal className="hero-copy">
             <h1>{hero.title}</h1>
             <p className="hero-subtitle">{hero.subtitle}</p>
@@ -40,10 +42,6 @@ export function Hero() {
                 ראשון עד חמישי, 08:30-16:30
               </span>
             </div>
-          </Reveal>
-
-          <Reveal className="hero-photo" delay={0.05}>
-            <img src={asset(`portfolio/${hero.image}`)} alt={hero.alt} width="1200" height="850" />
           </Reveal>
         </div>
       </section>
