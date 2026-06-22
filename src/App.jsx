@@ -1,63 +1,57 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeft, ArrowUpLeft, CalendarCheck, CheckCircle2, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { MobileActions } from '@/components/MobileActions'
-import { Reveal } from '@/components/Reveal'
-import { SectionHeading } from '@/components/SectionHeading'
 import {
-  about,
-  articles,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Mail,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Phone,
+  X,
+} from 'lucide-react'
+import { articles, articleRoute, getArticle } from './content/articles'
+import { galleryIntro, galleryItems } from './content/gallery'
+import { pages } from './content/pages'
+import { processSteps, solutions, solutionsIntro } from './content/solutions'
+import {
   asset,
-  contact,
-  getArticle,
-  getSolution,
-  galleryGroups,
-  hero,
-  processSteps,
-  solutionCategories,
-  trustItems,
-} from '@/data/siteContent'
+  defaultSeo,
+  href,
+  navItems,
+  routes,
+  siteInfo,
+  whatsappHref,
+  whatsappMessages,
+} from './content/siteInfo'
 import './App.css'
 
-const pageMeta = {
-  '/': {
-    title: 'אשבל אלומיניום | ייצור וביצוע פרויקטים באלומיניום',
-    description: 'אשבל אלומיניום מניצני עוז - ויטרינות, חלונות, תריסים, פרגולות ופתרונות אלומיניום לפי תוכנית.',
-  },
-  '/solutions': {
-    title: 'פתרונות אלומיניום | אשבל אלומיניום',
-    description: 'פתרונות אלומיניום לפי סוג מוצר: ויטרינות, חלונות, בלגי, תריסים, הצללות ופתרונות מיוחדים.',
-  },
-  '/projects': {
-    title: 'תיק עבודות | אשבל אלומיניום',
-    description: 'תיק עבודות מחולק לפי פתרונות אלומיניום ותמונות אמיתיות מהשטח.',
-  },
-  '/knowledge': {
-    title: 'מרכז ידע | אשבל אלומיניום',
-    description: 'מדריכים קצרים לבחירת חלונות, ויטרינות, פרופילים, זכוכית ופתרונות אלומיניום.',
-  },
-  '/process': {
-    title: 'תהליך עבודה | אשבל אלומיניום',
-    description: 'תהליך עבודה מסודר: בדיקת תוכניות, הצעת מחיר, ייצור, התקנה ומסירה.',
-  },
-  '/contact': {
-    title: 'ייעוץ טכני ותיאום פגישה | אשבל אלומיניום',
-    description: 'שלחו תוכניות, תמונות או תיאור קצר לבדיקה ראשונית מול עמית מאשבל אלומיניום.',
-  },
+const legacyAliases = {
+  '/about': routes.about,
+  '/process': routes.process,
+  '/knowledge': routes.knowledge,
+  '/contact': routes.contact,
+  '/solutions': routes.home,
+  '/projects': routes.home,
+  '/knowledge/aluminum-pergolas': articleRoute(articles[0]),
+  '/knowledge/profiles-and-openings': articleRoute(articles[6]),
+  '/knowledge/after-architect': articleRoute(articles[4]),
+  '/knowledge/one-supplier': articleRoute(articles[5]),
+  '/knowledge/glass-choice': articleRoute(articles[3]),
+  '/knowledge/technical-consultation': articleRoute(articles[2]),
 }
 
-function normalizeHash() {
-  const hash = window.location.hash.replace(/^#/, '')
-  return hash.startsWith('/') ? hash : '/'
+function normalizeRoute() {
+  const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
+  const route = hash.startsWith('/') ? hash : routes.home
+  return legacyAliases[route] || route
 }
 
-function useHashRoute() {
-  const [route, setRoute] = useState(normalizeHash)
+function useRoute() {
+  const [route, setRoute] = useState(normalizeRoute)
 
   useEffect(() => {
-    const onHashChange = () => setRoute(normalizeHash())
+    const onHashChange = () => setRoute(normalizeRoute())
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
@@ -69,480 +63,318 @@ function useHashRoute() {
   return route
 }
 
-const articleDisplay = {
-  'aluminum-pergolas': {
-    title: 'פרגולות אלומיניום לבנייה פרטית',
-    category: 'הצללות ופרגולות',
-    image: 'pergola-slats.webp',
-  },
-  'profiles-and-openings': {
-    title: 'סוגי פרופילים ופתחים לבית פרטי',
-    category: 'בחירת מערכת',
-    image: 'hero-wide-openings.webp',
-  },
-  'after-architect': {
-    title: 'מה בודקים אחרי שהתכנון מוכן',
-    category: 'תכנון וביצוע',
-    image: 'modern-facade-black-aluminum.webp',
-  },
-  'one-supplier': {
-    title: 'אלומיניום לבית בחבילה אחת',
-    category: 'בנייה פרטית',
-    image: 'large-sliding-vitrine.webp',
-  },
-  'glass-choice': {
-    title: 'בחירת זכוכית לחלונות ופתחים',
-    category: 'זכוכית ובידוד',
-    image: 'ribbed-glass-door.webp',
-  },
-  'technical-consultation': {
-    title: 'איך לבחור קבלן אלומיניום',
-    category: 'ייעוץ טכני',
-    image: 'black-frame-living-room.webp',
-  },
-}
-
-function articleTitle(article) {
-  return articleDisplay[article.slug]?.title || article.title
-}
-
-function articleCategory(article) {
-  return articleDisplay[article.slug]?.category || 'מרכז ידע'
-}
-
-function articleImage(article) {
-  return articleDisplay[article.slug]?.image || 'hero-wide-openings.webp'
-}
-
-function setMeta(route, title, description) {
+function setMeta(page) {
+  const title = page.seoTitle || page.title || defaultSeo.title
+  const description = page.description || defaultSeo.description
   document.title = title
-  const metaDescription = document.querySelector('meta[name="description"]')
-  if (metaDescription) metaDescription.setAttribute('content', description)
 
-  const ogTitle = document.querySelector('meta[property="og:title"]')
-  if (ogTitle) ogTitle.setAttribute('content', title)
+  const updates = [
+    ['meta[name="description"]', 'content', description],
+    ['meta[property="og:title"]', 'content', title],
+    ['meta[property="og:description"]', 'content', description],
+    ['meta[property="og:url"]', 'content', `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`],
+    ['link[rel="canonical"]', 'href', `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`],
+  ]
 
-  const ogDescription = document.querySelector('meta[property="og:description"]')
-  if (ogDescription) ogDescription.setAttribute('content', description)
-
-  const canonical = document.querySelector('link[rel="canonical"]')
-  if (canonical) canonical.setAttribute('href', `${window.location.origin}${import.meta.env.BASE_URL}#${route}`)
+  updates.forEach(([selector, attr, value]) => {
+    const node = document.querySelector(selector)
+    if (node) node.setAttribute(attr, value)
+  })
 }
 
 function App() {
-  const route = useHashRoute()
+  const route = useRoute()
   const page = useMemo(() => resolvePage(route), [route])
 
   useEffect(() => {
-    setMeta(route, page.title, page.description)
-  }, [page.description, page.title, route])
+    setMeta(page.meta)
+  }, [page.meta])
 
   return (
-    <main className="site-shell" id="top">
-      <Header currentRoute={route} />
-      {page.node}
+    <div className="site-shell">
+      <Header route={route} />
+      <main>{page.node}</main>
       <MobileActions />
       <Footer />
-    </main>
+    </div>
   )
 }
 
 function resolvePage(route) {
-  const solutionMatch = route.match(/^\/solutions\/([^/]+)$/)
-  if (solutionMatch) {
-    const solution = getSolution(solutionMatch[1])
-    if (solution) {
-      return {
-        title: `${solution.title} | אשבל אלומיניום`,
-        description: solution.short,
-        node: <SolutionPage solution={solution} />,
-      }
-    }
-  }
-
-  const articleMatch = route.match(/^\/knowledge\/([^/]+)$/)
+  const articleMatch = route.match(/^\/מרכז-הידע-שלנו\/(.+)$/)
   if (articleMatch) {
     const article = getArticle(articleMatch[1])
     if (article) {
       return {
-        title: `${article.title} | אשבל אלומיניום`,
-        description: article.intro,
+        meta: {
+          route: articleRoute(article),
+          seoTitle: `${article.title} | אשבל אלומיניום`,
+          description: article.description,
+        },
         node: <ArticlePage article={article} />,
       }
     }
   }
 
-  const staticPages = {
-    '/': { ...pageMeta['/'], node: <HomePage /> },
-    '/solutions': { ...pageMeta['/solutions'], node: <SolutionsPage /> },
-    '/projects': { ...pageMeta['/projects'], node: <ProjectsPage /> },
-    '/knowledge': { ...pageMeta['/knowledge'], node: <KnowledgePage /> },
-    '/process': { ...pageMeta['/process'], node: <ProcessPage /> },
-    '/contact': { ...pageMeta['/contact'], node: <ContactPage /> },
+  if (route === routes.about) {
+    return { meta: pages[routes.about], node: <AboutPage /> }
   }
 
-  return staticPages[route] || staticPages['/']
+  if (route === routes.process) {
+    return { meta: pages[routes.process], node: <ProcessPage /> }
+  }
+
+  if (route === routes.knowledge) {
+    return { meta: pages[routes.knowledge], node: <KnowledgePage /> }
+  }
+
+  if (route === routes.contact) {
+    return { meta: pages[routes.contact], node: <ContactPage /> }
+  }
+
+  return { meta: pages[routes.home], node: <HomePage /> }
+}
+
+function Header({ route }) {
+  const [open, setOpen] = useState(false)
+
+  const isActive = (itemRoute) =>
+    itemRoute === routes.home ? route === routes.home : route.startsWith(itemRoute)
+
+  return (
+    <header className="site-header">
+      <a className="brand" href={href(routes.home)} aria-label="אשבל אלומיניום - בית" onClick={() => setOpen(false)}>
+        <img src={asset(siteInfo.logo)} alt={siteInfo.logoAlt} />
+        <span>
+          <strong>{siteInfo.name}</strong>
+          <small>{siteInfo.positioning}</small>
+        </span>
+      </a>
+
+      <nav className="desktop-nav" aria-label="ניווט ראשי">
+        {navItems.map((item) => (
+          <a key={item.route} href={href(item.route)} aria-current={isActive(item.route) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <a className="header-contact" href={whatsappHref()}>
+        לבדיקת תוכנית האלומיניום שלך
+      </a>
+
+      <button
+        className="mobile-menu-button"
+        type="button"
+        aria-label={open ? 'סגירת תפריט' : 'פתיחת תפריט'}
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+      >
+        {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+      </button>
+
+      {open ? (
+        <nav className="mobile-nav" aria-label="תפריט מובייל">
+          {navItems.map((item) => (
+            <a key={item.route} href={href(item.route)} onClick={() => setOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+          <a href={whatsappHref()} onClick={() => setOpen(false)}>
+            שליחה בוואטסאפ
+          </a>
+        </nav>
+      ) : null}
+    </header>
+  )
 }
 
 function HomePage() {
+  const home = pages[routes.home]
+
   return (
     <>
-      <HeroSection />
-      <TrustStrip />
-      <SolutionsPreview />
-      <AboutSection />
-      <ProcessSection compact />
-      <ProjectsPreview />
-      <KnowledgePreview />
-      <ConsultationBand />
+      <Hero page={home} primaryHref={whatsappHref()} primaryLabel="לבדיקת תוכנית האלומיניום שלך" secondaryRoute={routes.process} secondaryLabel="איך אנחנו עובדים" />
+      <SolutionsSection />
+      <ProcessSection preview />
+      <GallerySection />
+      <ContactSection compact />
     </>
   )
 }
 
-function HeroSection() {
+function Hero({ page, primaryHref, primaryLabel, secondaryRoute, secondaryLabel }) {
   return (
     <section className="hero-section">
-      <img className="hero-background" src={asset(`portfolio/${hero.image}`)} alt="" aria-hidden="true" />
-      <div className="hero-shade" aria-hidden="true" />
-      <div className="hero-inner">
-        <Reveal className="hero-copy">
-          <h1>{hero.title}</h1>
-          <p className="hero-subtitle">{hero.subtitle}</p>
-          <p className="hero-lead">{hero.text}</p>
-          <div className="hero-actions" aria-label="פעולות ראשיות">
-            <Button asChild size="lg" className="primary-action">
-              <a href="#/contact">לקביעת ייעוץ טכני</a>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href={contact.whatsappHref}>
-                דברו עם עמית בוואטסאפ
-                <MessageCircle data-icon="inline-end" />
-              </a>
-            </Button>
-          </div>
-          <div className="hero-contact-strip">
-            <a href={contact.phoneHref}>
-              <Phone aria-hidden="true" />
-              {contact.phoneDisplay}
+      <img className="hero-image" src={asset(page.hero.image)} alt={page.hero.alt} />
+      <div className="hero-overlay" aria-hidden="true" />
+      <div className="hero-content">
+        <h1>{page.hero.title}</h1>
+        <p>{page.hero.subtitle}</p>
+        <div className="hero-actions">
+          <a className="button button-primary" href={primaryHref || href(routes.contact)}>
+            {primaryLabel || 'השאירו פרטים ונחזור אליכם'}
+          </a>
+          {secondaryRoute ? (
+            <a className="button button-ghost" href={href(secondaryRoute)}>
+              {secondaryLabel}
             </a>
-            <span>
-              <MapPin aria-hidden="true" />
-              {contact.location}
-            </span>
-            <span>
-              <CalendarCheck aria-hidden="true" />
-              ראשון עד חמישי, 08:30-16:30
-            </span>
-          </div>
-        </Reveal>
+          ) : null}
+        </div>
+        <div className="hero-contact" aria-label="פרטי קשר מהירים">
+          <span>
+            <MapPin aria-hidden="true" />
+            {siteInfo.location}
+          </span>
+          <a href={`tel:${siteInfo.phone}`}>
+            <Phone aria-hidden="true" />
+            {siteInfo.phoneLabel}
+          </a>
+          <a href={`mailto:${siteInfo.email}`}>
+            <Mail aria-hidden="true" />
+            {siteInfo.email}
+          </a>
+        </div>
       </div>
     </section>
   )
 }
 
-function TrustStrip() {
+function PageHero({ page }) {
   return (
-    <section className="trust-strip" aria-label="תחומי פעילות">
-      {trustItems.map((item) => (
-        <span key={item}>{item}</span>
-      ))}
+    <section className="page-hero">
+      <img src={asset(page.hero.image)} alt={page.hero.alt} />
+      <div className="page-hero-overlay" aria-hidden="true" />
+      <div>
+        <h1>{page.hero.title}</h1>
+        <p>{page.hero.subtitle}</p>
+      </div>
     </section>
   )
 }
 
-function SolutionsPreview() {
+function SolutionsSection() {
   return (
-    <section className="content-section white-section">
-      <SectionHeading
-        kicker="פתרונות אלומיניום"
-        title="בחירה לפי פתח, שימוש ותוכנית"
-        intro="האתר מחולק לפי סוגי פתרונות כדי שתוכלו לראות את העבודה בהקשר הנכון, ולא כאוסף תמונות אקראי."
-      />
+    <section className="section section-light">
+      <SectionTitle title={solutionsIntro.title} text={solutionsIntro.subtitle} />
       <div className="solutions-grid">
-        {solutionCategories.map((solution, index) => {
-          const Icon = solution.icon
-          return (
-            <Reveal className="solution-card" key={solution.slug} delay={index * 0.025}>
-              <a href={`#/solutions/${solution.slug}`}>
-                <img src={asset(`portfolio/${solution.image}`)} alt={solution.alt} loading="lazy" />
-                <span className="solution-overlay" aria-hidden="true" />
-              <span className="solution-content">
-                <Icon aria-hidden="true" />
-                <strong>{solution.title}</strong>
-                <small>{solution.short}</small>
-                <em>לפרטים</em>
-              </span>
-            </a>
-          </Reveal>
-          )
-        })}
-      </div>
-      <div className="section-action">
-        <Button asChild className="primary-action">
-          <a href="#/solutions">
-            לכל הפתרונות
-            <ArrowLeft data-icon="inline-end" />
-          </a>
-        </Button>
-      </div>
-    </section>
-  )
-}
-
-function AboutSection() {
-  return (
-    <section className="content-section about-section">
-      <div className="about-layout">
-        <Reveal className="about-copy">
-          <p className="section-kicker">על החברה</p>
-          <h2>ייצור וביצוע מסודר, מהתוכנית ועד השטח</h2>
-          <p>{about.intro}</p>
-          <div className="about-points">
-            {about.points.map((point) => (
-              <div className="about-point" key={point.title}>
-                <CheckCircle2 aria-hidden="true" />
-                <div>
-                  <h3>{point.title}</h3>
-                  <p>{point.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal className="about-photo" delay={0.05}>
-          <img src={asset(`portfolio/${about.image}`)} alt={about.alt} loading="lazy" />
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function ProcessSection({ compact = false }) {
-  return (
-    <section className={`content-section process-section ${compact ? 'compact-process' : ''}`}>
-      <SectionHeading
-        kicker="תהליך עבודה"
-        title="תהליך ברור שמייצר ביטחון"
-        intro="מהרגע ששולחים תוכניות או תמונות ועד התקנה ומסירה, התהליך נשאר פשוט, מקצועי ומבוסס תיאום."
-      />
-      <div className="process-layout">
-        <Reveal className="process-photo">
-          <img src={asset('portfolio/sliding-vitrine-balcony.webp')} alt="ויטרינת הזזה כהה ביציאה למרפסת" loading="lazy" />
-        </Reveal>
-        <div className="process-list">
-          {processSteps.map((step, index) => {
-            const Icon = step.icon
-            return (
-              <Reveal className="process-card" key={step.title} delay={index * 0.025}>
-                <span className="step-number">{index + 1}</span>
-                <Icon aria-hidden="true" />
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </Reveal>
-            )
-          })}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function ProjectsPreview() {
-  const featured = galleryGroups.slice(0, 4)
-  return (
-    <section className="content-section projects-section">
-      <SectionHeading
-        kicker="תיק עבודות"
-        title="תמונות נבחרות לפי סוג פתרון"
-        intro="מעט תמונות חזקות, מוצגות בהקשר שלהן. בלי שמות קבצים, בלי מספרים ובלי סיפורי פרויקט שלא אומתו."
-      />
-      <div className="project-category-grid">
-        {featured.map((group, index) => (
-          <Reveal className="project-category-card" key={group.slug} delay={index * 0.025}>
-            <a href={`#/solutions/${group.slug}`}>
-              <img src={asset(`portfolio/${group.image}`)} alt={group.alt} loading="lazy" />
-              <span>
-                <strong>{group.title}</strong>
-                <small>{group.short}</small>
-              </span>
-            </a>
-          </Reveal>
-        ))}
-      </div>
-      <div className="section-action">
-        <Button asChild variant="outline">
-          <a href="#/projects">לתיק העבודות המלא</a>
-        </Button>
-      </div>
-    </section>
-  )
-}
-
-function KnowledgePreview() {
-  return (
-    <section className="content-section white-section">
-      <SectionHeading
-        kicker="מרכז ידע"
-        title="מידע קצר לפני שמתחילים"
-        intro="מאמרים קצרים מתוך אתר אשבל המקורי, מסודרים מחדש לקריאה נוחה וברורה."
-      />
-      <div className="knowledge-grid">
-        {articles.slice(0, 4).map((article, index) => (
-          <Reveal className="knowledge-card" key={article.slug} delay={index * 0.025}>
-            <a href={`#/knowledge/${article.slug}`}>
-              <span>{articleCategory(article)} · {article.readTime}</span>
-              <h3>{articleTitle(article)}</h3>
-              <p>{article.intro}</p>
-              <small>קראו עוד</small>
-            </a>
-          </Reveal>
-        ))}
-      </div>
-      <div className="section-action">
-        <Button asChild variant="outline">
-          <a href="#/knowledge">למרכז הידע</a>
-        </Button>
-      </div>
-    </section>
-  )
-}
-
-function ConsultationBand() {
-  return (
-    <section className="consultation-band">
-      <div>
-        <p className="section-kicker">ייעוץ טכני</p>
-        <h2>שלחו תוכניות, תמונות או תיאור קצר של העבודה</h2>
-        <p>נבדוק את החומר ונחזור עם כיוון ראשוני לשלב הבא.</p>
-      </div>
-      <div className="contact-actions">
-        <Button asChild size="lg" className="primary-action">
-          <a href="#/contact">לקביעת ייעוץ טכני</a>
-        </Button>
-        <Button asChild size="lg" variant="outline">
-          <a href={contact.whatsappHref}>
-            שלחו בוואטסאפ
-            <MessageCircle data-icon="inline-end" />
-          </a>
-        </Button>
-      </div>
-    </section>
-  )
-}
-
-function SolutionsPage() {
-  return (
-    <>
-      <InnerHero title="פתרונות אלומיניום" text="פתרונות לפי סוג מוצר, שימוש ותוכנית - עם תמונות אמיתיות והקשר מקצועי." image="modern-facade-black-aluminum.webp" />
-      <SolutionsPreview />
-      <ConsultationBand />
-    </>
-  )
-}
-
-function SolutionPage({ solution }) {
-  const related = solutionCategories.filter((item) => item.slug !== solution.slug).slice(0, 3)
-  return (
-    <>
-      <InnerHero title={solution.title} text={solution.short} image={solution.image} />
-      <section className="content-section solution-detail-section">
-        <Reveal className="solution-intro-block">
-          <p>{solution.approach}</p>
-        </Reveal>
-        <div className="detail-layout">
-          <Reveal className="detail-copy">
-            <p className="section-kicker">פתרון אלומיניום</p>
-            <h2>מה חשוב לדעת לפני ביצוע</h2>
-            <div className="solution-info-grid">
-              <DetailList title="למי זה מתאים" items={solution.suitable} />
-              <DetailList title="מה בודקים לפני הצעה" items={solution.checks} />
-              <DetailList
-                title="איך אשבל עובדת"
-                items={['בדיקת תוכנית או תמונות לפני הצעה', 'התאמת מערכת, גמר ופתיחה לפי הפתח', 'ייצור והתקנה מסודרים עד למסירה']}
-              />
-            </div>
-          </Reveal>
-          <Reveal className="detail-aside" delay={0.05}>
-            <h3>העבירו חומר לבדיקה</h3>
-            <p>תוכנית, מידות פתחים, תמונות מהשטח או תיאור קצר יעזרו להבין את הכיוון.</p>
-            <ul className="send-list">
-              <li>תוכנית או סקיצה</li>
-              <li>תמונות של הפתח</li>
-              <li>מידות אם קיימות</li>
-              <li>שלב בפרויקט</li>
-            </ul>
-            <Button asChild className="primary-action">
-              <a href={contact.whatsappHref}>שלחו תוכניות לבדיקה</a>
-            </Button>
-          </Reveal>
-        </div>
-        <ImageStory images={solution.gallery} />
-        <RelatedSolutions solutions={related} />
-      </section>
-    </>
-  )
-}
-
-function DetailList({ title, items }) {
-  return (
-    <div className="detail-list">
-      <h3>{title}</h3>
-      <ul>
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-function ImageStory({ images }) {
-  return (
-    <div className="image-story">
-      {images.map(([image, alt], index) => (
-        <Reveal className="story-image" key={image} delay={index * 0.025}>
-          <img src={asset(`portfolio/${image}`)} alt={alt} loading="lazy" />
-        </Reveal>
-      ))}
-    </div>
-  )
-}
-
-function RelatedSolutions({ solutions }) {
-  return (
-    <div className="related-strip">
-      <h2>פתרונות קרובים</h2>
-      <div>
         {solutions.map((solution) => (
-          <a href={`#/solutions/${solution.slug}`} key={solution.slug}>
-            {solution.title}
-            <ArrowUpLeft aria-hidden="true" />
-          </a>
+          <article className="solution-card" key={solution.title}>
+            <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
+            <div>
+              <h3>{solution.title}</h3>
+              <p>{solution.text}</p>
+            </div>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 
-function ProjectsPage() {
+function ProcessSection({ preview = false }) {
+  return (
+    <section className="section section-muted">
+      <SectionTitle title="תהליך העבודה" text="ניהול פרויקט מסודר משלב בדיקת התוכניות ועד למסירה" />
+      <div className="process-grid">
+        {processSteps.map((step, index) => (
+          <article className="process-card" key={step.title}>
+            <span>{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+      {preview ? (
+        <div className="section-action">
+          <a className="text-link" href={href(routes.process)}>
+            לפירוט תהליך העבודה
+            <ArrowLeft aria-hidden="true" />
+          </a>
+        </div>
+      ) : null}
+    </section>
+  )
+}
+
+function GallerySection() {
+  const [index, setIndex] = useState(0)
+  const maxIndex = galleryItems.length - 1
+  const active = galleryItems[index]
+
+  const next = () => setIndex((current) => (current === maxIndex ? 0 : current + 1))
+  const previous = () => setIndex((current) => (current === 0 ? maxIndex : current - 1))
+
+  return (
+    <section className="section gallery-section">
+      <div className="gallery-copy">
+        <SectionTitle title={galleryIntro.title} text={galleryIntro.text} align="start" />
+        <div className="gallery-controls" aria-label="בקרת גלריה">
+          <button type="button" onClick={previous} aria-label="תמונה קודמת">
+            <ChevronRight aria-hidden="true" />
+          </button>
+          <span>{index + 1} / {galleryItems.length}</span>
+          <button type="button" onClick={next} aria-label="תמונה הבאה">
+            <ChevronLeft aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+      <div className="gallery-stage">
+        <img src={asset(active.image)} alt={active.alt} />
+        <strong>{active.title}</strong>
+      </div>
+      <div className="gallery-thumbs" aria-label="בחירת תמונה">
+        {galleryItems.map((item, itemIndex) => (
+          <button
+            type="button"
+            key={item.image}
+            aria-label={item.title}
+            aria-current={itemIndex === index ? 'true' : undefined}
+            onClick={() => setIndex(itemIndex)}
+          >
+            <img src={asset(item.image)} alt={item.alt} loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function AboutPage() {
+  const page = pages[routes.about]
+
   return (
     <>
-      <InnerHero title="תיק עבודות" text="העבודות מוצגות לפי סוג פתרון כדי לתת הקשר מקצועי לכל תמונה." image="black-frame-living-room.webp" />
-      <section className="content-section projects-section">
-        <div className="project-category-grid large">
-          {galleryGroups.map((group, index) => (
-            <Reveal className="project-category-card" key={group.slug} delay={index * 0.025}>
-              <a href={`#/solutions/${group.slug}`}>
-                <img src={asset(`portfolio/${group.image}`)} alt={group.alt} loading="lazy" />
-                <span>
-                  <strong>{group.title}</strong>
-                  <small>{group.short}</small>
-                </span>
-              </a>
-            </Reveal>
-          ))}
-        </div>
+      <PageHero page={page} />
+      <section className="section section-light narrative-section">
+        {page.sections.map((section) => (
+          <article className="narrative-block" key={section.title}>
+            <h2>{section.title}</h2>
+            {section.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {section.items ? (
+              <div className="info-list">
+                {section.items.map((item) => (
+                  <div key={item.title}>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </article>
+        ))}
       </section>
+      <ContactBand />
+    </>
+  )
+}
+
+function ProcessPage() {
+  return (
+    <>
+      <PageHero page={pages[routes.process]} />
+      <ProcessSection />
+      <ContactBand />
     </>
   )
 }
@@ -550,18 +382,19 @@ function ProjectsPage() {
 function KnowledgePage() {
   return (
     <>
-      <InnerHero title="מרכז ידע" text="נקודות מעשיות לפני בחירת חלונות, ויטרינות, פרופילים ופתרונות אלומיניום." image="pergola-slats.webp" />
-      <section className="content-section white-section">
+      <PageHero page={pages[routes.knowledge]} />
+      <section className="section section-light">
         <div className="article-grid">
-          {articles.map((article, index) => (
-            <Reveal className="article-card" key={article.slug} delay={index * 0.02}>
-              <a href={`#/knowledge/${article.slug}`}>
-                <span>{articleCategory(article)} · {article.readTime}</span>
-                <h2>{articleTitle(article)}</h2>
-                <p>{article.intro}</p>
-                <small>קראו עוד</small>
+          {articles.map((article) => (
+            <article className="article-card" key={article.slug}>
+              <a href={href(articleRoute(article))}>
+                <img src={asset(article.image)} alt={article.alt} loading="lazy" />
+                <span>{article.readTime}</span>
+                <h2>{article.title}</h2>
+                <p>{article.description}</p>
+                <small>קרא עוד</small>
               </a>
-            </Reveal>
+            </article>
           ))}
         </div>
       </section>
@@ -570,33 +403,29 @@ function KnowledgePage() {
 }
 
 function ArticlePage({ article }) {
-  const relatedSolutions = article.related.map(getSolution).filter(Boolean)
   return (
     <>
-      <InnerHero title={articleTitle(article)} text={article.intro} image={articleImage(article)} compact type="article" />
-      <article className="content-section article-page">
-        <div className="article-body">
-          <p className="article-time">{articleCategory(article)} · {article.readTime}</p>
-          {article.sections.map(([title, text]) => (
-            <section key={title}>
-              <h2>{title}</h2>
-              <p>{text}</p>
-            </section>
-          ))}
+      <section className="article-hero">
+        <div>
+          <a href={href(routes.knowledge)}>מרכז הידע שלנו</a>
+          <h1>{article.title}</h1>
+          <p>{article.readTime}</p>
         </div>
-        <RelatedSolutions solutions={relatedSolutions} />
+        <img src={asset(article.image)} alt={article.alt} />
+      </section>
+      <article className="section section-light article-body">
+        {article.sections.map((section, index) => (
+          <section key={section.title || index}>
+            {section.title ? <h2>{section.title}</h2> : null}
+            {section.body.map((paragraph) => (
+              <p className={paragraph.startsWith('•') ? 'bullet-line' : undefined} key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </section>
+        ))}
       </article>
-      <ConsultationBand />
-    </>
-  )
-}
-
-function ProcessPage() {
-  return (
-    <>
-      <InnerHero title="תהליך העבודה" text="ניהול פרויקט מסודר משלב בדיקת התוכניות ועד למסירה." image="sliding-vitrine-balcony.webp" />
-      <ProcessSection />
-      <ConsultationBand />
+      <ContactBand />
     </>
   )
 }
@@ -604,68 +433,158 @@ function ProcessPage() {
 function ContactPage() {
   return (
     <>
-      <InnerHero title="ייעוץ טכני ותיאום פגישה" text="שלחו תוכניות, תמונות או תיאור קצר ונחזור אליכם בהקדם." image="modern-facade-black-aluminum.webp" compact />
-      <section className="contact-section" id="contact">
-        <Reveal className="contact-panel">
-          <div>
-            <p className="section-kicker">צור קשר</p>
-            <h2>העבירו חומר לבדיקה ראשונית</h2>
-            <p>אפשר לפנות ב-WhatsApp או במייל. נחזור עם כיוון מקצועי ונבין יחד מה נדרש לשלב הבא.</p>
-          </div>
-          <ul className="contact-checklist" aria-label="מה כדאי לשלוח לבדיקה">
-            <li>תוכנית או סקיצה</li>
-            <li>תמונות של הפתח או החזית</li>
-            <li>מידות אם כבר קיימות</li>
-            <li>מיקום כללי ושלב בפרויקט</li>
-          </ul>
-          <div className="contact-actions">
-            <Button asChild size="lg" className="primary-action">
-              <a href={contact.whatsappHref}>
-                <MessageCircle data-icon="inline-start" />
-                שלחו בוואטסאפ
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href={`mailto:${contact.email}`}>
-                <Mail data-icon="inline-start" />
-                שליחת מייל
-              </a>
-            </Button>
-          </div>
-          <div className="contact-details">
-            <span>
-              <MapPin aria-hidden="true" />
-              {contact.location}
-            </span>
-            <a href={contact.phoneHref}>
-              <Phone aria-hidden="true" />
-              {contact.phoneDisplay}
-            </a>
-            <a href={`mailto:${contact.email}`}>
-              <Mail aria-hidden="true" />
-              {contact.email}
-            </a>
-            <span>
-              <CalendarCheck aria-hidden="true" />
-              {contact.hours}
-            </span>
-          </div>
-        </Reveal>
-      </section>
+      <PageHero page={pages[routes.contact]} />
+      <ContactSection />
     </>
   )
 }
 
-function InnerHero({ title, text, image, compact = false, type = 'default' }) {
+function ContactSection({ compact = false }) {
   return (
-    <section className={`inner-hero ${compact ? 'compact' : ''} ${type === 'article' ? 'article-hero' : ''}`}>
-      <img src={asset(`portfolio/${image}`)} alt="" aria-hidden="true" />
-      <div className="inner-hero-shade" aria-hidden="true" />
-      <Reveal className="inner-hero-copy">
-        <h1>{title}</h1>
-        <p>{text}</p>
-      </Reveal>
+    <section className={`section contact-section ${compact ? 'compact-contact' : ''}`}>
+      <div className="contact-layout">
+        <div className="contact-details-card">
+          <SectionTitle
+            title="לייעוץ טכני ותיאום פגישה"
+            text="לבדיקת תוכניות אלומיניום, תיאום פגישה או קבלת הצעה טכנית, שלחו תוכניות, תמונות או תיאור קצר ונחזור אליכם בהקדם."
+            align="start"
+          />
+          <ul className="contact-list">
+            <li>
+              <MapPin aria-hidden="true" />
+              {siteInfo.location}
+            </li>
+            <li>{siteInfo.name} | מערכות אלומיניום מתקדמות</li>
+            <li>
+              <Phone aria-hidden="true" />
+              <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneLabel}</a>
+            </li>
+            <li>
+              <Mail aria-hidden="true" />
+              <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
+            </li>
+            <li>{siteInfo.hours}</li>
+            <li>{siteInfo.hoursNote}</li>
+          </ul>
+          <div className="contact-buttons">
+            <a className="button button-primary" href={whatsappHref()}>
+              <MessageCircle aria-hidden="true" />
+              שליחת תוכניות בוואטסאפ
+            </a>
+            <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
+              <Mail aria-hidden="true" />
+              שליחת מייל
+            </a>
+          </div>
+        </div>
+        <ContactForm />
+      </div>
     </section>
+  )
+}
+
+function ContactForm() {
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
+  const updateField = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
+  const message = [
+    form.name ? `שם: ${form.name}` : '',
+    form.phone ? `טלפון: ${form.phone}` : '',
+    form.email ? `מייל: ${form.email}` : '',
+    form.message ? `הודעה: ${form.message}` : '',
+  ].filter(Boolean).join('\n')
+
+  const encoded = message || whatsappMessages.details
+
+  return (
+    <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+      <h2>צור קשר</h2>
+      <label>
+        שם*
+        <input value={form.name} onChange={updateField('name')} autoComplete="name" />
+      </label>
+      <label>
+        טלפון
+        <input value={form.phone} onChange={updateField('phone')} autoComplete="tel" inputMode="tel" />
+      </label>
+      <label>
+        כתובת הדואר האלקטרוני שלך*
+        <input value={form.email} onChange={updateField('email')} autoComplete="email" inputMode="email" />
+      </label>
+      <label>
+        הודעה
+        <textarea value={form.message} onChange={updateField('message')} rows="5" />
+      </label>
+      <div className="form-actions">
+        <a className="button button-primary" href={whatsappHref(encoded)}>
+          שליחה בוואטסאפ
+        </a>
+        <a className="button button-outline" href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל אלומיניום')}&body=${encodeURIComponent(encoded)}`}>
+          שליחה במייל
+        </a>
+      </div>
+      <p>הטופס מכין הודעה לשליחה בוואטסאפ או במייל. ניתן לצרף שם תוכניות ותמונות לפני השליחה.</p>
+    </form>
+  )
+}
+
+function ContactBand() {
+  return (
+    <section className="contact-band">
+      <div>
+        <h2>שלחו תוכניות, תמונות או תיאור קצר של העבודה</h2>
+        <p>נבדוק את החומר ונחזור עם כיוון ראשוני לשלב הבא.</p>
+      </div>
+      <a className="button button-primary" href={whatsappHref()}>
+        שליחת תוכניות לוואטסאפ
+      </a>
+    </section>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div>
+        <strong>{siteInfo.name}</strong>
+        <p>{siteInfo.positioning}</p>
+        <p>{siteInfo.location} | {siteInfo.hours}</p>
+      </div>
+      <nav aria-label="קישורי תחתית">
+        {navItems.map((item) => (
+          <a key={item.route} href={href(item.route)}>{item.label}</a>
+        ))}
+      </nav>
+      <div className="footer-contact">
+        <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneLabel}</a>
+        <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
+        <a href={whatsappHref(whatsappMessages.details)}>WhatsApp</a>
+      </div>
+      <small>{siteInfo.copyright}</small>
+    </footer>
+  )
+}
+
+function MobileActions() {
+  return (
+    <div className="mobile-actions" aria-label="פעולות מהירות">
+      <a href={whatsappHref()}>
+        <MessageCircle aria-hidden="true" />
+        WhatsApp
+      </a>
+      <a href={`tel:${siteInfo.phone}`}>
+        <Phone aria-hidden="true" />
+        התקשרות
+      </a>
+    </div>
+  )
+}
+
+function SectionTitle({ title, text, align = 'center' }) {
+  return (
+    <div className={`section-title align-${align}`}>
+      <h2>{title}</h2>
+      {text ? <p>{text}</p> : null}
+    </div>
   )
 }
 
