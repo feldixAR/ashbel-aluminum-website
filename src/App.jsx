@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
   Mail,
   MapPin,
   Menu,
@@ -11,7 +9,6 @@ import {
   X,
 } from 'lucide-react'
 import { articles, articleRoute, getArticle } from './content/articles'
-import { galleryIntro, galleryItems } from './content/gallery'
 import { pages } from './content/pages'
 import { processSteps, solutions, solutionsIntro } from './content/solutions'
 import {
@@ -68,12 +65,13 @@ function setMeta(page) {
   const description = page.description || defaultSeo.description
   document.title = title
 
+  const currentUrl = `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`
   const updates = [
     ['meta[name="description"]', 'content', description],
     ['meta[property="og:title"]', 'content', title],
     ['meta[property="og:description"]', 'content', description],
-    ['meta[property="og:url"]', 'content', `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`],
-    ['link[rel="canonical"]', 'href', `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`],
+    ['meta[property="og:url"]', 'content', currentUrl],
+    ['link[rel="canonical"]', 'href', currentUrl],
   ]
 
   updates.forEach(([selector, attr, value]) => {
@@ -116,28 +114,16 @@ function resolvePage(route) {
     }
   }
 
-  if (route === routes.about) {
-    return { meta: pages[routes.about], node: <AboutPage /> }
-  }
-
-  if (route === routes.process) {
-    return { meta: pages[routes.process], node: <ProcessPage /> }
-  }
-
-  if (route === routes.knowledge) {
-    return { meta: pages[routes.knowledge], node: <KnowledgePage /> }
-  }
-
-  if (route === routes.contact) {
-    return { meta: pages[routes.contact], node: <ContactPage /> }
-  }
+  if (route === routes.about) return { meta: pages[routes.about], node: <AboutPage /> }
+  if (route === routes.process) return { meta: pages[routes.process], node: <ProcessPage /> }
+  if (route === routes.knowledge) return { meta: pages[routes.knowledge], node: <KnowledgePage /> }
+  if (route === routes.contact) return { meta: pages[routes.contact], node: <ContactPage /> }
 
   return { meta: pages[routes.home], node: <HomePage /> }
 }
 
 function Header({ route }) {
   const [open, setOpen] = useState(false)
-
   const isActive = (itemRoute) =>
     itemRoute === routes.home ? route === routes.home : route.startsWith(itemRoute)
 
@@ -190,20 +176,17 @@ function Header({ route }) {
 }
 
 function HomePage() {
-  const home = pages[routes.home]
-
   return (
     <>
-      <Hero page={home} primaryHref={whatsappHref()} primaryLabel="לבדיקת תוכנית האלומיניום שלך" secondaryRoute={routes.process} secondaryLabel="איך אנחנו עובדים" />
+      <Hero page={pages[routes.home]} />
       <SolutionsSection />
       <ProcessSection preview />
-      <GallerySection />
       <ContactSection compact />
     </>
   )
 }
 
-function Hero({ page, primaryHref, primaryLabel, secondaryRoute, secondaryLabel }) {
+function Hero({ page }) {
   return (
     <section className="hero-section">
       <img className="hero-image" src={asset(page.hero.image)} alt={page.hero.alt} />
@@ -212,27 +195,8 @@ function Hero({ page, primaryHref, primaryLabel, secondaryRoute, secondaryLabel 
         <h1>{page.hero.title}</h1>
         <p>{page.hero.subtitle}</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={primaryHref || href(routes.contact)}>
-            {primaryLabel || 'השאירו פרטים ונחזור אליכם'}
-          </a>
-          {secondaryRoute ? (
-            <a className="button button-ghost" href={href(secondaryRoute)}>
-              {secondaryLabel}
-            </a>
-          ) : null}
-        </div>
-        <div className="hero-contact" aria-label="פרטי קשר מהירים">
-          <span>
-            <MapPin aria-hidden="true" />
-            {siteInfo.location}
-          </span>
-          <a href={`tel:${siteInfo.phone}`}>
-            <Phone aria-hidden="true" />
-            {siteInfo.phoneLabel}
-          </a>
-          <a href={`mailto:${siteInfo.email}`}>
-            <Mail aria-hidden="true" />
-            {siteInfo.email}
+          <a className="button button-primary" href={whatsappHref()}>
+            לבדיקת תוכנית האלומיניום שלך
           </a>
         </div>
       </div>
@@ -250,6 +214,15 @@ function PageHero({ page }) {
         <p>{page.hero.subtitle}</p>
       </div>
     </section>
+  )
+}
+
+function SectionTitle({ title, text, align = 'center' }) {
+  return (
+    <div className={`section-title align-${align}`}>
+      <h2>{title}</h2>
+      {text ? <p>{text}</p> : null}
+    </div>
   )
 }
 
@@ -279,9 +252,12 @@ function ProcessSection({ preview = false }) {
       <div className="process-grid">
         {processSteps.map((step, index) => (
           <article className="process-card" key={step.title}>
-            <span>{index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
+            <img src={asset(step.image)} alt={step.alt} loading="lazy" />
+            <div>
+              <span>{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
           </article>
         ))}
       </div>
@@ -297,72 +273,23 @@ function ProcessSection({ preview = false }) {
   )
 }
 
-function GallerySection() {
-  const [index, setIndex] = useState(0)
-  const maxIndex = galleryItems.length - 1
-  const active = galleryItems[index]
-
-  const next = () => setIndex((current) => (current === maxIndex ? 0 : current + 1))
-  const previous = () => setIndex((current) => (current === 0 ? maxIndex : current - 1))
-
-  return (
-    <section className="section gallery-section">
-      <div className="gallery-copy">
-        <SectionTitle title={galleryIntro.title} text={galleryIntro.text} align="start" />
-        <div className="gallery-controls" aria-label="בקרת גלריה">
-          <button type="button" onClick={previous} aria-label="תמונה קודמת">
-            <ChevronRight aria-hidden="true" />
-          </button>
-          <span>{index + 1} / {galleryItems.length}</span>
-          <button type="button" onClick={next} aria-label="תמונה הבאה">
-            <ChevronLeft aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-      <div className="gallery-stage">
-        <img src={asset(active.image)} alt={active.alt} />
-        <strong>{active.title}</strong>
-      </div>
-      <div className="gallery-thumbs" aria-label="בחירת תמונה">
-        {galleryItems.map((item, itemIndex) => (
-          <button
-            type="button"
-            key={item.image}
-            aria-label={item.title}
-            aria-current={itemIndex === index ? 'true' : undefined}
-            onClick={() => setIndex(itemIndex)}
-          >
-            <img src={asset(item.image)} alt={item.alt} loading="lazy" />
-          </button>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 function AboutPage() {
   const page = pages[routes.about]
 
   return (
     <>
       <PageHero page={page} />
-      <section className="section section-light narrative-section">
-        {page.sections.map((section) => (
-          <article className="narrative-block" key={section.title}>
-            <h2>{section.title}</h2>
-            {section.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            {section.items ? (
-              <div className="info-list">
-                {section.items.map((item) => (
-                  <div key={item.title}>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </article>
-        ))}
+      <section className="section section-light about-page-section">
+        <div className="about-page-layout">
+          <div className="about-media">
+            <img src={asset(page.image.src)} alt={page.image.alt} loading="lazy" />
+          </div>
+          <div className="narrative-stack">
+            {page.sections.map((section) => (
+              <NarrativeBlock section={section} key={section.title} />
+            ))}
+          </div>
+        </div>
       </section>
       <ContactBand />
     </>
@@ -370,12 +297,38 @@ function AboutPage() {
 }
 
 function ProcessPage() {
+  const page = pages[routes.process]
+
   return (
     <>
-      <PageHero page={pages[routes.process]} />
+      <PageHero page={page} />
       <ProcessSection />
+      <section className="section section-light narrative-section">
+        {page.sections.map((section) => (
+          <NarrativeBlock section={section} key={section.title} />
+        ))}
+      </section>
       <ContactBand />
     </>
+  )
+}
+
+function NarrativeBlock({ section }) {
+  return (
+    <article className="narrative-block">
+      <h2>{section.title}</h2>
+      {section.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      {section.items ? (
+        <div className="info-list">
+          {section.items.map((item) => (
+            <div key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </article>
   )
 }
 
@@ -445,8 +398,8 @@ function ContactSection({ compact = false }) {
       <div className="contact-layout">
         <div className="contact-details-card">
           <SectionTitle
-            title="לייעוץ טכני ותיאום פגישה"
-            text="לבדיקת תוכניות אלומיניום, תיאום פגישה או קבלת הצעה טכנית, שלחו תוכניות, תמונות או תיאור קצר ונחזור אליכם בהקדם."
+            title="השאירו פרטים ונחזור אליכם"
+            text="לתיאום פגישה להצעת מחיר, ייעוץ טכני ובדיקת תכניות אלומיניום. שלחו תוכניות, תמונות או תיאור קצר ונחזור אליכם בהקדם."
             align="start"
           />
           <ul className="contact-list">
@@ -457,19 +410,22 @@ function ContactSection({ compact = false }) {
             <li>{siteInfo.name} | מערכות אלומיניום מתקדמות</li>
             <li>
               <Phone aria-hidden="true" />
-              <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneLabel}</a>
+              <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
             </li>
             <li>
               <Mail aria-hidden="true" />
               <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
             </li>
             <li>{siteInfo.hours}</li>
-            <li>{siteInfo.hoursNote}</li>
           </ul>
           <div className="contact-buttons">
             <a className="button button-primary" href={whatsappHref()}>
               <MessageCircle aria-hidden="true" />
               שליחת תוכניות בוואטסאפ
+            </a>
+            <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
+              <Phone aria-hidden="true" />
+              התקשרות
             </a>
             <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
               <Mail aria-hidden="true" />
@@ -522,7 +478,7 @@ function ContactForm() {
           שליחה במייל
         </a>
       </div>
-      <p>הטופס מכין הודעה לשליחה בוואטסאפ או במייל. ניתן לצרף שם תוכניות ותמונות לפני השליחה.</p>
+      <p>הטופס מכין הודעה לשליחה בוואטסאפ או במייל. ניתן לצרף תוכניות ותמונות לפני השליחה.</p>
     </form>
   )
 }
@@ -555,7 +511,7 @@ function Footer() {
         ))}
       </nav>
       <div className="footer-contact">
-        <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneLabel}</a>
+        <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
         <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
         <a href={whatsappHref(whatsappMessages.details)}>WhatsApp</a>
       </div>
@@ -575,15 +531,6 @@ function MobileActions() {
         <Phone aria-hidden="true" />
         התקשרות
       </a>
-    </div>
-  )
-}
-
-function SectionTitle({ title, text, align = 'center' }) {
-  return (
-    <div className={`section-title align-${align}`}>
-      <h2>{title}</h2>
-      {text ? <p>{text}</p> : null}
     </div>
   )
 }
