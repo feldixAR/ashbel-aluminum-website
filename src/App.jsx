@@ -9,11 +9,13 @@ import {
   X,
 } from 'lucide-react'
 import { articles, articleRoute, getArticle } from './content/articles'
+import { galleryItems } from './content/gallery'
 import { pages } from './content/pages'
-import { processSteps, solutions, solutionsIntro } from './content/solutions'
+import { processIntro, processSteps, solutions, solutionsIntro, trustItems } from './content/solutions'
 import {
   asset,
   defaultSeo,
+  footerNavItems,
   href,
   navItems,
   routes,
@@ -27,9 +29,11 @@ const legacyAliases = {
   '/about': routes.about,
   '/process': routes.process,
   '/knowledge': routes.knowledge,
+  '/מרכז-הידע-שלנו': routes.knowledge,
   '/contact': routes.contact,
-  '/solutions': routes.home,
-  '/projects': routes.home,
+  '/השאירו-פרטים-ונחזור-אליכם': routes.contact,
+  '/solutions': routes.systems,
+  '/projects': routes.projects,
   '/knowledge/aluminum-pergolas': articleRoute(articles[0]),
   '/knowledge/profiles-and-openings': articleRoute(articles[6]),
   '/knowledge/after-architect': articleRoute(articles[4]),
@@ -99,14 +103,14 @@ function App() {
 }
 
 function resolvePage(route) {
-  const articleMatch = route.match(/^\/מרכז-הידע-שלנו\/(.+)$/)
+  const articleMatch = route.match(/^\/(?:מהשטח|מרכז-הידע-שלנו)\/(.+)$/)
   if (articleMatch) {
     const article = getArticle(articleMatch[1])
     if (article) {
       return {
         meta: {
           route: articleRoute(article),
-          seoTitle: `${article.title} | אשבל אלומיניום`,
+          seoTitle: `${article.title} | אשבל מערכות אלומיניום`,
           description: article.description,
         },
         node: <ArticlePage article={article} />,
@@ -114,6 +118,8 @@ function resolvePage(route) {
     }
   }
 
+  if (route === routes.systems) return { meta: pages[routes.systems], node: <SystemsPage /> }
+  if (route === routes.projects) return { meta: pages[routes.projects], node: <ProjectsPage /> }
   if (route === routes.about) return { meta: pages[routes.about], node: <AboutPage /> }
   if (route === routes.process) return { meta: pages[routes.process], node: <ProcessPage /> }
   if (route === routes.knowledge) return { meta: pages[routes.knowledge], node: <KnowledgePage /> }
@@ -129,12 +135,12 @@ function Header({ route }) {
 
   return (
     <header className="site-header">
-      <a className="brand" href={href(routes.home)} aria-label="אשבל אלומיניום - בית" onClick={() => setOpen(false)}>
+      <a className="brand" href={href(routes.home)} aria-label="אשבל מערכות אלומיניום - ראשי" onClick={() => setOpen(false)}>
         <img src={asset(siteInfo.logo)} alt={siteInfo.logoAlt} />
-        <span>
-          <strong>{siteInfo.name}</strong>
-          <small>{siteInfo.positioning}</small>
-        </span>
+        <strong>
+          <span className="brand-full">{siteInfo.name}</span>
+          <span className="brand-short">{siteInfo.shortName}</span>
+        </strong>
       </a>
 
       <nav className="desktop-nav" aria-label="ניווט ראשי">
@@ -145,9 +151,18 @@ function Header({ route }) {
         ))}
       </nav>
 
-      <a className="header-contact" href={whatsappHref()}>
-        לבדיקת תוכנית האלומיניום שלך
-      </a>
+      <div className="header-actions" aria-label="פעולות יצירת קשר">
+        <a className="action-link whatsapp-action" href={whatsappHref()} aria-label="שליחה בוואטסאפ">
+          <MessageCircle aria-hidden="true" />
+          WhatsApp
+        </a>
+        <a className="action-link" href={`tel:${siteInfo.phone}`} aria-label="התקשרות">
+          <Phone aria-hidden="true" />
+        </a>
+        <a className="action-link" href={`mailto:${siteInfo.email}`} aria-label="שליחת מייל">
+          <Mail aria-hidden="true" />
+        </a>
+      </div>
 
       <button
         className="mobile-menu-button"
@@ -166,9 +181,11 @@ function Header({ route }) {
               {item.label}
             </a>
           ))}
-          <a href={whatsappHref()} onClick={() => setOpen(false)}>
-            שליחה בוואטסאפ
-          </a>
+          <div className="mobile-contact-row">
+            <a href={whatsappHref()} onClick={() => setOpen(false)}>WhatsApp</a>
+            <a href={`tel:${siteInfo.phone}`} onClick={() => setOpen(false)}>טלפון</a>
+            <a href={`mailto:${siteInfo.email}`} onClick={() => setOpen(false)}>מייל</a>
+          </div>
         </nav>
       ) : null}
     </header>
@@ -179,9 +196,12 @@ function HomePage() {
   return (
     <>
       <Hero page={pages[routes.home]} />
+      <TrustStrip />
       <SolutionsSection />
       <ProcessSection preview />
-      <ContactSection compact />
+      <ProjectsPreview />
+      <KnowledgePreview />
+      <ContactCta />
     </>
   )
 }
@@ -190,16 +210,29 @@ function Hero({ page }) {
   return (
     <section className="hero-section">
       <img className="hero-image" src={asset(page.hero.image)} alt={page.hero.alt} />
-      <div className="hero-overlay" aria-hidden="true" />
       <div className="hero-content">
         <h1>{page.hero.title}</h1>
-        <p>{page.hero.subtitle}</p>
+        <strong>{page.hero.subtitle}</strong>
+        <p>{page.hero.text || page.hero.subtitle}</p>
         <div className="hero-actions">
           <a className="button button-primary" href={whatsappHref()}>
-            לבדיקת תוכנית האלומיניום שלך
+            שליחת תוכניות לבדיקה
+          </a>
+          <a className="button button-ghost" href={href(routes.projects)}>
+            צפייה בפרויקטים
           </a>
         </div>
       </div>
+    </section>
+  )
+}
+
+function TrustStrip() {
+  return (
+    <section className="trust-strip" aria-label="עיקרי עבודה">
+      {trustItems.map((item) => (
+        <span key={item}>{item}</span>
+      ))}
     </section>
   )
 }
@@ -208,7 +241,6 @@ function PageHero({ page }) {
   return (
     <section className="page-hero">
       <img src={asset(page.hero.image)} alt={page.hero.alt} />
-      <div className="page-hero-overlay" aria-hidden="true" />
       <div>
         <h1>{page.hero.title}</h1>
         <p>{page.hero.subtitle}</p>
@@ -226,19 +258,19 @@ function SectionTitle({ title, text, align = 'center' }) {
   )
 }
 
-function SolutionsSection() {
+function SolutionsSection({ compact = false }) {
   return (
     <section className="section section-light">
       <SectionTitle title={solutionsIntro.title} text={solutionsIntro.subtitle} />
-      <div className="solutions-grid">
+      <div className={compact ? 'systems-list compact-systems' : 'systems-list'}>
         {solutions.map((solution) => (
-          <article className="solution-card" key={solution.title}>
+          <a className="system-card" href={href(routes.systems)} key={solution.id}>
             <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
             <div>
               <h3>{solution.title}</h3>
               <p>{solution.text}</p>
             </div>
-          </article>
+          </a>
         ))}
       </div>
     </section>
@@ -248,13 +280,13 @@ function SolutionsSection() {
 function ProcessSection({ preview = false }) {
   return (
     <section className="section section-muted">
-      <SectionTitle title="תהליך העבודה" text="ניהול פרויקט מסודר משלב בדיקת התוכניות ועד למסירה" />
-      <div className="process-grid">
+      <SectionTitle title={processIntro.title} text={processIntro.subtitle} />
+      <div className="process-timeline">
         {processSteps.map((step, index) => (
           <article className="process-card" key={step.title}>
             <img src={asset(step.image)} alt={step.alt} loading="lazy" />
             <div>
-              <span>{index + 1}</span>
+              <span>{String(index + 1).padStart(2, '0')}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
             </div>
@@ -264,12 +296,148 @@ function ProcessSection({ preview = false }) {
       {preview ? (
         <div className="section-action">
           <a className="text-link" href={href(routes.process)}>
-            לפירוט תהליך העבודה
+            לפירוט התהליך
             <ArrowLeft aria-hidden="true" />
           </a>
         </div>
       ) : null}
     </section>
+  )
+}
+
+function ProjectsPreview() {
+  return (
+    <section className="section section-light">
+      <SectionTitle
+        title="פרויקטים"
+        text="תמונות אמיתיות של פתחים, ויטרינות, הצללות ופרטי אלומיניום שבוצעו בשטח."
+      />
+      <ProjectGrid items={galleryItems.slice(0, 6)} />
+      <div className="section-action">
+        <a className="text-link" href={href(routes.projects)}>
+          לכל הפרויקטים
+          <ArrowLeft aria-hidden="true" />
+        </a>
+      </div>
+    </section>
+  )
+}
+
+function KnowledgePreview() {
+  return (
+    <section className="section section-muted">
+      <SectionTitle
+        title="מהשטח"
+        text="דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט - בלי שפה של קטלוג."
+      />
+      <ArticleGrid articlesToShow={articles.slice(0, 3)} />
+      <div className="section-action">
+        <a className="text-link" href={href(routes.knowledge)}>
+          לכל המאמרים
+          <ArrowLeft aria-hidden="true" />
+        </a>
+      </div>
+    </section>
+  )
+}
+
+function SystemsPage() {
+  return (
+    <>
+      <PageHero page={pages[routes.systems]} />
+      <section className="section section-light">
+        <div className="systems-detail-list">
+          {solutions.map((solution) => (
+            <article className="system-detail" id={solution.id} key={solution.id}>
+              <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
+              <div>
+                <h2>{solution.title}</h2>
+                <p>{solution.text}</p>
+                <h3>מה זה כולל</h3>
+                <ul>
+                  {solution.includes.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+                <h3>מה בודקים לפני ביצוע</h3>
+                <ul>
+                  {solution.checks.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+                <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
+                  {solution.id === 'factory' ? 'שליחת מפרט / רשימת חיתוך' : 'שליחת תוכניות לבדיקה'}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      <FactoryBand />
+      <ContactCta />
+    </>
+  )
+}
+
+function FactoryBand() {
+  return (
+    <section className="factory-band">
+      <div>
+        <h2>שירותי מפעל לקבלנים ומתקינים</h2>
+        <p>
+          חיתוך לפי מידה, עיבוד פרופילים, צביעה, קיטים מוכנים להרכבה ואספקה לפי מפרט,
+          רשימת חיתוך או כתב כמויות.
+        </p>
+      </div>
+      <a className="button button-primary" href={whatsappHref(whatsappMessages.b2b)}>
+        שליחת מפרט / רשימת חיתוך
+      </a>
+    </section>
+  )
+}
+
+function ProjectsPage() {
+  const [category, setCategory] = useState('הכל')
+  const categories = ['הכל', 'מודרני', 'כפרי / בלגי', 'הצללה', 'פרגולות', 'פתרונות היקפיים', 'ביצוע / מפעל']
+  const taggedItems = galleryItems.map((item, index) => ({
+    ...item,
+    category: ['מודרני', 'מודרני', 'מודרני', 'פרגולות', 'כפרי / בלגי', 'כפרי / בלגי', 'הצללה', 'פתרונות היקפיים'][index] || 'מודרני',
+  }))
+  const items = category === 'הכל' ? taggedItems : taggedItems.filter((item) => item.category === category)
+
+  return (
+    <>
+      <PageHero page={pages[routes.projects]} />
+      <section className="section section-light">
+        <div className="project-filters" aria-label="סינון פרויקטים">
+          {categories.map((item) => (
+            <button
+              type="button"
+              key={item}
+              aria-pressed={category === item}
+              onClick={() => setCategory(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <ProjectGrid items={items} />
+      </section>
+      <ContactCta />
+    </>
+  )
+}
+
+function ProjectGrid({ items }) {
+  if (!items.length) {
+    return <p className="project-empty">אין תמונות זמינות בקטגוריה הזו כרגע.</p>
+  }
+
+  return (
+    <div className="project-grid">
+      {items.map((item) => (
+        <figure key={item.image}>
+          <img src={asset(item.image)} alt={item.alt} loading="lazy" />
+          <figcaption>{item.title}</figcaption>
+        </figure>
+      ))}
+    </div>
   )
 }
 
@@ -291,7 +459,7 @@ function AboutPage() {
           </div>
         </div>
       </section>
-      <ContactBand />
+      <ContactCta />
     </>
   )
 }
@@ -308,7 +476,7 @@ function ProcessPage() {
           <NarrativeBlock section={section} key={section.title} />
         ))}
       </section>
-      <ContactBand />
+      <ContactCta />
     </>
   )
 }
@@ -337,21 +505,26 @@ function KnowledgePage() {
     <>
       <PageHero page={pages[routes.knowledge]} />
       <section className="section section-light">
-        <div className="article-grid">
-          {articles.map((article) => (
-            <article className="article-card" key={article.slug}>
-              <a href={href(articleRoute(article))}>
-                <img src={asset(article.image)} alt={article.alt} loading="lazy" />
-                <span>{article.readTime}</span>
-                <h2>{article.title}</h2>
-                <p>{article.description}</p>
-                <small>קרא עוד</small>
-              </a>
-            </article>
-          ))}
-        </div>
+        <ArticleGrid articlesToShow={articles} />
       </section>
     </>
+  )
+}
+
+function ArticleGrid({ articlesToShow }) {
+  return (
+    <div className="article-grid">
+      {articlesToShow.map((article) => (
+        <article className="article-card" key={article.slug}>
+          <a href={href(articleRoute(article))}>
+            <img src={asset(article.image)} alt={article.alt} loading="lazy" />
+            <h2>{article.title}</h2>
+            <p>{article.description}</p>
+            <small>קרא עוד</small>
+          </a>
+        </article>
+      ))}
+    </div>
   )
 }
 
@@ -360,9 +533,9 @@ function ArticlePage({ article }) {
     <>
       <section className="article-hero">
         <div>
-          <a href={href(routes.knowledge)}>מרכז הידע שלנו</a>
+          <a href={href(routes.knowledge)}>מהשטח</a>
           <h1>{article.title}</h1>
-          <p>{article.readTime}</p>
+          <p>{article.description}</p>
         </div>
         <img src={asset(article.image)} alt={article.alt} />
       </section>
@@ -370,6 +543,7 @@ function ArticlePage({ article }) {
         {article.sections.map((section, index) => (
           <section key={section.title || index}>
             {section.title ? <h2>{section.title}</h2> : null}
+            {section.image ? <ArticleMedia section={section} /> : null}
             {section.body.map((paragraph) => (
               <p className={paragraph.startsWith('•') ? 'bullet-line' : undefined} key={paragraph}>
                 {paragraph}
@@ -378,8 +552,29 @@ function ArticlePage({ article }) {
           </section>
         ))}
       </article>
-      <ContactBand />
+      <ArticleCta />
     </>
+  )
+}
+
+function ArticleMedia({ section }) {
+  return (
+    <figure className="article-media">
+      <img src={asset(section.image)} alt={section.imageAlt} loading="lazy" />
+      {section.caption ? <figcaption>{section.caption}</figcaption> : null}
+    </figure>
+  )
+}
+
+function ArticleCta() {
+  return (
+    <section className="article-cta">
+      <h2>רוצים שנבדוק את התוכנית שלכם?</h2>
+      <p>שלחו תוכנית או תמונה מהשטח ונחזור עם כיוון ראשוני.</p>
+      <a className="button button-primary" href={whatsappHref()}>
+        שליחת תוכנית או תמונה
+      </a>
+    </section>
   )
 }
 
@@ -398,30 +593,14 @@ function ContactSection({ compact = false }) {
       <div className="contact-layout">
         <div className="contact-details-card">
           <SectionTitle
-            title="השאירו פרטים ונחזור אליכם"
-            text="לתיאום פגישה להצעת מחיר, ייעוץ טכני ובדיקת תכניות אלומיניום. שלחו תוכניות, תמונות או תיאור קצר ונחזור אליכם בהקדם."
+            title="יש לכם תוכנית, מפרט או תמונות מהשטח?"
+            text="שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר."
             align="start"
           />
-          <ul className="contact-list">
-            <li>
-              <MapPin aria-hidden="true" />
-              {siteInfo.location}
-            </li>
-            <li>{siteInfo.name} | מערכות אלומיניום מתקדמות</li>
-            <li>
-              <Phone aria-hidden="true" />
-              <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
-            </li>
-            <li>
-              <Mail aria-hidden="true" />
-              <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
-            </li>
-            <li>{siteInfo.hours}</li>
-          </ul>
           <div className="contact-buttons">
-            <a className="button button-primary" href={whatsappHref()}>
+            <a className="button button-primary whatsapp-button" href={whatsappHref()}>
               <MessageCircle aria-hidden="true" />
-              שליחת תוכניות בוואטסאפ
+              שליחה בוואטסאפ
             </a>
             <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
               <Phone aria-hidden="true" />
@@ -432,10 +611,46 @@ function ContactSection({ compact = false }) {
               שליחת מייל
             </a>
           </div>
+          <ul className="contact-list">
+            <li>
+              <MapPin aria-hidden="true" />
+              {siteInfo.location}
+            </li>
+            <li>{siteInfo.hours}</li>
+            <li>
+              <Phone aria-hidden="true" />
+              <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
+            </li>
+            <li>
+              <Mail aria-hidden="true" />
+              <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
+            </li>
+          </ul>
+          <WhatToSend />
         </div>
         <ContactForm />
       </div>
     </section>
+  )
+}
+
+function WhatToSend() {
+  const items = [
+    'תוכנית אלומיניום / תוכנית אדריכלית',
+    'כתב כמויות',
+    'תמונות מהשטח',
+    'מידות כלליות',
+    'שלב הבנייה',
+    'מפרט / רשימת חיתוך לקבלנים',
+  ]
+
+  return (
+    <div className="what-to-send">
+      <h3>מה כדאי לשלוח</h3>
+      <ul>
+        {items.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+    </div>
   )
 }
 
@@ -453,7 +668,7 @@ function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
-      <h2>צור קשר</h2>
+      <h2>שליחת פרטים</h2>
       <label>
         שם*
         <input value={form.name} onChange={updateField('name')} autoComplete="name" />
@@ -463,36 +678,44 @@ function ContactForm() {
         <input value={form.phone} onChange={updateField('phone')} autoComplete="tel" inputMode="tel" />
       </label>
       <label>
-        כתובת הדואר האלקטרוני שלך*
+        כתובת דואר אלקטרוני
         <input value={form.email} onChange={updateField('email')} autoComplete="email" inputMode="email" />
       </label>
       <label>
-        הודעה
+        מה תרצו שנבדוק?
         <textarea value={form.message} onChange={updateField('message')} rows="5" />
       </label>
       <div className="form-actions">
-        <a className="button button-primary" href={whatsappHref(encoded)}>
+        <a className="button button-primary whatsapp-button" href={whatsappHref(encoded)}>
           שליחה בוואטסאפ
         </a>
-        <a className="button button-outline" href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל אלומיניום')}&body=${encodeURIComponent(encoded)}`}>
+        <a className="button button-outline" href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל מערכות אלומיניום')}&body=${encodeURIComponent(encoded)}`}>
           שליחה במייל
         </a>
       </div>
-      <p>הטופס מכין הודעה לשליחה בוואטסאפ או במייל. ניתן לצרף תוכניות ותמונות לפני השליחה.</p>
+      <p>הטופס מכין הודעה לשליחה. ניתן לצרף תוכניות ותמונות בוואטסאפ או במייל לפני השליחה.</p>
     </form>
   )
 }
 
-function ContactBand() {
+function ContactCta() {
   return (
-    <section className="contact-band">
+    <section className="contact-cta">
       <div>
-        <h2>שלחו תוכניות, תמונות או תיאור קצר של העבודה</h2>
-        <p>נבדוק את החומר ונחזור עם כיוון ראשוני לשלב הבא.</p>
+        <h2>יש לכם תוכנית, מפרט או תמונות מהשטח?</h2>
+        <p>שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר.</p>
       </div>
-      <a className="button button-primary" href={whatsappHref()}>
-        שליחת תוכניות לוואטסאפ
-      </a>
+      <div className="contact-cta-actions">
+        <a className="button button-primary whatsapp-button" href={whatsappHref()}>
+          שליחה בוואטסאפ
+        </a>
+        <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
+          התקשרות
+        </a>
+        <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
+          שליחת מייל
+        </a>
+      </div>
     </section>
   )
 }
@@ -506,7 +729,7 @@ function Footer() {
         <p>{siteInfo.location} | {siteInfo.hours}</p>
       </div>
       <nav aria-label="קישורי תחתית">
-        {navItems.map((item) => (
+        {footerNavItems.map((item) => (
           <a key={item.route} href={href(item.route)}>{item.label}</a>
         ))}
       </nav>
@@ -523,7 +746,7 @@ function Footer() {
 function MobileActions() {
   return (
     <div className="mobile-actions" aria-label="פעולות מהירות">
-      <a href={whatsappHref()}>
+      <a className="whatsapp-mobile-action" href={whatsappHref()}>
         <MessageCircle aria-hidden="true" />
         WhatsApp
       </a>

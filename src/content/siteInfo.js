@@ -6,36 +6,41 @@ export function asset(path) {
 
 export const routes = {
   home: '/',
+  systems: '/מערכות',
+  projects: '/פרויקטים',
   about: '/על-החברה',
   process: '/תהליך-העבודה',
-  knowledge: '/מרכז-הידע-שלנו',
-  contact: '/השאירו-פרטים-ונחזור-אליכם',
+  knowledge: '/מהשטח',
+  contact: '/צור-קשר',
 }
 
 export const siteInfo = {
-  name: 'אשבל אלומיניום',
-  title: 'אשבל אלומיניום | ייצור וביצוע פרויקטים',
-  positioning: 'מפעל לייצור והתקנה של מערכות אלומיניום',
+  name: 'אשבל מערכות אלומיניום',
+  shortName: 'אשבל אלומיניום',
+  title: 'אשבל מערכות אלומיניום | ייצור וביצוע פרויקטים',
+  positioning: 'ייצור וביצוע פרויקטים',
   description:
-    'אשבל אלומיניום מניצני עוז מייצרת, צובעת ומתקינה מערכות אלומיניום לבתים פרטיים, אדריכלים, קבלנים ומנהלי פרויקטים.',
+    'אשבל מערכות אלומיניום מניצני עוז מייצרת, צובעת ומתקינה מערכות אלומיניום לבתים, אדריכלים, קבלנים ופרויקטים מסחריים.',
   location: 'ניצני עוז, ישראל',
   serviceArea: 'ישראל',
   phone: '+972559607033',
-  phoneDisplay: '+972-55-960-7033 - לתיאום פגישה',
+  phoneDisplay: '+972-55-960-7033',
   phoneLabel: '+972-55-960-7033 - עמית',
   email: 'alumashbel@gmail.com',
   hours: 'ראשון עד חמישי - 08:30-16:30',
   hoursNote: 'בתיאום מראש, תודה.',
   logo: 'portfolio/ashbel-logo.webp',
-  logoAlt: 'לוגו אשבל אלומיניום',
-  copyright: 'זכויות יוצרים © 2026 כל הזכויות שמורות - אשבל אלומיניום',
+  logoAlt: 'לוגו אשבל מערכות אלומיניום',
+  copyright: 'זכויות יוצרים © 2026 כל הזכויות שמורות - אשבל מערכות אלומיניום',
 }
 
 export const whatsappMessages = {
   plans:
-    'שלום עמית אשמח לתאם פגישת היכרות קצרה לבחינת התוכניות והתאמת פתרון אלומיניום לפרויקט שלי',
+    'שלום עמית, אשמח לשלוח תוכנית / מפרט / תמונות מהשטח לבדיקה ולקבל כיוון ראשוני לפרויקט אלומיניום.',
   details:
-    'שלום, מעוניין לקבל פרטים לגבי עבודות אלומיניום לבית או לפרויקט שבביצוע. אשמח לבדוק התאמה ולקבל הכוונה ראשונית.',
+    'שלום, אשמח לקבל פרטים לגבי עבודות אלומיניום לבית או לפרויקט שבביצוע. יש לי תוכנית / תמונות / מפרט לבדיקה.',
+  b2b:
+    'שלום עמית, אשמח לשלוח מפרט / רשימת חיתוך / כתב כמויות לקבלת כיוון לשירותי מפעל.',
 }
 
 export function whatsappHref(message = whatsappMessages.plans) {
@@ -43,11 +48,17 @@ export function whatsappHref(message = whatsappMessages.plans) {
 }
 
 export const navItems = [
-  { label: 'בית', route: routes.home },
+  { label: 'ראשי', route: routes.home },
+  { label: 'מערכות', route: routes.systems },
+  { label: 'פרויקטים', route: routes.projects },
+  { label: 'תהליך', route: routes.process },
+  { label: 'מהשטח', route: routes.knowledge },
+  { label: 'צור קשר', route: routes.contact },
+]
+
+export const footerNavItems = [
+  ...navItems,
   { label: 'על החברה', route: routes.about },
-  { label: 'תהליך העבודה', route: routes.process },
-  { label: 'מרכז הידע שלנו', route: routes.knowledge },
-  { label: 'השאירו פרטים ונחזור אליכם', route: routes.contact },
 ]
 
 export function href(route) {
@@ -57,5 +68,5 @@ export function href(route) {
 export const defaultSeo = {
   title: siteInfo.title,
   description:
-    'ייצור והתקנה של מערכות אלומיניום בניצני עוז עבור אדריכלים, קבלנים ובונים פרטיים - משלב בקרת התוכנית ועד למסירה בשטח.',
+    'ייצור, ביצוע, התקנה ואספקת מערכות אלומיניום לפי תוכנית, מידה ומפרט עבור בתים, אדריכלים, קבלנים ופרויקטים מסחריים.',
 }
