@@ -556,6 +556,10 @@ svg {
   object-fit: cover;
 }
 
+.contact-page-hero img {
+  object-position: center center;
+}
+
 .page-hero::after {
   content: "";
   position: absolute;

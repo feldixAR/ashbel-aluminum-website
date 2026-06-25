@@ -12,6 +12,7 @@ dist
 dist-ssr
 .next
 artifacts
+backups
 tsconfig.tsbuildinfo
 *.local
 .agent/

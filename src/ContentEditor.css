@@ -1,0 +1,248 @@
+.content-editor {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  background: #f5f7f8;
+  color: #17202a;
+  font-family: Heebo, Arial, sans-serif;
+}
+
+.editor-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-left: 1px solid #dde3e8;
+}
+
+.editor-sidebar strong {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.editor-sidebar nav {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.editor-sidebar button,
+.editor-actions button,
+.editor-panel button,
+.publish-steps button {
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #17202a;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.editor-sidebar button {
+  text-align: right;
+}
+
+.editor-sidebar button.active,
+.editor-actions button:first-child,
+.editor-picker button.active {
+  background: #17202a;
+  color: #ffffff;
+  border-color: #17202a;
+}
+
+.editor-main {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.editor-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.editor-topbar h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 500;
+}
+
+.editor-topbar p,
+.editor-help {
+  color: #5c6b76;
+  margin: 0.35rem 0 0;
+}
+
+.editor-actions,
+.editor-inline-actions,
+.publish-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.editor-status,
+.validation-box {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #d8e0e6;
+  background: #ffffff;
+}
+
+.editor-status.success,
+.validation-box.success {
+  border-color: #7abf91;
+  background: #effaf2;
+}
+
+.editor-status.error,
+.validation-box {
+  border-color: #e19a9a;
+  background: #fff4f4;
+}
+
+.editor-panel {
+  background: #ffffff;
+  border: 1px solid #dde3e8;
+  border-radius: 10px;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.editor-panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.editor-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.editor-field,
+.image-field,
+.list-editor,
+.image-list,
+.article-section-editor {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.editor-field span,
+.image-field > span,
+.list-editor h3,
+.image-list h3 {
+  font-weight: 600;
+}
+
+.editor-field input,
+.editor-field textarea,
+.editor-field select,
+.image-row select,
+.image-row input {
+  width: 100%;
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  background: #ffffff;
+}
+
+.editor-field textarea {
+  resize: vertical;
+}
+
+.editor-field small {
+  color: #687783;
+}
+
+.editor-wide,
+.editor-picker,
+.image-list,
+.list-editor {
+  grid-column: 1 / -1;
+}
+
+.editor-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.image-field img {
+  width: min(24rem, 100%);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #d8e0e6;
+}
+
+.image-row,
+.list-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.image-list-item,
+.article-section-editor {
+  border: 1px solid #e2e8ee;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background: #fbfcfd;
+}
+
+.editor-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.danger {
+  color: #a33a3a !important;
+  border-color: #e5b8b8 !important;
+}
+
+.editor-loading {
+  padding: 3rem;
+  direction: rtl;
+  font-family: Heebo, Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .content-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-sidebar {
+    position: static;
+    height: auto;
+    border-left: 0;
+    border-bottom: 1px solid #dde3e8;
+  }
+
+  .editor-sidebar nav,
+  .editor-actions {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+  }
+
+  .editor-topbar,
+  .image-row,
+  .list-row {
+    display: grid;
+  }
+
+  .editor-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

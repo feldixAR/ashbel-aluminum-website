@@ -1,4 +1,4 @@
-import { routes } from './siteInfo'
+import { routes } from './siteInfo.js'
 
 export const articles = [
   {
@@ -7,7 +7,7 @@ export const articles = [
     readTime: '4 דקות קריאה',
     description:
       'מה בודקים לפני שמזמינים פרגולה: כיוון שמש, ניקוז, קיבועים, גובה, חומרי גמר והתאמה אמיתית לבית.',
-    image: 'portfolio/pergola-slats.webp',
+    image: 'media/projects/pergola-slats.webp',
     alt: 'פרגולת אלומיניום עם סרגלי הצללה',
     sections: [
       {
@@ -62,7 +62,7 @@ export const articles = [
     readTime: '4 דקות קריאה',
     description:
       'מה באמת חשוב בתריסים ומנועים: משקל התריס, גודל הפתח, ארגז, מסילות, חשמל, רעש וגישה לתחזוקה.',
-    image: 'portfolio/exterior-shutters.webp',
+    image: 'media/projects/exterior-shutters.webp',
     alt: 'תריסים כהים בחזית אבן בהירה',
     sections: [
       {
@@ -117,7 +117,7 @@ export const articles = [
     readTime: '5 דקות קריאה',
     description:
       'איך משווים הצעות מחיר, מה חייב להופיע במפרט, ואילו סימני אזהרה כדאי לזהות לפני שסוגרים ביצוע.',
-    image: 'portfolio/black-frame-living-room.webp',
+    image: 'media/projects/black-frame-living-room.webp',
     alt: 'חלל מגורים עם אלומיניום שחור',
     sections: [
       {
@@ -173,7 +173,7 @@ export const articles = [
     readTime: '5 דקות קריאה',
     description:
       'איך בוחרים זכוכית לפי רעש, שמש, פרטיות, בטיחות וגודל הפתח בלי ללכת לאיבוד בין המונחים.',
-    image: 'portfolio/ribbed-glass-door.webp',
+    image: 'media/projects/ribbed-glass-door.webp',
     alt: 'דלת אלומיניום שחורה עם זכוכית מחוספסת',
     sections: [
       {
@@ -229,7 +229,7 @@ export const articles = [
     readTime: '5 דקות קריאה',
     description:
       'איך עוברים מתוכנית אדריכלית לביצוע בשטח: פתחים, מידות, כיווני פתיחה, תריסים, ריצוף ותיאום עם בעלי מקצוע.',
-    image: 'portfolio/modern-facade-black-aluminum.webp',
+    image: 'media/projects/modern-facade-black-aluminum.webp',
     alt: 'חזית בית עם עבודות אלומיניום שחורות',
     sections: [
       {
@@ -285,7 +285,7 @@ export const articles = [
     readTime: '4 דקות קריאה',
     description:
       'איך ריכוז עבודות האלומיניום עוזר לשמור על אחידות, תיאום, אחריות ופחות נפילות בין ספקים.',
-    image: 'portfolio/large-sliding-vitrine.webp',
+    image: 'media/projects/large-sliding-vitrine.webp',
     alt: 'ויטרינה לבנה רחבה בחלל מגורים',
     sections: [
       {
@@ -341,7 +341,7 @@ export const articles = [
     readTime: '5 דקות קריאה',
     description:
       'מדריך מעשי לבחירת פרופילים ומנגנוני פתיחה לפי סלון, חדרי שינה, רחצה, ממ״ד ויציאה לגינה.',
-    image: 'portfolio/hero-wide-openings.webp',
+    image: 'media/projects/hero-wide-openings.webp',
     alt: 'ויטרינות אלומיניום כהות במפתח רחב',
     sections: [
       {
@@ -403,7 +403,7 @@ export const articles = [
     readTime: '5 דקות קריאה',
     description:
       'רשימת טעויות נפוצות בבנייה פרטית: תזמון מאוחר, חוסר תיאום עם שטח, מפרט לא ברור ובחירה לפי מחיר בלבד.',
-    image: 'portfolio/pergola-slats.webp',
+    image: 'media/projects/pergola-slats.webp',
     alt: 'פרגולת אלומיניום עם סרגלי הצללה',
     sections: [
       {
@@ -479,3 +479,4 @@ export function articleRoute(article) {
 export function getArticle(slug) {
   return articles.find((article) => article.slug === slug)
 }
+

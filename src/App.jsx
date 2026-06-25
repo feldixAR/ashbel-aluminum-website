@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import {
   ArrowLeft,
   Mail,
@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { articles, articleRoute, getArticle } from './content/articles'
 import { galleryItems } from './content/gallery'
-import { homeAbout, pages } from './content/pages'
+import { contactContent, homeAbout, homeContent, pages } from './content/pages'
 import { processIntro, processSteps, solutions, solutionsIntro, trustItems } from './content/solutions'
 import {
   asset,
@@ -24,6 +24,8 @@ import {
   whatsappMessages,
 } from './content/siteInfo'
 import './App.css'
+
+const ContentEditor = import.meta.env.DEV ? lazy(() => import('./ContentEditor')) : null
 
 const legacyAliases = {
   '/about': routes.about,
@@ -95,18 +97,35 @@ function App() {
 
   return (
     <div className="site-shell">
-      <Header route={route} />
+      {page.isEditor ? null : <Header route={route} />}
       <main>{page.node}</main>
-      <MobileActions />
-      <Footer />
+      {page.isEditor ? null : <MobileActions />}
+      {page.isEditor ? null : <Footer />}
     </div>
   )
 }
 
 function resolvePage(route) {
+  if (import.meta.env.DEV && route === '/content-editor' && ContentEditor) {
+    return {
+      isEditor: true,
+      meta: {
+        route,
+        title: 'עורך תוכן מקומי',
+        seoTitle: 'עורך תוכן מקומי | אשבל',
+        description: 'עורך תוכן מקומי לאתר אשבל.',
+      },
+      node: (
+        <Suspense fallback={<div className="editor-loading">טוען עורך תוכן...</div>}>
+          <ContentEditor />
+        </Suspense>
+      ),
+    }
+  }
+
   const solutionMatch = route.match(/^\/(?:מוצרים|מערכות)\/(.+)$/)
   if (solutionMatch) {
-    const solution = solutions.find((item) => item.slug === solutionMatch[1])
+    const solution = solutions.find((item) => item.slug === solutionMatch[1] || item.legacySlugs?.includes(solutionMatch[1]))
     if (solution) {
       return {
         meta: {
@@ -228,6 +247,9 @@ function productRoute(solution) {
 }
 
 function Hero({ page }) {
+  const primaryHref = resolveCtaHref(page.hero.primaryCtaTarget || homeContent.heroPrimaryCtaTarget)
+  const secondaryHref = resolveCtaHref(page.hero.secondaryCtaTarget || homeContent.heroSecondaryCtaTarget)
+
   return (
     <section className="hero-section">
       <img className="hero-image" src={asset(page.hero.image)} alt={page.hero.alt} />
@@ -236,11 +258,11 @@ function Hero({ page }) {
         <strong>{page.hero.subtitle}</strong>
         <p>{page.hero.text || page.hero.subtitle}</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={whatsappHref()}>
-            שליחת תוכניות לבדיקה
+          <a className="button button-primary" href={primaryHref}>
+            {page.hero.primaryCtaLabel || homeContent.heroPrimaryCtaLabel}
           </a>
-          <a className="button button-ghost" href={href(routes.projects)}>
-            צפייה בפרויקטים
+          <a className="button button-ghost" href={secondaryHref}>
+            {page.hero.secondaryCtaLabel || homeContent.heroSecondaryCtaLabel}
           </a>
         </div>
       </div>
@@ -259,8 +281,10 @@ function TrustStrip() {
 }
 
 function PageHero({ page }) {
+  const isContactPage = page.route === routes.contact
+
   return (
-    <section className="page-hero">
+    <section className={`page-hero${isContactPage ? ' contact-page-hero' : ''}`}>
       <img src={asset(page.hero.image)} alt={page.hero.alt} />
       <div>
         <h1>{page.hero.title}</h1>
@@ -280,11 +304,13 @@ function SectionTitle({ title, text, align = 'center' }) {
 }
 
 function SolutionsSection({ compact = false }) {
+  const visibleSolutions = sortByOrder(solutions).filter((solution) => solution.showOnHome !== false)
+
   return (
     <section className="section section-light">
       <SectionTitle title={solutionsIntro.title} text={solutionsIntro.subtitle} />
       <div className={compact ? 'systems-list compact-systems' : 'systems-list'}>
-        {solutions.map((solution) => (
+        {visibleSolutions.map((solution) => (
           <a className="system-card" href={href(productRoute(solution))} key={solution.id}>
             <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
             <div>
@@ -317,25 +343,30 @@ function AboutPreview() {
 }
 
 function ProcessSection({ preview = false }) {
+  const orderedSteps = sortByOrder(processSteps)
+
   return (
     <section className="section section-muted">
       <SectionTitle title={processIntro.title} text={processIntro.subtitle} />
       <div className="process-timeline">
-        {processSteps.map((step, index) => (
+        {orderedSteps.map((step, index) => {
+          const image = getPrimaryImage(step)
+          return (
           <article className="process-card" key={step.title}>
-            <img src={asset(step.image)} alt={step.alt} loading="lazy" />
+            <img src={asset(image.image)} alt={image.alt} loading="lazy" />
             <div>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
             </div>
           </article>
-        ))}
+          )
+        })}
       </div>
       {preview ? (
         <div className="section-action">
           <a className="text-link" href={href(routes.process)}>
-            לפירוט התהליך
+            {homeContent.processPreviewLinkLabel}
             <ArrowLeft aria-hidden="true" />
           </a>
         </div>
@@ -348,13 +379,13 @@ function ProjectsPreview() {
   return (
     <section className="section section-light">
       <SectionTitle
-        title="פרויקטים"
-        text="תמונות אמיתיות של פתחים, ויטרינות, הצללות ופרטי אלומיניום שבוצעו בשטח."
+        title={homeContent.projectsPreviewTitle}
+        text={homeContent.projectsPreviewText}
       />
-      <ProjectGrid items={galleryItems.slice(0, 6)} />
+      <ProjectGrid items={homeProjects()} />
       <div className="section-action">
         <a className="text-link" href={href(routes.projects)}>
-          לכל הפרויקטים
+          {homeContent.projectsPreviewLinkLabel}
           <ArrowLeft aria-hidden="true" />
         </a>
       </div>
@@ -366,13 +397,13 @@ function KnowledgePreview() {
   return (
     <section className="section section-muted">
       <SectionTitle
-        title="מהשטח"
-        text="דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט - בלי שפה של קטלוג."
+        title={homeContent.fieldNotesPreviewTitle}
+        text={homeContent.fieldNotesPreviewText}
       />
-      <ArticleGrid articlesToShow={articles.slice(0, 3)} />
+      <ArticleGrid articlesToShow={homeArticles()} />
       <div className="section-action">
         <a className="text-link" href={href(routes.knowledge)}>
-          לכל המאמרים
+          {homeContent.fieldNotesPreviewLinkLabel}
           <ArrowLeft aria-hidden="true" />
         </a>
       </div>
@@ -386,7 +417,7 @@ function SystemsPage() {
       <PageHero page={pages[routes.systems]} />
       <section className="section section-light">
         <div className="systems-detail-list">
-          {solutions.map((solution) => (
+          {sortByOrder(solutions).map((solution) => (
             <article className="system-detail" id={solution.id} key={solution.id}>
               <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
               <div>
@@ -444,6 +475,11 @@ function ProductPage({ solution }) {
           </article>
         </div>
       </section>
+      {solution.gallery?.length ? (
+        <section className="section section-light product-gallery-section">
+          <ProjectGrid items={sortByOrder(solution.gallery).map((item) => ({ ...item, title: item.title || solution.title }))} />
+        </section>
+      ) : null}
       <ProjectsPreview />
       <ContactCta />
     </>
@@ -470,9 +506,9 @@ function FactoryBand() {
 function ProjectsPage() {
   const [category, setCategory] = useState('הכל')
   const categories = ['הכל', 'מודרני', 'כפרי / בלגי', 'הצללה', 'פרגולות', 'פתרונות היקפיים', 'ביצוע / מפעל']
-  const taggedItems = galleryItems.map((item, index) => ({
+  const taggedItems = sortByOrder(galleryItems).map((item) => ({
     ...item,
-    category: ['מודרני', 'מודרני', 'מודרני', 'פרגולות', 'כפרי / בלגי', 'כפרי / בלגי', 'הצללה', 'פתרונות היקפיים'][index] || 'מודרני',
+    category: item.category || 'מודרני',
   }))
   const items = category === 'הכל' ? taggedItems : taggedItems.filter((item) => item.category === category)
 
@@ -669,8 +705,8 @@ function ContactSection({ compact = false }) {
         <div className="contact-details-card">
           <img className="contact-media" src={asset(pages[routes.contact].hero.image)} alt={pages[routes.contact].hero.alt} loading="lazy" />
           <SectionTitle
-            title="יש לכם תוכנית, מפרט או תמונות מהשטח?"
-            text="שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר."
+            title={contactContent.panelTitle}
+            text={contactContent.panelText}
             align="start"
           />
           <div className="contact-buttons">
@@ -711,27 +747,18 @@ function ContactSection({ compact = false }) {
 }
 
 function WhatToSend() {
-  const items = [
-    'תוכנית אלומיניום / תוכנית אדריכלית',
-    'כתב כמויות',
-    'תמונות מהשטח',
-    'מידות כלליות',
-    'שלב הבנייה',
-    'מפרט / רשימת חיתוך לקבלנים',
-  ]
-
   return (
     <div className="what-to-send">
       <h3>מה כדאי לשלוח</h3>
       <ul>
-        {items.map((item) => <li key={item}>{item}</li>)}
+        {contactContent.whatToSend.map((item) => <li key={item}>{item}</li>)}
       </ul>
     </div>
   )
 }
 
 function ContactForm() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', inquiryType: 'בית / שיפוץ', message: '' })
+  const [form, setForm] = useState({ name: '', phone: '', email: '', inquiryType: contactContent.inquiryTypes[0] || '', message: '' })
   const updateField = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
   const message = [
     form.name ? `שם: ${form.name}` : '',
@@ -761,11 +788,7 @@ function ContactForm() {
       <label>
         סוג פנייה
         <select value={form.inquiryType} onChange={updateField('inquiryType')}>
-          <option>בית / שיפוץ</option>
-          <option>אדריכל</option>
-          <option>קבלן / מתקין</option>
-          <option>פרויקט מסחרי</option>
-          <option>שירותי מפעל</option>
+          {contactContent.inquiryTypes.map((type) => <option key={type}>{type}</option>)}
         </select>
       </label>
       <label>
@@ -789,8 +812,8 @@ function ContactCta() {
   return (
     <section className="contact-cta">
       <div>
-        <h2>יש לכם תוכנית, מפרט או תמונות מהשטח?</h2>
-        <p>שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר.</p>
+        <h2>{homeContent.contactCtaTitle}</h2>
+        <p>{homeContent.contactCtaText}</p>
       </div>
       <div className="contact-cta-actions">
         <a className="button button-primary whatsapp-button" href={whatsappHref()}>
@@ -848,6 +871,31 @@ function MobileActions() {
       </a>
     </div>
   )
+}
+
+function sortByOrder(items = []) {
+  return [...items].sort((a, b) => Number(a.order || 0) - Number(b.order || 0))
+}
+
+function getPrimaryImage(item) {
+  const images = item.images?.length ? sortByOrder(item.images) : [{ image: item.image, alt: item.alt }]
+  return images.find((image) => image.primary) || images[0]
+}
+
+function homeProjects() {
+  return sortByOrder(galleryItems).filter((item) => item.showOnHome !== false).slice(0, 6)
+}
+
+function homeArticles() {
+  return sortByOrder(articles).filter((article) => article.featured !== false).slice(0, 3)
+}
+
+function resolveCtaHref(target) {
+  if (!target || target === 'whatsapp') return whatsappHref()
+  if (target === 'phone') return `tel:${siteInfo.phone}`
+  if (target === 'email') return `mailto:${siteInfo.email}`
+  if (target.startsWith('http') || target.startsWith('mailto:') || target.startsWith('tel:')) return target
+  return href(target)
 }
 
 export default App

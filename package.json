@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "content:check": "node scripts/content-check.mjs",
+    "content:report": "node scripts/content-report.mjs",
+    "publish:check": "node scripts/publish-check.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
