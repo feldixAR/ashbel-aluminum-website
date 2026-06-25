@@ -6,7 +6,7 @@ export const trustItems = [
 ]
 
 export const solutionsIntro = {
-  title: 'מערכות ופתרונות',
+  title: 'מוצרים ופתרונות',
   subtitle:
     'תחומי העבודה המרכזיים של אשבל: פתחים, הצללות, פתרונות היקפיים ושירותי מפעל לפי תוכנית, מידה או מפרט.',
 }
@@ -14,6 +14,7 @@ export const solutionsIntro = {
 export const solutions = [
   {
     id: 'modern',
+    slug: 'סגנון-מודרני',
     title: 'סגנון מודרני',
     text: 'חלונות, ויטרינות ומפתחים רחבים בקווים נקיים.',
     image: 'portfolio/hero-wide-openings.webp',
@@ -23,6 +24,7 @@ export const solutions = [
   },
   {
     id: 'belgian',
+    slug: 'סגנון-כפרי-בלגי',
     title: 'סגנון כפרי / בלגי',
     text: 'חלונות ודלתות במראה קלאסי, עם חלוקות והתאמה לסגנון הבית.',
     image: 'portfolio/belgian-partition.webp',
@@ -32,6 +34,7 @@ export const solutions = [
   },
   {
     id: 'shading',
+    slug: 'תריסים-ופתרונות-הצללה',
     title: 'תריסים ופתרונות הצללה',
     text: 'תריסים, רפפות ומערכות הצללה לשליטה באור ופרטיות.',
     image: 'portfolio/exterior-shutters.webp',
@@ -41,6 +44,7 @@ export const solutions = [
   },
   {
     id: 'pergolas',
+    slug: 'פרגולות-וגדרות-אלומיניום',
     title: 'פרגולות וגדרות אלומיניום',
     text: 'פרגולות, גדרות ואלמנטים חיצוניים לפי מידה.',
     image: 'portfolio/pergola-slats.webp',
@@ -50,6 +54,7 @@ export const solutions = [
   },
   {
     id: 'envelope',
+    slug: 'פתרונות-היקפיים-מאלומיניום',
     title: 'פתרונות היקפיים מאלומיניום',
     text: 'חיפויי קירות, מסתורי כביסה, מסתורי מזגנים, מסתורים לדודי שמש/גז, סגירות חוץ, מעקות זכוכית, מקלחונים ופרטי אלומיניום משלימים.',
     image: 'portfolio/modern-facade-black-aluminum.webp',
@@ -59,6 +64,7 @@ export const solutions = [
   },
   {
     id: 'factory',
+    slug: 'שירותי-מפעל-לקבלנים-ומתקינים',
     title: 'שירותי מפעל לקבלנים ומתקינים',
     text: 'חיתוך, עיבוד, צביעה, אספקת פרופילים וקיטים מוכנים להרכבה לפי מידה, מפרט או רשימת חיתוך.',
     image: 'portfolio/narrow-window-stone.webp',

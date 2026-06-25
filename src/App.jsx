@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { articles, articleRoute, getArticle } from './content/articles'
 import { galleryItems } from './content/gallery'
-import { pages } from './content/pages'
+import { homeAbout, pages } from './content/pages'
 import { processIntro, processSteps, solutions, solutionsIntro, trustItems } from './content/solutions'
 import {
   asset,
@@ -33,6 +33,7 @@ const legacyAliases = {
   '/contact': routes.contact,
   '/השאירו-פרטים-ונחזור-אליכם': routes.contact,
   '/solutions': routes.systems,
+  '/מערכות': routes.systems,
   '/projects': routes.projects,
   '/knowledge/aluminum-pergolas': articleRoute(articles[0]),
   '/knowledge/profiles-and-openings': articleRoute(articles[6]),
@@ -103,6 +104,21 @@ function App() {
 }
 
 function resolvePage(route) {
+  const solutionMatch = route.match(/^\/(?:מוצרים|מערכות)\/(.+)$/)
+  if (solutionMatch) {
+    const solution = solutions.find((item) => item.slug === solutionMatch[1])
+    if (solution) {
+      return {
+        meta: {
+          route: productRoute(solution),
+          seoTitle: `${solution.title} | אשבל מערכות אלומיניום`,
+          description: solution.text,
+        },
+        node: <ProductPage solution={solution} />,
+      }
+    }
+  }
+
   const articleMatch = route.match(/^\/(?:מהשטח|מרכז-הידע-שלנו)\/(.+)$/)
   if (articleMatch) {
     const article = getArticle(articleMatch[1])
@@ -200,10 +216,15 @@ function HomePage() {
       <SolutionsSection />
       <ProcessSection preview />
       <ProjectsPreview />
+      <AboutPreview />
       <KnowledgePreview />
       <ContactCta />
     </>
   )
+}
+
+function productRoute(solution) {
+  return `${routes.systems}/${solution.slug}`
 }
 
 function Hero({ page }) {
@@ -264,7 +285,7 @@ function SolutionsSection({ compact = false }) {
       <SectionTitle title={solutionsIntro.title} text={solutionsIntro.subtitle} />
       <div className={compact ? 'systems-list compact-systems' : 'systems-list'}>
         {solutions.map((solution) => (
-          <a className="system-card" href={href(routes.systems)} key={solution.id}>
+          <a className="system-card" href={href(productRoute(solution))} key={solution.id}>
             <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
             <div>
               <h3>{solution.title}</h3>
@@ -272,6 +293,24 @@ function SolutionsSection({ compact = false }) {
             </div>
           </a>
         ))}
+      </div>
+    </section>
+  )
+}
+
+function AboutPreview() {
+  return (
+    <section className="section about-preview-section">
+      <div className="about-preview-layout">
+        <img src={asset(pages[routes.about].image.src)} alt={pages[routes.about].image.alt} loading="lazy" />
+        <div>
+          <SectionTitle title={homeAbout.title} align="start" />
+          <p>{homeAbout.text}</p>
+          <a className="text-link" href={href(routes.about)}>
+            {homeAbout.linkLabel}
+            <ArrowLeft aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </section>
   )
@@ -370,6 +409,42 @@ function SystemsPage() {
         </div>
       </section>
       <FactoryBand />
+      <ContactCta />
+    </>
+  )
+}
+
+function ProductPage({ solution }) {
+  return (
+    <>
+      <section className="product-hero">
+        <img src={asset(solution.image)} alt={solution.alt} />
+        <div>
+          <a href={href(routes.systems)}>מוצרים</a>
+          <h1>{solution.title}</h1>
+          <p>{solution.text}</p>
+          <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
+            {solution.id === 'factory' ? 'שליחת מפרט / רשימת חיתוך' : 'שליחת תוכניות לבדיקה'}
+          </a>
+        </div>
+      </section>
+      <section className="section section-light product-detail-section">
+        <div className="product-detail-grid">
+          <article>
+            <h2>מה זה כולל</h2>
+            <ul>
+              {solution.includes.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </article>
+          <article>
+            <h2>מה בודקים לפני ביצוע</h2>
+            <ul>
+              {solution.checks.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </article>
+        </div>
+      </section>
+      <ProjectsPreview />
       <ContactCta />
     </>
   )
@@ -592,6 +667,7 @@ function ContactSection({ compact = false }) {
     <section className={`section contact-section ${compact ? 'compact-contact' : ''}`}>
       <div className="contact-layout">
         <div className="contact-details-card">
+          <img className="contact-media" src={asset(pages[routes.contact].hero.image)} alt={pages[routes.contact].hero.alt} loading="lazy" />
           <SectionTitle
             title="יש לכם תוכנית, מפרט או תמונות מהשטח?"
             text="שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר."
@@ -655,12 +731,13 @@ function WhatToSend() {
 }
 
 function ContactForm() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', phone: '', email: '', inquiryType: 'בית / שיפוץ', message: '' })
   const updateField = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
   const message = [
     form.name ? `שם: ${form.name}` : '',
     form.phone ? `טלפון: ${form.phone}` : '',
     form.email ? `מייל: ${form.email}` : '',
+    form.inquiryType ? `סוג פנייה: ${form.inquiryType}` : '',
     form.message ? `הודעה: ${form.message}` : '',
   ].filter(Boolean).join('\n')
 
@@ -682,6 +759,16 @@ function ContactForm() {
         <input value={form.email} onChange={updateField('email')} autoComplete="email" inputMode="email" />
       </label>
       <label>
+        סוג פנייה
+        <select value={form.inquiryType} onChange={updateField('inquiryType')}>
+          <option>בית / שיפוץ</option>
+          <option>אדריכל</option>
+          <option>קבלן / מתקין</option>
+          <option>פרויקט מסחרי</option>
+          <option>שירותי מפעל</option>
+        </select>
+      </label>
+      <label>
         מה תרצו שנבדוק?
         <textarea value={form.message} onChange={updateField('message')} rows="5" />
       </label>
@@ -693,7 +780,7 @@ function ContactForm() {
           שליחה במייל
         </a>
       </div>
-      <p>הטופס מכין הודעה לשליחה. ניתן לצרף תוכניות ותמונות בוואטסאפ או במייל לפני השליחה.</p>
+      <p>אפשר לשלוח קבצים ישירות בוואטסאפ או במייל.</p>
     </form>
   )
 }
@@ -725,7 +812,7 @@ function Footer() {
     <footer className="site-footer">
       <div>
         <strong>{siteInfo.name}</strong>
-        <p>{siteInfo.positioning}</p>
+        <p>ייצור, ביצוע ואספקת מערכות אלומיניום לפי תוכנית, מידה ומפרט.</p>
         <p>{siteInfo.location} | {siteInfo.hours}</p>
       </div>
       <nav aria-label="קישורי תחתית">
@@ -737,6 +824,11 @@ function Footer() {
         <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
         <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
         <a href={whatsappHref(whatsappMessages.details)}>WhatsApp</a>
+      </div>
+      <div className="footer-cta">
+        <strong>יש לכם תוכנית או מפרט?</strong>
+        <p>שלחו לבדיקה ונחזור עם כיוון ראשוני.</p>
+        <a className="text-link" href={whatsappHref()}>שליחה בוואטסאפ</a>
       </div>
       <small>{siteInfo.copyright}</small>
     </footer>

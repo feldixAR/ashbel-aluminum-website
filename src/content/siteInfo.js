@@ -6,7 +6,7 @@ export function asset(path) {
 
 export const routes = {
   home: '/',
-  systems: '/מערכות',
+  systems: '/מוצרים',
   projects: '/פרויקטים',
   about: '/על-החברה',
   process: '/תהליך-העבודה',
@@ -49,7 +49,7 @@ export function whatsappHref(message = whatsappMessages.plans) {
 
 export const navItems = [
   { label: 'ראשי', route: routes.home },
-  { label: 'מערכות', route: routes.systems },
+  { label: 'מוצרים', route: routes.systems },
   { label: 'פרויקטים', route: routes.projects },
   { label: 'תהליך', route: routes.process },
   { label: 'מהשטח', route: routes.knowledge },
@@ -68,5 +68,5 @@ export function href(route) {
 export const defaultSeo = {
   title: siteInfo.title,
   description:
-    'ייצור, ביצוע, התקנה ואספקת מערכות אלומיניום לפי תוכנית, מידה ומפרט עבור בתים, אדריכלים, קבלנים ופרויקטים מסחריים.',
+    'מערכות אלומיניום לבתים, אדריכלים, קבלנים ופרויקטים - חלונות, ויטרינות, פרגולות, תריסים, ייצור, התקנה ואספקה לפי מידה.',
 }
