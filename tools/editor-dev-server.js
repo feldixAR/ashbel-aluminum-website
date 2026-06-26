@@ -145,6 +145,10 @@ function normalizeContent(content) {
       ...item,
       order: Number(item.order || index + 1),
       showOnHome: item.showOnHome !== false,
+      options: (item.options || []).map((option, optionIndex) => ({
+        ...option,
+        order: Number(option.order || optionIndex + 1),
+      })),
       legacySlugs: Array.from(legacySlugs),
     }
   })

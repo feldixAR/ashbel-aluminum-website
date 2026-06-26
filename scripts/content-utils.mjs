@@ -117,6 +117,12 @@ export function validateContent(content) {
     validateTextArray(product.includes, `מה זה כולל - ${product.title}`, `${pathBase}.includes`, addIssue)
     validateTextArray(product.checks, `מה חשוב לבדוק - ${product.title}`, `${pathBase}.checks`, addIssue)
     validateNumber(product.order, `סדר תצוגה מוצר ${product.title}`, `${pathBase}.order`, addWarning)
+    ;(product.options || []).forEach((option, optionIndex) => {
+      requiredText(option.title, `כותרת תת־אפשרות במוצר ${product.title}`, `${pathBase}.options.${optionIndex}.title`)
+      requiredText(option.text, `טקסט תת־אפשרות במוצר ${product.title}`, `${pathBase}.options.${optionIndex}.text`)
+      validateImage(option.image, option.alt, `תמונת תת־אפשרות במוצר ${product.title}`, `${pathBase}.options.${optionIndex}`)
+      validateNumber(option.order, `סדר תת־אפשרות במוצר ${product.title}`, `${pathBase}.options.${optionIndex}.order`, addWarning)
+    })
     if (product.slug) {
       if (productSlugs.has(product.slug)) addIssue(`slug כפול במוצרים: ${product.slug}`, `${pathBase}.slug`)
       productSlugs.set(product.slug, true)
@@ -176,10 +182,12 @@ export function validateContent(content) {
 export function buildReport(content, validation = validateContent(content)) {
   const homepageProjects = (content.galleryItems || []).filter((item) => item.showOnHome !== false)
   const featuredArticles = (content.articles || []).filter((article) => article.featured !== false).slice(0, 3)
+  const productOptionsCount = (content.solutions || []).reduce((sum, product) => sum + (product.options || []).length, 0)
   const lines = [
     'דוח תוכן אשבל',
     '---------------',
     `מוצרים: ${(content.solutions || []).length}`,
+    `תתי־אפשרויות מוצר: ${productOptionsCount}`,
     `פרויקטים: ${(content.galleryItems || []).length}`,
     `פרויקטים בדף הבית: ${homepageProjects.length}`,
     `מאמרים: ${(content.articles || []).length}`,

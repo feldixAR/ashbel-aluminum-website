@@ -116,6 +116,7 @@ function ContentEditor() {
               <ImageField label="תמונת מוצר ראשית" value={selectedProductItem.image} alt={selectedProductItem.alt} media={media} folder={`products/${folderForProduct(selectedProductItem.id)}`} onImage={(value) => update([...productPath, 'image'], value)} onAlt={(value) => update([...productPath, 'alt'], value)} onUpload={(file, folder) => uploadImage(file, folder, setMedia, setStatus, (image) => update([...productPath, 'image'], image))} />
               <StringList title="מה זה כולל" items={selectedProductItem.includes || []} onChange={(items) => update([...productPath, 'includes'], items)} />
               <StringList title="מה חשוב לבדוק" items={selectedProductItem.checks || []} onChange={(items) => update([...productPath, 'checks'], items)} />
+              <ProductOptionsList title="תתי־אפשרויות בעולם המוצר" items={selectedProductItem.options || []} media={media} folder={`products/${folderForProduct(selectedProductItem.id)}`} onChange={(items) => update([...productPath, 'options'], items)} onUpload={(file, folder, done) => uploadImage(file, folder, setMedia, setStatus, done)} />
               <ImageList title="תמונות לדף מוצר" items={selectedProductItem.gallery || []} media={media} folder={`products/${folderForProduct(selectedProductItem.id)}`} onChange={(items) => update([...productPath, 'gallery'], items)} onUpload={(file, folder, done) => uploadImage(file, folder, setMedia, setStatus, done)} />
             </>
           ) : null}
@@ -441,6 +442,35 @@ function ImageList({ title, items, media, folder, onChange, onUpload }) {
         </div>
       ))}
       <button type="button" onClick={() => onChange([...safeItems, { image: '', alt: '', order: safeItems.length + 1, primary: safeItems.length === 0 }])}>הוספת תמונה</button>
+    </div>
+  )
+}
+
+function ProductOptionsList({ title, items, media, folder, onChange, onUpload }) {
+  const safeItems = items || []
+  return (
+    <div className="image-list editor-wide">
+      <h3>{title}</h3>
+      <p className="editor-help">אלו תתי־האפשרויות שמופיעות בתוך עולם המוצר ובדף המוצר. במובייל הן מוצגות פתוחות, בלי תלות ב־hover.</p>
+      {safeItems.map((item, index) => (
+        <div className="image-list-item" key={`${item.title}-${index}`}>
+          <Field label="כותרת אפשרות" value={item.title || ''} onChange={(value) => onChange(replaceAt(safeItems, index, { ...item, title: value }))} required />
+          <TextArea label="טקסט קצר" value={item.text || ''} onChange={(value) => onChange(replaceAt(safeItems, index, { ...item, text: value }))} required />
+          <ImageField
+            label="תמונת אפשרות"
+            value={item.image}
+            alt={item.alt}
+            media={media}
+            folder={folder}
+            onImage={(value) => onChange(replaceAt(safeItems, index, { ...item, image: value }))}
+            onAlt={(value) => onChange(replaceAt(safeItems, index, { ...item, alt: value }))}
+            onUpload={(file, targetFolder) => onUpload(file, targetFolder, (image) => onChange(replaceAt(safeItems, index, { ...item, image })))}
+          />
+          <NumberField label="סדר" value={item.order || index + 1} onChange={(value) => onChange(replaceAt(safeItems, index, { ...item, order: value }))} />
+          <button type="button" className="danger" onClick={() => onChange(safeItems.filter((_, itemIndex) => itemIndex !== index))}>מחיקת אפשרות</button>
+        </div>
+      ))}
+      <button type="button" onClick={() => onChange([...safeItems, { title: '', text: '', image: '', alt: '', order: safeItems.length + 1 }])}>הוספת אפשרות</button>
     </div>
   )
 }

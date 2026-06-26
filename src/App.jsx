@@ -309,20 +309,34 @@ function SolutionsSection({ compact = false }) {
   const visibleSolutions = sortByOrder(solutions).filter((solution) => solution.showOnHome !== false)
 
   return (
-    <section className="section section-light">
+    <section className={`section section-light product-worlds-section${compact ? ' compact-product-worlds-section' : ''}`}>
       <SectionTitle title={solutionsIntro.title} text={solutionsIntro.subtitle} />
-      <div className={compact ? 'systems-list compact-systems' : 'systems-list'}>
+      <div className={compact ? 'product-worlds compact-product-worlds' : 'product-worlds'}>
         {visibleSolutions.map((solution) => (
-          <a className="system-card" href={href(productRoute(solution))} key={solution.id}>
-            <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
-            <div>
-              <h3>{solution.title}</h3>
-              <p>{solution.text}</p>
-            </div>
-          </a>
+          <ProductWorldCard solution={solution} key={solution.id} />
         ))}
       </div>
     </section>
+  )
+}
+
+function ProductWorldCard({ solution }) {
+  const options = sortByOrder(solution.options || []).slice(0, 4)
+
+  return (
+    <a className="product-world-card" href={href(productRoute(solution))}>
+      <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
+      <div className="product-world-content">
+        <span>{String(solution.order || '').padStart(2, '0')}</span>
+        <h3>{solution.title}</h3>
+        <p>{solution.text}</p>
+        {options.length ? (
+          <ul>
+            {options.map((option) => <li key={option.title}>{option.title}</li>)}
+          </ul>
+        ) : null}
+      </div>
+    </a>
   )
 }
 
@@ -417,7 +431,16 @@ function SystemsPage() {
   return (
     <>
       <PageHero page={pages[routes.systems]} />
-      <section className="section section-light">
+      <section className="section section-light product-worlds-page">
+        <SectionTitle
+          title="עולמות מוצר"
+          text="כל תחום מוצג כעולם עבודה: מה רואים בפרויקט, אילו אפשרויות קיימות, ומה כדאי לשלוח לבדיקה."
+        />
+        <div className="product-worlds product-worlds-large">
+          {sortByOrder(solutions).map((solution) => <ProductWorldCard solution={solution} key={solution.id} />)}
+        </div>
+      </section>
+      <section className="section section-muted product-worlds-brief">
         <div className="systems-detail-list">
           {sortByOrder(solutions).map((solution) => (
             <article className="system-detail" id={solution.id} key={solution.id}>
@@ -425,14 +448,7 @@ function SystemsPage() {
               <div>
                 <h2>{solution.title}</h2>
                 <p>{solution.text}</p>
-                <h3>מה זה כולל</h3>
-                <ul>
-                  {solution.includes.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-                <h3>מה בודקים לפני ביצוע</h3>
-                <ul>
-                  {solution.checks.map((item) => <li key={item}>{item}</li>)}
-                </ul>
+                <ProductOptionsPreview solution={solution} />
                 <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
                   {sharedCta.shortPrimaryLabel}
                 </a>
@@ -447,7 +463,24 @@ function SystemsPage() {
   )
 }
 
+function ProductOptionsPreview({ solution }) {
+  const options = sortByOrder(solution.options || [])
+  if (!options.length) return null
+
+  return (
+    <div className="product-options-preview">
+      {options.map((option) => (
+        <span key={option.title}>{option.title}</span>
+      ))}
+    </div>
+  )
+}
+
 function ProductPage({ solution }) {
+  const options = sortByOrder(solution.options || [])
+  const leadOption = options[0]
+  const secondaryOptions = options.slice(1, 3)
+
   return (
     <>
       <section className="product-hero">
@@ -461,20 +494,52 @@ function ProductPage({ solution }) {
           </a>
         </div>
       </section>
-      <section className="section section-light product-detail-section">
-        <div className="product-detail-grid">
-          <article>
-            <h2>מה זה כולל</h2>
-            <ul>
-              {solution.includes.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-          </article>
-          <article>
-            <h2>מה בודקים לפני ביצוע</h2>
-            <ul>
-              {solution.checks.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-          </article>
+      {leadOption ? (
+        <section className="section section-light product-showcase">
+          <div className="product-showcase-grid">
+            <img src={asset(leadOption.image)} alt={leadOption.alt} loading="lazy" />
+            <div>
+              <span>{solution.title}</span>
+              <h2>{leadOption.title}</h2>
+              <p>{leadOption.text}</p>
+              <ProductOptionsPreview solution={solution} />
+            </div>
+          </div>
+        </section>
+      ) : null}
+      {secondaryOptions.length ? (
+        <section className="product-option-strip" aria-label="אפשרויות מוצר">
+          {secondaryOptions.map((option) => (
+            <article key={option.title}>
+              <img src={asset(option.image)} alt={option.alt} loading="lazy" />
+              <div>
+                <h2>{option.title}</h2>
+                <p>{option.text}</p>
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : null}
+      <section className="section section-muted product-detail-section">
+        <div className="product-check-layout">
+          <div>
+            <h2>מה חשוב לסגור לפני ביצוע</h2>
+            <p>כדי לתמחר ולבצע נכון, כדאי לשלוח תוכנית, תמונות או מפרט ולסגור את הפרטים המרכזיים לפני ייצור.</p>
+          </div>
+          <div className="product-check-grid">
+            {solution.checks.map((item, index) => (
+              <article key={item}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="section section-light product-includes-section">
+        <SectionTitle title="מה זה כולל" text="התחומים המרכזיים שמרכיבים את עולם המוצר הזה." />
+        <div className="product-includes-row">
+          {solution.includes.map((item) => <span key={item}>{item}</span>)}
         </div>
       </section>
       {solution.gallery?.length ? (
