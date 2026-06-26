@@ -59,11 +59,11 @@ export const navItems = [
     "route": "/פרויקטים"
   },
   {
-    "label": "תהליך",
+    "label": "תהליך העבודה",
     "route": "/תהליך-העבודה"
   },
   {
-    "label": "מהשטח",
+    "label": "מרכז ידע",
     "route": "/מהשטח"
   },
   {
@@ -86,11 +86,11 @@ export const footerNavItems = [
     "route": "/פרויקטים"
   },
   {
-    "label": "תהליך",
+    "label": "תהליך העבודה",
     "route": "/תהליך-העבודה"
   },
   {
-    "label": "מהשטח",
+    "label": "מרכז ידע",
     "route": "/מהשטח"
   },
   {

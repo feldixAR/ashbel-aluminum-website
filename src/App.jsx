@@ -97,10 +97,10 @@ function App() {
 
   return (
     <div className="site-shell">
-      {page.isEditor ? null : <Header route={route} />}
+      {page.isEditor ? null : <Header route={route} immersive={route === routes.systems} />}
       <main>{page.node}</main>
-      {page.isEditor ? null : <MobileActions />}
-      {page.isEditor ? null : <Footer />}
+      {page.isEditor || route === routes.systems ? null : <MobileActions />}
+      {page.isEditor ? null : <Footer compact={route === routes.systems} />}
     </div>
   )
 }
@@ -163,13 +163,13 @@ function resolvePage(route) {
   return { meta: pages[routes.home], node: <HomePage /> }
 }
 
-function Header({ route }) {
+function Header({ route, immersive = false }) {
   const [open, setOpen] = useState(false)
   const isActive = (itemRoute) =>
     itemRoute === routes.home ? route === routes.home : route.startsWith(itemRoute)
 
   return (
-    <header className="site-header">
+    <header className={`site-header${immersive ? ' immersive-header' : ''}`}>
       <a className="brand" href={href(routes.home)} aria-label="אשבל מערכות אלומיניום - ראשי" onClick={() => setOpen(false)}>
         <img src={asset(siteInfo.logo)} alt={siteInfo.logoAlt} />
         <strong>
@@ -187,14 +187,14 @@ function Header({ route }) {
       </nav>
 
       <div className="header-actions" aria-label="פעולות יצירת קשר">
-        <a className="action-link whatsapp-action" href={whatsappHref()} aria-label="שליחה בוואטסאפ">
+        <a className="action-link whatsapp-action" href={whatsappHref()} aria-label="שליחה בוואטסאפ" title="שליחה בוואטסאפ">
           <MessageCircle aria-hidden="true" />
-          {sharedCta.primaryButton}
+          <span className="visually-hidden">{sharedCta.primaryButton}</span>
         </a>
-        <a className="action-link" href={`tel:${siteInfo.phone}`} aria-label="התקשרות">
+        <a className="action-link phone-action" href={`tel:${siteInfo.phone}`} aria-label="התקשרות" title="התקשרות">
           <Phone aria-hidden="true" />
         </a>
-        <a className="action-link" href={`mailto:${siteInfo.email}`} aria-label="שליחת מייל">
+        <a className="action-link mail-action" href={`mailto:${siteInfo.email}`} aria-label="שליחת מייל" title="שליחת מייל">
           <Mail aria-hidden="true" />
         </a>
       </div>
@@ -320,15 +320,15 @@ function SolutionsSection({ compact = false }) {
   )
 }
 
-function ProductWorldCard({ solution }) {
-  const options = sortByOrder(solution.options || []).slice(0, 4)
+function ProductWorldCard({ solution, eager = false }) {
+  const options = sortByOrder(solution.options || []).slice(0, 3)
 
   return (
     <a className="product-world-card" href={href(productRoute(solution))}>
-      <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
+      <img src={asset(solution.image)} alt={solution.alt} loading={eager ? 'eager' : 'lazy'} fetchPriority={eager ? 'high' : undefined} />
       <div className="product-world-content">
         <span>{String(solution.order || '').padStart(2, '0')}</span>
-        <h3>{solution.title}</h3>
+        <h3>{solution.displayTitle || solution.title}</h3>
         <p>{solution.text}</p>
         {options.length ? (
           <ul>
@@ -429,32 +429,13 @@ function KnowledgePreview() {
 
 function SystemsPage() {
   return (
-    <>
+    <div className="products-reference-page">
       <section className="products-reference-hero" aria-label="עולמות מוצר">
         <div className="product-worlds product-worlds-fullscreen">
-          {sortByOrder(solutions).map((solution) => <ProductWorldCard solution={solution} key={solution.id} />)}
+          {sortByOrder(solutions).map((solution) => <ProductWorldCard solution={solution} eager key={solution.id} />)}
         </div>
       </section>
-      <section className="section section-muted product-worlds-brief">
-        <div className="systems-detail-list">
-          {sortByOrder(solutions).map((solution) => (
-            <article className="system-detail" id={solution.id} key={solution.id}>
-              <img src={asset(solution.image)} alt={solution.alt} loading="lazy" />
-              <div>
-                <h2>{solution.title}</h2>
-                <p>{solution.text}</p>
-                <ProductOptionsPreview solution={solution} />
-                <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
-                  {sharedCta.shortPrimaryLabel}
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-      <FactoryBand />
-      <ContactCta />
-    </>
+    </div>
   )
 }
 
@@ -545,23 +526,6 @@ function ProductPage({ solution }) {
       <ProjectsPreview />
       <ContactCta />
     </>
-  )
-}
-
-function FactoryBand() {
-  return (
-    <section className="factory-band">
-      <div>
-        <h2>שירותי מפעל לקבלנים ומתקינים</h2>
-        <p>
-          חיתוך לפי מידה, עיבוד פרופילים, צביעה, קיטים מוכנים להרכבה ואספקה לפי מפרט,
-          רשימת חיתוך או כתב כמויות.
-        </p>
-      </div>
-      <a className="button button-primary" href={whatsappHref(whatsappMessages.b2b)}>
-        {sharedCta.shortPrimaryLabel}
-      </a>
-    </section>
   )
 }
 
@@ -898,7 +862,30 @@ function CtaActions({ className = 'contact-cta-actions' }) {
   )
 }
 
-function Footer() {
+function Footer({ compact = false }) {
+  if (compact) {
+    return (
+      <footer className="site-footer product-footer">
+        <a className="product-footer-link" href={href(routes.contact)}>
+          <ArrowLeft aria-hidden="true" />
+          {sharedCta.shortPrimaryLabel}
+        </a>
+        <div className="product-footer-contact" aria-label="פרטי קשר">
+          <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
+          <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
+          <a className="product-footer-whatsapp" href={whatsappHref()}>
+            <MessageCircle aria-hidden="true" />
+            {sharedCta.primaryButton}
+          </a>
+        </div>
+        <a className="product-footer-brand" href={href(routes.home)} aria-label={`${siteInfo.name} - ראשי`}>
+          <strong>{siteInfo.name}</strong>
+          <img src={asset(siteInfo.logo)} alt={siteInfo.logoAlt} />
+        </a>
+      </footer>
+    )
+  }
+
   return (
     <footer className="site-footer">
       <div>
