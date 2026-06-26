@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { articles } from './content/articles'
 import { galleryIntro, galleryItems, missingImageNeeds } from './content/gallery'
-import { contactContent, homeAbout, homeContent, pages } from './content/pages'
+import { contactContent, homeAbout, homeContent, pages, sharedCta } from './content/pages'
 import { processIntro, processSteps, solutions, solutionsIntro, trustItems } from './content/solutions'
 import { defaultSeo, footerNavItems, navItems, routes, siteInfo, whatsappMessages } from './content/siteInfo'
 import './ContentEditor.css'
@@ -97,8 +97,6 @@ function ContentEditor() {
           <TextArea label="טקסט על החברה בדף הבית" value={content.homeAbout.text} onChange={(value) => update(['homeAbout', 'text'], value)} />
           <Field label="כותרת מהשטח בדף הבית" value={content.homeContent.fieldNotesPreviewTitle} onChange={(value) => update(['homeContent', 'fieldNotesPreviewTitle'], value)} />
           <TextArea label="טקסט מהשטח בדף הבית" value={content.homeContent.fieldNotesPreviewText} onChange={(value) => update(['homeContent', 'fieldNotesPreviewText'], value)} />
-          <Field label="כותרת קריאה ליצירת קשר" value={content.homeContent.contactCtaTitle} onChange={(value) => update(['homeContent', 'contactCtaTitle'], value)} />
-          <TextArea label="טקסט קריאה ליצירת קשר" value={content.homeContent.contactCtaText} onChange={(value) => update(['homeContent', 'contactCtaText'], value)} />
         </EditorPanel>
       )
     }
@@ -226,6 +224,17 @@ function ContentEditor() {
           <TextArea label="תיאור כללי" value={content.siteInfo.description} onChange={(value) => update(['siteInfo', 'description'], value)} />
           <Field label="כותרת SEO ברירת מחדל" value={content.defaultSeo.title} onChange={(value) => update(['defaultSeo', 'title'], value)} />
           <TextArea label="תיאור SEO ברירת מחדל" value={content.defaultSeo.description} onChange={(value) => update(['defaultSeo', 'description'], value)} />
+          <div className="editor-help editor-wide">
+            ה־CTA הבא הוא ברירת המחדל של כל האתר. מומלץ לשנות אותו כאן בלבד ולא ליצור ניסוח שונה לכל מוצר או עמוד.
+          </div>
+          <Field label="כותרת CTA כללית" value={content.sharedCta.title} onChange={(value) => update(['sharedCta', 'title'], value)} required />
+          <TextArea label="טקסט CTA כללי" value={content.sharedCta.text} onChange={(value) => update(['sharedCta', 'text'], value)} required />
+          <Field label="כפתור וואטסאפ" value={content.sharedCta.primaryButton} onChange={(value) => update(['sharedCta', 'primaryButton'], value)} required />
+          <Field label="כפתור טלפון" value={content.sharedCta.phoneButton} onChange={(value) => update(['sharedCta', 'phoneButton'], value)} required />
+          <Field label="כפתור מייל" value={content.sharedCta.emailButton} onChange={(value) => update(['sharedCta', 'emailButton'], value)} required />
+          <Field label="כפתור קצר ראשי" value={content.sharedCta.shortPrimaryLabel} onChange={(value) => update(['sharedCta', 'shortPrimaryLabel'], value)} required />
+          <Field label="כפתור קצר משני" value={content.sharedCta.shortSecondaryLabel} onChange={(value) => update(['sharedCta', 'shortSecondaryLabel'], value)} required />
+          <Field label="יעד כפתור קצר משני" value={content.sharedCta.shortSecondaryTarget} onChange={(value) => update(['sharedCta', 'shortSecondaryTarget'], value)} helper="בדרך כלל להשאיר: /פרויקטים" />
           <Field label="טקסט תחתית" value={content.siteInfo.copyright} onChange={(value) => update(['siteInfo', 'copyright'], value)} />
           <ImageField label="לוגו" value={content.siteInfo.logo} alt={content.siteInfo.logoAlt} media={media} folder="site" onImage={(value) => update(['siteInfo', 'logo'], value)} onAlt={(value) => update(['siteInfo', 'logoAlt'], value)} onUpload={(file, folder) => uploadImage(file, folder, setMedia, setStatus, (image) => update(['siteInfo', 'logo'], image))} />
         </EditorPanel>
@@ -287,6 +296,7 @@ function buildInitialContent() {
     navItems: structuredClone(navItems),
     footerNavItems: structuredClone(footerNavItems),
     defaultSeo: structuredClone(defaultSeo),
+    sharedCta: structuredClone(sharedCta),
     homeAbout: structuredClone(homeAbout),
     homeContent: structuredClone(homeContent),
     contactContent: structuredClone(contactContent),

@@ -4,6 +4,17 @@ export const homeAbout = {
   "linkLabel": "עוד על החברה"
 }
 
+export const sharedCta = {
+  "title": "יש לכם תוכנית, מפרט או תמונות מהשטח?",
+  "text": "שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט.",
+  "primaryButton": "שליחה בוואטסאפ",
+  "phoneButton": "התקשרות",
+  "emailButton": "שליחת מייל",
+  "shortPrimaryLabel": "שליחת תוכניות לבדיקה",
+  "shortSecondaryLabel": "צפייה בפרויקטים",
+  "shortSecondaryTarget": "/פרויקטים"
+}
+
 export const homeContent = {
   "heroPrimaryCtaLabel": "שליחת תוכניות לבדיקה",
   "heroPrimaryCtaTarget": "whatsapp",
@@ -17,12 +28,12 @@ export const homeContent = {
   "fieldNotesPreviewText": "דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט - בלי שפה של קטלוג.",
   "fieldNotesPreviewLinkLabel": "לכל המאמרים",
   "contactCtaTitle": "יש לכם תוכנית, מפרט או תמונות מהשטח?",
-  "contactCtaText": "שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר."
+  "contactCtaText": "שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט."
 }
 
 export const contactContent = {
   "panelTitle": "יש לכם תוכנית, מפרט או תמונות מהשטח?",
-  "panelText": "שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר.",
+  "panelText": "שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט.",
   "inquiryTypes": [
     "בית / שיפוץ",
     "אדריכל",

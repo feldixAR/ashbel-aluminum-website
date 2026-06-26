@@ -131,12 +131,24 @@
 }
 
 .button-primary {
-  background: var(--cta);
+  border-color: var(--ink);
+  background: var(--ink);
   color: #ffffff;
 }
 
 .button-primary:hover {
-  background: #0d85b0;
+  border-color: #0f1724;
+  background: #0f1724;
+}
+
+.button-primary.whatsapp-button {
+  border-color: #25d366;
+  background: #25d366;
+}
+
+.button-primary.whatsapp-button:hover {
+  border-color: #1fba59;
+  background: #1fba59;
 }
 
 .button-ghost {
@@ -1088,6 +1100,11 @@ svg {
 
 .footer-cta strong {
   font-size: 1.12rem;
+}
+
+.footer-cta-actions {
+  display: grid;
+  gap: 0.35rem;
 }
 
 .mobile-actions {

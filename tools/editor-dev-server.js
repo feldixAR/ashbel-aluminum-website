@@ -216,6 +216,8 @@ export const defaultSeo = ${toJs(content.defaultSeo)}
 function renderPages(content) {
   return `export const homeAbout = ${toJs(content.homeAbout)}
 
+export const sharedCta = ${toJs(content.sharedCta)}
+
 export const homeContent = ${toJs(content.homeContent)}
 
 export const contactContent = ${toJs(content.contactContent)}

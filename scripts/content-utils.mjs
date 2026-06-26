@@ -47,6 +47,7 @@ export async function loadContentModules() {
     footerNavItems: siteInfoModule.footerNavItems,
     defaultSeo: siteInfoModule.defaultSeo,
     homeAbout: pagesModule.homeAbout,
+    sharedCta: pagesModule.sharedCta || defaultSharedCta,
     homeContent: pagesModule.homeContent || defaultHomeContent,
     contactContent: pagesModule.contactContent || defaultContactContent,
     pages: pagesModule.pages,
@@ -84,6 +85,13 @@ export function validateContent(content) {
   requiredText(content.siteInfo?.name, 'שם העסק', 'siteInfo.name')
   requiredText(content.siteInfo?.phone, 'טלפון', 'siteInfo.phone')
   requiredText(content.siteInfo?.email, 'מייל', 'siteInfo.email')
+  requiredText(content.sharedCta?.title, 'כותרת CTA כללית', 'sharedCta.title')
+  requiredText(content.sharedCta?.text, 'טקסט CTA כללי', 'sharedCta.text')
+  requiredText(content.sharedCta?.primaryButton, 'כפתור וואטסאפ CTA', 'sharedCta.primaryButton')
+  requiredText(content.sharedCta?.phoneButton, 'כפתור טלפון CTA', 'sharedCta.phoneButton')
+  requiredText(content.sharedCta?.emailButton, 'כפתור מייל CTA', 'sharedCta.emailButton')
+  requiredText(content.sharedCta?.shortPrimaryLabel, 'כפתור קצר ראשי CTA', 'sharedCta.shortPrimaryLabel')
+  requiredText(content.sharedCta?.shortSecondaryLabel, 'כפתור קצר משני CTA', 'sharedCta.shortSecondaryLabel')
 
   Object.entries(content.pages || {}).forEach(([route, page]) => {
     requiredText(page.title, `כותרת עמוד ${route}`, `pages.${route}.title`)
@@ -177,6 +185,7 @@ export function buildReport(content, validation = validateContent(content)) {
     `מאמרים: ${(content.articles || []).length}`,
     `מאמרים שמופיעים בדף הבית: ${featuredArticles.length}`,
     `סוגי פנייה: ${(content.contactContent?.inquiryTypes || []).length}`,
+    `CTA כללי: ${content.sharedCta?.title ? 'מוגדר' : 'חסר'}`,
     `טלפון: ${content.siteInfo?.phoneDisplay || content.siteInfo?.phone || 'חסר'}`,
     `מייל: ${content.siteInfo?.email || 'חסר'}`,
     '',
@@ -239,12 +248,23 @@ const defaultHomeContent = {
   fieldNotesPreviewText: 'דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט.',
   fieldNotesPreviewLinkLabel: 'לכל המאמרים',
   contactCtaTitle: 'יש לכם תוכנית, מפרט או תמונות מהשטח?',
-  contactCtaText: 'שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר.',
+  contactCtaText: 'שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט.',
+}
+
+const defaultSharedCta = {
+  title: 'יש לכם תוכנית, מפרט או תמונות מהשטח?',
+  text: 'שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט.',
+  primaryButton: 'שליחה בוואטסאפ',
+  phoneButton: 'התקשרות',
+  emailButton: 'שליחת מייל',
+  shortPrimaryLabel: 'שליחת תוכניות לבדיקה',
+  shortSecondaryLabel: 'צפייה בפרויקטים',
+  shortSecondaryTarget: '/פרויקטים',
 }
 
 const defaultContactContent = {
   panelTitle: 'יש לכם תוכנית, מפרט או תמונות מהשטח?',
-  panelText: 'שלחו לנו ונבדוק מה נכון לבצע לפני הצעת מחיר.',
+  panelText: 'שלחו לנו את החומר ונבדוק מה נכון לבצע — לפי הפתחים, הסגנון, המידה והמפרט.',
   inquiryTypes: ['בית / שיפוץ', 'אדריכל', 'קבלן / מתקין', 'פרויקט מסחרי', 'שירותי מפעל'],
   whatToSend: [
     'תוכנית אלומיניום / תוכנית אדריכלית',

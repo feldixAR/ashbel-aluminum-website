@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { articles, articleRoute, getArticle } from './content/articles'
 import { galleryItems } from './content/gallery'
-import { contactContent, homeAbout, homeContent, pages } from './content/pages'
+import { contactContent, homeAbout, homeContent, pages, sharedCta } from './content/pages'
 import { processIntro, processSteps, solutions, solutionsIntro, trustItems } from './content/solutions'
 import {
   asset,
@@ -189,7 +189,7 @@ function Header({ route }) {
       <div className="header-actions" aria-label="פעולות יצירת קשר">
         <a className="action-link whatsapp-action" href={whatsappHref()} aria-label="שליחה בוואטסאפ">
           <MessageCircle aria-hidden="true" />
-          WhatsApp
+          {sharedCta.primaryButton}
         </a>
         <a className="action-link" href={`tel:${siteInfo.phone}`} aria-label="התקשרות">
           <Phone aria-hidden="true" />
@@ -217,7 +217,7 @@ function Header({ route }) {
             </a>
           ))}
           <div className="mobile-contact-row">
-            <a href={whatsappHref()} onClick={() => setOpen(false)}>WhatsApp</a>
+            <a href={whatsappHref()} onClick={() => setOpen(false)}>{sharedCta.primaryButton}</a>
             <a href={`tel:${siteInfo.phone}`} onClick={() => setOpen(false)}>טלפון</a>
             <a href={`mailto:${siteInfo.email}`} onClick={() => setOpen(false)}>מייל</a>
           </div>
@@ -248,7 +248,9 @@ function productRoute(solution) {
 
 function Hero({ page }) {
   const primaryHref = resolveCtaHref(page.hero.primaryCtaTarget || homeContent.heroPrimaryCtaTarget)
-  const secondaryHref = resolveCtaHref(page.hero.secondaryCtaTarget || homeContent.heroSecondaryCtaTarget)
+  const secondaryHref = resolveCtaHref(page.hero.secondaryCtaTarget || sharedCta.shortSecondaryTarget || homeContent.heroSecondaryCtaTarget)
+  const primaryLabel = page.hero.primaryCtaLabel || sharedCta.shortPrimaryLabel || homeContent.heroPrimaryCtaLabel
+  const secondaryLabel = page.hero.secondaryCtaLabel || sharedCta.shortSecondaryLabel || homeContent.heroSecondaryCtaLabel
 
   return (
     <section className="hero-section">
@@ -259,10 +261,10 @@ function Hero({ page }) {
         <p>{page.hero.text || page.hero.subtitle}</p>
         <div className="hero-actions">
           <a className="button button-primary" href={primaryHref}>
-            {page.hero.primaryCtaLabel || homeContent.heroPrimaryCtaLabel}
+            {primaryLabel}
           </a>
           <a className="button button-ghost" href={secondaryHref}>
-            {page.hero.secondaryCtaLabel || homeContent.heroSecondaryCtaLabel}
+            {secondaryLabel}
           </a>
         </div>
       </div>
@@ -432,7 +434,7 @@ function SystemsPage() {
                   {solution.checks.map((item) => <li key={item}>{item}</li>)}
                 </ul>
                 <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
-                  {solution.id === 'factory' ? 'שליחת מפרט / רשימת חיתוך' : 'שליחת תוכניות לבדיקה'}
+                  {sharedCta.shortPrimaryLabel}
                 </a>
               </div>
             </article>
@@ -455,7 +457,7 @@ function ProductPage({ solution }) {
           <h1>{solution.title}</h1>
           <p>{solution.text}</p>
           <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
-            {solution.id === 'factory' ? 'שליחת מפרט / רשימת חיתוך' : 'שליחת תוכניות לבדיקה'}
+            {sharedCta.shortPrimaryLabel}
           </a>
         </div>
       </section>
@@ -497,7 +499,7 @@ function FactoryBand() {
         </p>
       </div>
       <a className="button button-primary" href={whatsappHref(whatsappMessages.b2b)}>
-        שליחת מפרט / רשימת חיתוך
+        {sharedCta.shortPrimaryLabel}
       </a>
     </section>
   )
@@ -680,11 +682,11 @@ function ArticleMedia({ section }) {
 function ArticleCta() {
   return (
     <section className="article-cta">
-      <h2>רוצים שנבדוק את התוכנית שלכם?</h2>
-      <p>שלחו תוכנית או תמונה מהשטח ונחזור עם כיוון ראשוני.</p>
-      <a className="button button-primary" href={whatsappHref()}>
-        שליחת תוכנית או תמונה
-      </a>
+      <div>
+        <h2>{sharedCta.title}</h2>
+        <p>{sharedCta.text}</p>
+      </div>
+      <CtaActions />
     </section>
   )
 }
@@ -705,22 +707,22 @@ function ContactSection({ compact = false }) {
         <div className="contact-details-card">
           <img className="contact-media" src={asset(pages[routes.contact].hero.image)} alt={pages[routes.contact].hero.alt} loading="lazy" />
           <SectionTitle
-            title={contactContent.panelTitle}
-            text={contactContent.panelText}
+            title={sharedCta.title || contactContent.panelTitle}
+            text={sharedCta.text || contactContent.panelText}
             align="start"
           />
           <div className="contact-buttons">
             <a className="button button-primary whatsapp-button" href={whatsappHref()}>
               <MessageCircle aria-hidden="true" />
-              שליחה בוואטסאפ
+              {sharedCta.primaryButton}
             </a>
             <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
               <Phone aria-hidden="true" />
-              התקשרות
+              {sharedCta.phoneButton}
             </a>
             <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
               <Mail aria-hidden="true" />
-              שליחת מייל
+              {sharedCta.emailButton}
             </a>
           </div>
           <ul className="contact-list">
@@ -797,10 +799,10 @@ function ContactForm() {
       </label>
       <div className="form-actions">
         <a className="button button-primary whatsapp-button" href={whatsappHref(encoded)}>
-          שליחה בוואטסאפ
+          {sharedCta.primaryButton}
         </a>
         <a className="button button-outline" href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל מערכות אלומיניום')}&body=${encodeURIComponent(encoded)}`}>
-          שליחה במייל
+          {sharedCta.emailButton}
         </a>
       </div>
       <p>אפשר לשלוח קבצים ישירות בוואטסאפ או במייל.</p>
@@ -812,21 +814,27 @@ function ContactCta() {
   return (
     <section className="contact-cta">
       <div>
-        <h2>{homeContent.contactCtaTitle}</h2>
-        <p>{homeContent.contactCtaText}</p>
+        <h2>{sharedCta.title || homeContent.contactCtaTitle}</h2>
+        <p>{sharedCta.text || homeContent.contactCtaText}</p>
       </div>
-      <div className="contact-cta-actions">
-        <a className="button button-primary whatsapp-button" href={whatsappHref()}>
-          שליחה בוואטסאפ
-        </a>
-        <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
-          התקשרות
-        </a>
-        <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
-          שליחת מייל
-        </a>
-      </div>
+      <CtaActions />
     </section>
+  )
+}
+
+function CtaActions({ className = 'contact-cta-actions' }) {
+  return (
+    <div className={className}>
+      <a className="button button-primary whatsapp-button" href={whatsappHref()}>
+        {sharedCta.primaryButton}
+      </a>
+      <a className="button button-outline" href={`tel:${siteInfo.phone}`}>
+        {sharedCta.phoneButton}
+      </a>
+      <a className="button button-outline" href={`mailto:${siteInfo.email}`}>
+        {sharedCta.emailButton}
+      </a>
+    </div>
   )
 }
 
@@ -846,12 +854,16 @@ function Footer() {
       <div className="footer-contact">
         <a href={`tel:${siteInfo.phone}`}>{siteInfo.phoneDisplay}</a>
         <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
-        <a href={whatsappHref(whatsappMessages.details)}>WhatsApp</a>
+        <a href={whatsappHref(whatsappMessages.details)}>{sharedCta.primaryButton}</a>
       </div>
       <div className="footer-cta">
-        <strong>יש לכם תוכנית או מפרט?</strong>
-        <p>שלחו לבדיקה ונחזור עם כיוון ראשוני.</p>
-        <a className="text-link" href={whatsappHref()}>שליחה בוואטסאפ</a>
+        <strong>{sharedCta.title}</strong>
+        <p>{sharedCta.text}</p>
+        <div className="footer-cta-actions">
+          <a className="text-link" href={whatsappHref()}>{sharedCta.primaryButton}</a>
+          <a className="text-link" href={`tel:${siteInfo.phone}`}>{sharedCta.phoneButton}</a>
+          <a className="text-link" href={`mailto:${siteInfo.email}`}>{sharedCta.emailButton}</a>
+        </div>
       </div>
       <small>{siteInfo.copyright}</small>
     </footer>
@@ -863,7 +875,7 @@ function MobileActions() {
     <div className="mobile-actions" aria-label="פעולות מהירות">
       <a className="whatsapp-mobile-action" href={whatsappHref()}>
         <MessageCircle aria-hidden="true" />
-        WhatsApp
+        {sharedCta.primaryButton}
       </a>
       <a href={`tel:${siteInfo.phone}`}>
         <Phone aria-hidden="true" />
