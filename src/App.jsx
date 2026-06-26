@@ -430,13 +430,8 @@ function KnowledgePreview() {
 function SystemsPage() {
   return (
     <>
-      <PageHero page={pages[routes.systems]} />
-      <section className="section section-light product-worlds-page">
-        <SectionTitle
-          title="עולמות מוצר"
-          text="כל תחום מוצג כעולם עבודה: מה רואים בפרויקט, אילו אפשרויות קיימות, ומה כדאי לשלוח לבדיקה."
-        />
-        <div className="product-worlds product-worlds-large">
+      <section className="products-reference-hero" aria-label="עולמות מוצר">
+        <div className="product-worlds product-worlds-fullscreen">
           {sortByOrder(solutions).map((solution) => <ProductWorldCard solution={solution} key={solution.id} />)}
         </div>
       </section>
