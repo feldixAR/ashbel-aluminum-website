@@ -456,18 +456,27 @@ function ProductPage({ solution }) {
   const options = sortByOrder(solution.options || [])
   const leadOption = options[0]
   const secondaryOptions = options.slice(1, 3)
+  const otherProducts = sortByOrder(solutions).filter((item) => item.id !== solution.id).slice(0, 5)
 
   return (
     <>
       <section className="product-hero">
         <img src={asset(solution.image)} alt={solution.alt} />
         <div>
-          <a href={href(routes.systems)}>מוצרים</a>
-          <h1>{solution.title}</h1>
-          <p>{solution.text}</p>
-          <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
-            {sharedCta.shortPrimaryLabel}
+          <a className="product-back-link" href={href(routes.systems)}>
+            <ArrowLeft aria-hidden="true" />
+            חזרה למוצרים
           </a>
+          <h1>{solution.displayTitle || solution.title}</h1>
+          <p>{solution.text}</p>
+          <div className="product-hero-actions">
+            <a className="button button-primary" href={whatsappHref(solution.id === 'factory' ? whatsappMessages.b2b : whatsappMessages.plans)}>
+              {sharedCta.shortPrimaryLabel}
+            </a>
+            <a className="button button-outline" href={href(routes.projects)}>
+              {sharedCta.shortSecondaryLabel}
+            </a>
+          </div>
         </div>
       </section>
       {leadOption ? (
@@ -475,7 +484,7 @@ function ProductPage({ solution }) {
           <div className="product-showcase-grid">
             <img src={asset(leadOption.image)} alt={leadOption.alt} loading="lazy" />
             <div>
-              <span>{solution.title}</span>
+              <span>{solution.displayTitle || solution.title}</span>
               <h2>{leadOption.title}</h2>
               <p>{leadOption.text}</p>
               <ProductOptionsPreview solution={solution} />
@@ -523,7 +532,17 @@ function ProductPage({ solution }) {
           <ProjectGrid items={sortByOrder(solution.gallery).map((item) => ({ ...item, title: item.title || solution.title }))} />
         </section>
       ) : null}
-      <ProjectsPreview />
+      <section className="product-page-nav" aria-label="עולמות מוצר נוספים">
+        <a className="text-link" href={href(routes.systems)}>
+          כל המוצרים
+          <ArrowLeft aria-hidden="true" />
+        </a>
+        <div>
+          {otherProducts.map((item) => (
+            <a key={item.id} href={href(productRoute(item))}>{item.displayTitle || item.title}</a>
+          ))}
+        </div>
+      </section>
       <ContactCta />
     </>
   )
@@ -670,7 +689,7 @@ function ArticlePage({ article }) {
     <>
       <section className="article-hero">
         <div>
-          <a href={href(routes.knowledge)}>מהשטח</a>
+          <a href={href(routes.knowledge)}>מרכז ידע</a>
           <h1>{article.title}</h1>
           <p>{article.description}</p>
         </div>
@@ -888,11 +907,10 @@ function Footer({ compact = false }) {
 
   return (
     <footer className="site-footer">
-      <div>
-        <strong>{siteInfo.name}</strong>
-        <p>ייצור, ביצוע ואספקת מערכות אלומיניום לפי תוכנית, מידה ומפרט.</p>
-        <p>{siteInfo.location} | {siteInfo.hours}</p>
-      </div>
+        <div>
+          <strong>{siteInfo.name}</strong>
+          <p>{siteInfo.location} | {siteInfo.hours}</p>
+        </div>
       <nav aria-label="קישורי תחתית">
         {footerNavItems.map((item) => (
           <a key={item.route} href={href(item.route)}>{item.label}</a>
@@ -905,7 +923,6 @@ function Footer({ compact = false }) {
       </div>
       <div className="footer-cta">
         <strong>{sharedCta.title}</strong>
-        <p>{sharedCta.text}</p>
         <div className="footer-cta-actions">
           <a className="text-link" href={whatsappHref()}>{sharedCta.primaryButton}</a>
           <a className="text-link" href={`tel:${siteInfo.phone}`}>{sharedCta.phoneButton}</a>

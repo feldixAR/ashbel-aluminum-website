@@ -24,7 +24,7 @@ export const homeContent = {
   "projectsPreviewTitle": "פרויקטים",
   "projectsPreviewText": "מבט נקי על פתחים, ויטרינות, הצללות ופרטי אלומיניום שבוצעו בשטח.",
   "projectsPreviewLinkLabel": "לכל הפרויקטים",
-  "fieldNotesPreviewTitle": "מהשטח",
+  "fieldNotesPreviewTitle": "מרכז ידע",
   "fieldNotesPreviewText": "דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט - בלי שפה של קטלוג.",
   "fieldNotesPreviewLinkLabel": "לכל המאמרים",
   "contactCtaTitle": "יש לכם תוכנית, מפרט או תמונות מהשטח?",
@@ -147,11 +147,11 @@ export const pages = {
   },
   "/תהליך-העבודה": {
     "route": "/תהליך-העבודה",
-    "title": "תהליך",
+    "title": "תהליך העבודה",
     "seoTitle": "תהליך העבודה | אשבל מערכות אלומיניום",
     "description": "מהתוכנית לשטח: בדיקת תוכניות, תיאום, מדידה, ייצור, התקנה או אספקה לפי מידה.",
     "hero": {
-      "title": "תהליך",
+      "title": "תהליך העבודה",
       "subtitle": "מהתוכנית לשטח - עבודה מסודרת לפני ייצור, התקנה או אספקה.",
       "image": "media/projects/sliding-vitrine-balcony.webp",
       "alt": "ויטרינת הזזה כהה ביציאה למרפסת"
@@ -189,11 +189,11 @@ export const pages = {
   },
   "/מהשטח": {
     "route": "/מהשטח",
-    "title": "מהשטח",
-    "seoTitle": "מהשטח | אשבל מערכות אלומיניום",
+    "title": "מרכז ידע",
+    "seoTitle": "מרכז ידע | אשבל מערכות אלומיניום",
     "description": "מדריכים מעשיים מתוך עבודה עם תוכניות, פתחים, ייצור והתקנות: מה לבדוק לפני הצעת מחיר ואיך נמנעים מטעויות יקרות.",
     "hero": {
-      "title": "מהשטח",
+      "title": "מרכז ידע",
       "subtitle": "דברים שכדאי לדעת לפני שסוגרים אלומיניום לבית או לפרויקט - מתוך עבודה עם תוכניות, פתחים, ייצור והתקנות.",
       "image": "media/projects/pergola-slats.webp",
       "alt": "פרגולת אלומיניום עם סרגלי הצללה"
