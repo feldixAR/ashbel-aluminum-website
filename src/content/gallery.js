@@ -83,7 +83,7 @@ export const galleryItems = [
     "category": "מודרני",
     "order": 8.2,
     "featured": true,
-    "showOnHome": true
+    "showOnHome": false
   },
   {
     "image": "media/projects/herzliya-pituach/herzliya-pituach-vitrine-shutters-03.jpg",
@@ -92,7 +92,7 @@ export const galleryItems = [
     "category": "הצללה",
     "order": 8.3,
     "featured": true,
-    "showOnHome": true
+    "showOnHome": false
   },
   {
     "image": "media/projects/herzliya-pituach/herzliya-pituach-exterior-renovation-01.jpg",
