@@ -75,6 +75,87 @@ export const galleryItems = [
     "order": 8,
     "featured": false,
     "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-vitrine-02.jpg",
+    "alt": "ויטרינת אלומיניום כהה בחלל בית פרטי בשיפוץ, תמונה 1",
+    "title": "ויטרינות בבית פרטי בשיפוץ",
+    "category": "מודרני",
+    "order": 8.2,
+    "featured": true,
+    "showOnHome": true
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-vitrine-shutters-03.jpg",
+    "alt": "ויטרינת אלומיניום ותריסים חומים בחזית בית פרטי, תמונה 2",
+    "title": "ויטרינות ותריסים בפרויקט בביצוע",
+    "category": "הצללה",
+    "order": 8.3,
+    "featured": true,
+    "showOnHome": true
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-exterior-renovation-01.jpg",
+    "alt": "חזית בית פרטי בשיפוץ עם ויטרינות ותריסי אלומיניום כהים, תמונה 3",
+    "title": "פרויקט בביצוע בהרצליה פיתוח",
+    "category": "ביצוע / מפעל",
+    "order": 9,
+    "featured": true,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-shutter-front-04.jpg",
+    "alt": "תריס אלומיניום חום עם שלבים אופקיים בחזית בית, תמונה 4",
+    "title": "תריסי אלומיניום בחזית",
+    "category": "הצללה",
+    "order": 10,
+    "featured": false,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-shutters-05.jpg",
+    "alt": "חדר בשיפוץ עם חלונות ותריסי אלומיניום כהים, תמונה 5",
+    "title": "חלונות ותריסים בחדר בשיפוץ",
+    "category": "הצללה",
+    "order": 11,
+    "featured": false,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-horizontal-window-06.jpg",
+    "alt": "חלון אלומיניום אופקי כהה בחדר בבית פרטי בשיפוץ, תמונה 6",
+    "title": "חלון אופקי לפי מידה",
+    "category": "מודרני",
+    "order": 12,
+    "featured": false,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-louver-detail-07.jpg",
+    "alt": "תקריב של שלבי רפפה מאלומיניום בגוון כהה, תמונה 7",
+    "title": "פרט רפפה מאלומיניום",
+    "category": "הצללה",
+    "order": 13,
+    "featured": false,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-installation-room-09.jpg",
+    "alt": "חלל בית פרטי בשיפוץ עם ויטרינות אלומיניום ועבודת התקנה, תמונה 8",
+    "title": "התקנת ויטרינות בשטח",
+    "category": "ביצוע / מפעל",
+    "order": 14,
+    "featured": false,
+    "showOnHome": false
+  },
+  {
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-louver-closeup-10.jpg",
+    "alt": "חלון רפפה מאלומיניום כהה בתוך חדר בשיפוץ, תמונה 9",
+    "title": "רפפה פנימית כהה",
+    "category": "הצללה",
+    "order": 15,
+    "featured": false,
+    "showOnHome": false
   }
 ]
 

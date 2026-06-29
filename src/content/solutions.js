@@ -57,7 +57,26 @@ export const solutions = [
     "order": 1,
     "showOnHome": true,
     "legacySlugs": [],
-    "gallery": []
+    "gallery": [
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-vitrine-02.jpg",
+        "alt": "ויטרינת אלומיניום כהה בחלל בית פרטי בשיפוץ, תמונה 1",
+        "title": "ויטרינה רחבה בבית בשיפוץ",
+        "order": 1
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-vitrine-shutters-03.jpg",
+        "alt": "ויטרינת אלומיניום ותריסים חומים בחזית בית פרטי, תמונה 2",
+        "title": "ויטרינה עם תריס חיצוני",
+        "order": 2
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-horizontal-window-06.jpg",
+        "alt": "חלון אלומיניום אופקי כהה בחדר בבית פרטי בשיפוץ, תמונה 3",
+        "title": "חלון אופקי לפי מידה",
+        "order": 3
+      }
+    ]
   },
   {
     "id": "belgian",
@@ -153,7 +172,32 @@ export const solutions = [
     "order": 3,
     "showOnHome": true,
     "legacySlugs": [],
-    "gallery": []
+    "gallery": [
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-shutter-front-04.jpg",
+        "alt": "תריס אלומיניום חום עם שלבים אופקיים בחזית בית, תמונה 1",
+        "title": "תריס אלומיניום בחזית",
+        "order": 1
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-shutters-05.jpg",
+        "alt": "חדר בשיפוץ עם חלונות ותריסי אלומיניום כהים, תמונה 2",
+        "title": "חלונות ותריסים בחדר בשיפוץ",
+        "order": 2
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-louver-detail-07.jpg",
+        "alt": "תקריב של שלבי רפפה מאלומיניום בגוון כהה, תמונה 3",
+        "title": "פרט רפפה מאלומיניום",
+        "order": 3
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-louver-closeup-10.jpg",
+        "alt": "חלון רפפה מאלומיניום כהה בתוך חדר בשיפוץ, תמונה 4",
+        "title": "רפפה פנימית כהה",
+        "order": 4
+      }
+    ]
   },
   {
     "id": "pergolas",
@@ -249,7 +293,20 @@ export const solutions = [
     "order": 5,
     "showOnHome": true,
     "legacySlugs": [],
-    "gallery": []
+    "gallery": [
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-exterior-renovation-01.jpg",
+        "alt": "חזית בית פרטי בשיפוץ עם ויטרינות ותריסי אלומיניום כהים, תמונה 1",
+        "title": "חזית בית בשלב ביצוע",
+        "order": 1
+      },
+      {
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-vitrine-shutters-03.jpg",
+        "alt": "ויטרינת אלומיניום ותריסים חומים בחזית בית פרטי, תמונה 2",
+        "title": "ויטרינות ותריסים חיצוניים",
+        "order": 2
+      }
+    ]
   },
   {
     "id": "factory",
@@ -340,13 +397,13 @@ export const processSteps = [
   {
     "title": "מדידה ותיאום באתר",
     "text": "כאשר צריך, מתאמים מדידה בשטח ומוודאים שהפתחים וההכנות מתאימים לביצוע.",
-    "image": "media/projects/sliding-vitrine-balcony.webp",
-    "alt": "ויטרינת הזזה כהה ביציאה למרפסת",
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-vitrine-02.jpg",
+    "alt": "ויטרינת אלומיניום כהה בחלל בית פרטי בשיפוץ, תמונה 1",
     "order": 3,
     "images": [
       {
-        "image": "media/projects/sliding-vitrine-balcony.webp",
-        "alt": "ויטרינת הזזה כהה ביציאה למרפסת",
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-interior-vitrine-02.jpg",
+        "alt": "ויטרינת אלומיניום כהה בחלל בית פרטי בשיפוץ, תמונה 1",
         "order": 1,
         "primary": true
       }
@@ -370,13 +427,13 @@ export const processSteps = [
   {
     "title": "התקנה ובדיקת גמר",
     "text": "מתקינים באתר או מספקים לפי מידה, ובודקים פתיחה, סגירה, איטום וגמרים.",
-    "image": "media/projects/black-frame-living-room.webp",
-    "alt": "חלל מגורים לאחר התקנת אלומיניום שחור",
+    "image": "media/projects/herzliya-pituach/herzliya-pituach-installation-room-09.jpg",
+    "alt": "חלל בית פרטי בשיפוץ עם ויטרינות אלומיניום ועבודת התקנה, תמונה 2",
     "order": 5,
     "images": [
       {
-        "image": "media/projects/black-frame-living-room.webp",
-        "alt": "חלל מגורים לאחר התקנת אלומיניום שחור",
+        "image": "media/projects/herzliya-pituach/herzliya-pituach-installation-room-09.jpg",
+        "alt": "חלל בית פרטי בשיפוץ עם ויטרינות אלומיניום ועבודת התקנה, תמונה 2",
         "order": 1,
         "primary": true
       }
