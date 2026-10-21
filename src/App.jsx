@@ -854,7 +854,7 @@ function ContactForm() {
     form.projectStage ? `שלב הפרויקט: ${form.projectStage}` : '',
     form.inquiryType ? `סוג פנייה: ${form.inquiryType}` : '',
     form.message ? `פרטים: ${form.message}` : '',
-  ].filter(Boolean).join('\\n')
+  ].filter(Boolean).join('\n')
 
   const openWhatsApp = (event) => {
     event.preventDefault()
