@@ -46,18 +46,34 @@ const legacyAliases = {
 }
 
 function normalizeRoute() {
-  const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
-  const route = hash.startsWith('/') ? hash : routes.home
+  const requested = typeof window === 'undefined'
+    ? globalThis.__ASHBEL_PRERENDER_PATH__ || routes.home
+    : (() => {
+        const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
+        return hash.startsWith('/') ? hash : decodeURIComponent(window.location.pathname || routes.home)
+      })()
+  const route = requested.length > 1 ? requested.replace(/\/+$/, '') : requested
   return legacyAliases[route] || route
 }
 
+function getInitialRoute() {
+  if (typeof window === 'undefined') return normalizeRoute()
+  const prerenderedRoute = document.getElementById('root')?.dataset.prerenderRoute
+  return prerenderedRoute || normalizeRoute()
+}
+
 function useRoute() {
-  const [route, setRoute] = useState(normalizeRoute)
+  const [route, setRoute] = useState(getInitialRoute)
 
   useEffect(() => {
-    const onHashChange = () => setRoute(normalizeRoute())
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    const onLocationChange = () => setRoute(normalizeRoute())
+    onLocationChange()
+    window.addEventListener('hashchange', onLocationChange)
+    window.addEventListener('popstate', onLocationChange)
+    return () => {
+      window.removeEventListener('hashchange', onLocationChange)
+      window.removeEventListener('popstate', onLocationChange)
+    }
   }, [])
 
   useEffect(() => {
@@ -70,16 +86,25 @@ function useRoute() {
 function setMeta(page) {
   const title = page.seoTitle || page.title || defaultSeo.title
   const description = page.description || defaultSeo.description
+  const routePath = page.route || routes.home
+  const canonicalUrl = new URL(routePath === '/' ? '/' : `${routePath.replace(/\/+$/, '')}/`, siteInfo.url).href
+  const imagePath = page.image || page.hero?.image
+  const imageUrl = imagePath ? new URL(asset(imagePath), siteInfo.url).href : undefined
   document.title = title
 
-  const currentUrl = `${window.location.origin}${import.meta.env.BASE_URL}#${page.route || routes.home}`
   const updates = [
     ['meta[name="description"]', 'content', description],
     ['meta[property="og:title"]', 'content', title],
     ['meta[property="og:description"]', 'content', description],
-    ['meta[property="og:url"]', 'content', currentUrl],
-    ['link[rel="canonical"]', 'href', currentUrl],
+    ['meta[property="og:url"]', 'content', canonicalUrl],
+    ['link[rel="canonical"]', 'href', canonicalUrl],
+    ['meta[name="twitter:title"]', 'content', title],
+    ['meta[name="twitter:description"]', 'content', description],
   ]
+  if (imageUrl) {
+    updates.push(['meta[property="og:image"]', 'content', imageUrl])
+    updates.push(['meta[name="twitter:image"]', 'content', imageUrl])
+  }
 
   updates.forEach(([selector, attr, value]) => {
     const node = document.querySelector(selector)
@@ -130,8 +155,9 @@ function resolvePage(route) {
       return {
         meta: {
           route: productRoute(solution),
-          seoTitle: `${solution.title} | אשבל מערכות אלומיניום`,
+          seoTitle: `${solution.title} | אלומיניום לבית פרטי | אשבל`,
           description: solution.text,
+          image: solution.image,
         },
         node: <ProductPage solution={solution} />,
       }
@@ -145,8 +171,9 @@ function resolvePage(route) {
       return {
         meta: {
           route: articleRoute(article),
-          seoTitle: `${article.title} | אשבל מערכות אלומיניום`,
+          seoTitle: `${article.title} | אשבל אלומיניום`,
           description: article.description,
+          image: article.image,
         },
         node: <ArticlePage article={article} />,
       }

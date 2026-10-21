@@ -8,7 +8,7 @@
     "content:check": "node scripts/content-check.mjs",
     "content:report": "node scripts/content-report.mjs",
     "publish:check": "node scripts/publish-check.mjs",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

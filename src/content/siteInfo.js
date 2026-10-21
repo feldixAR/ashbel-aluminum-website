@@ -15,6 +15,7 @@ export const routes = {
 }
 
 export const siteInfo = {
+  "url": "https://www.alumashbel.co.il",
   "name": "אשבל מערכות אלומיניום",
   "shortName": "אשבל אלומיניום",
   "title": "אשבל מערכות אלומיניום | ייצור וביצוע פרויקטים",
@@ -104,10 +105,15 @@ export const footerNavItems = [
 ]
 
 export function href(route) {
-  return `#${route}`
+  let cleanRoute = String(route || routes.home)
+  if (!cleanRoute.startsWith('/')) cleanRoute = `/${cleanRoute}`
+  while (cleanRoute.length > 1 && cleanRoute.endsWith('/')) {
+    cleanRoute = cleanRoute.slice(0, -1)
+  }
+  return cleanRoute === '/' ? '/' : `${cleanRoute}/`
 }
 
 export const defaultSeo = {
-  "title": "אשבל מערכות אלומיניום | ייצור וביצוע פרויקטים",
-  "description": "מערכות אלומיניום לבתים, אדריכלים, קבלנים ופרויקטים - חלונות, ויטרינות, פרגולות, תריסים, ייצור, התקנה ואספקה לפי מידה."
+  "title": "עבודות אלומיניום לבית פרטי | חלונות וויטרינות | אשבל",
+  "description": "עבודות אלומיניום לבתים פרטיים: חלונות, ויטרינות, דלתות, תריסים והצללה. בדיקת תוכניות, ייצור והתקנה."
 }

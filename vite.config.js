@@ -8,8 +8,8 @@ import { ashbelContentEditorPlugin } from './tools/editor-dev-server.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/ashbel-aluminum-website/' : '/',
+export default defineConfig(() => ({
+  base: '/',
   plugins: [react(), tailwindcss(), ashbelContentEditorPlugin(__dirname)],
   resolve: {
     alias: {
