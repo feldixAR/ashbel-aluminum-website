@@ -457,6 +457,12 @@ function KnowledgePreview() {
 function SystemsPage() {
   return (
     <div className="products-reference-page">
+      <section className="section section-light systems-intro">
+        <div className="section-title">
+          <h1>עבודות אלומיניום לבית פרטי</h1>
+          <p>חלונות, ויטרינות, דלתות, תריסים ופתרונות נוספים. בחרו תחום כדי לראות אפשרויות, פרטים ותמונות מהשטח.</p>
+        </div>
+      </section>
       <section className="products-reference-hero" aria-label="עולמות מוצר">
         <div className="product-worlds product-worlds-fullscreen">
           {sortByOrder(solutions).map((solution) => <ProductWorldCard solution={solution} eager key={solution.id} />)}
