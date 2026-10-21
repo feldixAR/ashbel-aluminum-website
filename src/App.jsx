@@ -836,52 +836,89 @@ function WhatToSend() {
 }
 
 function ContactForm() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', inquiryType: contactContent.inquiryTypes[0] || '', message: '' })
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    projectArea: '',
+    projectStage: '',
+    inquiryType: contactContent.inquiryTypes[0] || '',
+    message: '',
+  })
   const updateField = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
   const message = [
-    form.name ? `שם: ${form.name}` : '',
+    form.name.trim() ? `שם: ${form.name.trim()}` : '',
     form.phone ? `טלפון: ${form.phone}` : '',
     form.email ? `מייל: ${form.email}` : '',
+    form.projectArea ? `יישוב / אזור הפרויקט: ${form.projectArea}` : '',
+    form.projectStage ? `שלב הפרויקט: ${form.projectStage}` : '',
     form.inquiryType ? `סוג פנייה: ${form.inquiryType}` : '',
-    form.message ? `הודעה: ${form.message}` : '',
-  ].filter(Boolean).join('\n')
+    form.message ? `פרטים: ${form.message}` : '',
+  ].filter(Boolean).join('\\n')
 
-  const encoded = message || whatsappMessages.details
+  const openWhatsApp = (event) => {
+    event.preventDefault()
+    if (!event.currentTarget.reportValidity()) return
+    window.location.href = whatsappHref(message || whatsappMessages.details)
+  }
+
+  const validateEmailLink = (event) => {
+    if (!event.currentTarget.closest('form')?.reportValidity()) event.preventDefault()
+  }
 
   return (
-    <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+    <form className="contact-form" onSubmit={openWhatsApp}>
       <h2>שליחת פרטים</h2>
       <label>
         שם*
-        <input value={form.name} onChange={updateField('name')} autoComplete="name" />
+        <input name="name" required value={form.name} onChange={updateField('name')} autoComplete="name" />
       </label>
       <label>
         טלפון
-        <input value={form.phone} onChange={updateField('phone')} autoComplete="tel" inputMode="tel" />
+        <input name="phone" value={form.phone} onChange={updateField('phone')} autoComplete="tel" inputMode="tel" />
       </label>
       <label>
         כתובת דואר אלקטרוני
-        <input value={form.email} onChange={updateField('email')} autoComplete="email" inputMode="email" />
+        <input name="email" type="email" value={form.email} onChange={updateField('email')} autoComplete="email" inputMode="email" />
+      </label>
+      <label>
+        יישוב / אזור הפרויקט
+        <input name="projectArea" value={form.projectArea} onChange={updateField('projectArea')} autoComplete="address-level2" />
+      </label>
+      <label>
+        שלב הפרויקט
+        <select name="projectStage" value={form.projectStage} onChange={updateField('projectStage')}>
+          <option value="">בחירה אם ידוע</option>
+          <option>בתכנון</option>
+          <option>בשלב השלד</option>
+          <option>לפני התקנת האלומיניום</option>
+          <option>שיפוץ או החלפת חלונות</option>
+          <option>שלב אחר</option>
+        </select>
       </label>
       <label>
         סוג פנייה
-        <select value={form.inquiryType} onChange={updateField('inquiryType')}>
+        <select name="inquiryType" value={form.inquiryType} onChange={updateField('inquiryType')}>
           {contactContent.inquiryTypes.map((type) => <option key={type}>{type}</option>)}
         </select>
       </label>
       <label>
         מה תרצו שנבדוק?
-        <textarea value={form.message} onChange={updateField('message')} rows="5" />
+        <textarea name="message" value={form.message} onChange={updateField('message')} rows="5" />
       </label>
       <div className="form-actions">
-        <a className="button button-primary whatsapp-button" href={whatsappHref(encoded)}>
+        <button className="button button-primary whatsapp-button" type="submit">
           {sharedCta.primaryButton}
-        </a>
-        <a className="button button-outline" href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל מערכות אלומיניום')}&body=${encodeURIComponent(encoded)}`}>
+        </button>
+        <a
+          className="button button-outline"
+          href={`mailto:${siteInfo.email}?subject=${encodeURIComponent('פנייה מאתר אשבל מערכות אלומיניום')}&body=${encodeURIComponent(message)}`}
+          onClick={validateEmailLink}
+        >
           {sharedCta.emailButton}
         </a>
       </div>
-      <p>אפשר לשלוח קבצים ישירות בוואטסאפ או במייל.</p>
+      <p>הפרטים לא נשמרים באתר. אחרי פתיחת WhatsApp או טיוטת המייל אפשר לצרף תוכניות, מפרט או תמונות.</p>
     </form>
   )
 }
